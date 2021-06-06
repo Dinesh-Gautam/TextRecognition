@@ -6,9 +6,9 @@ const threshold = 2.8;
 let resultData = null;
 
 const image = new Image();
-// image.src = "images/ (2).jpg";
+image.src = "images/ (2).jpg";
 
-image.src = "images/randomBook.jpg";
+// image.src = "images/text.jpg";
 
 image.addEventListener("load", () => {
   canvas.height = image.height;
@@ -63,12 +63,34 @@ image.addEventListener("load", () => {
     //   const A = data[i][r + 3];
   }
   console.log(difference);
-  imageData.data = data;
 
+  imageData.data = data;
+  enhanceText(imageData.data);
   ctx.putImageData(imageData, 0, 0);
 
-  recoganizeText();
+  // recoganizeText();
 });
+
+function enhanceText(data) {
+  for (let c = 0; c < canvas.height; c++) {
+    for (let r = 0; r < canvas.width; r++) {
+      const R = data[c * 4 * canvas.width + r * 4];
+      const G = data[c * 4 * canvas.width + (r * 4 + 1)];
+      const B = data[c * 4 * canvas.width + (r * 4 + 2)];
+
+      const total = R + G + B / 3;
+
+      if (total < 255) {
+        data[c * 4 * canvas.width + r * 4] = 255;
+        // data[r] = 255;
+        // data[r + 1] = 0;
+        // data[r + 2] = 0;
+      }
+    }
+  }
+
+  data = data;
+}
 
 function recoganizeText() {
   const scheduler = Tesseract.createScheduler();
