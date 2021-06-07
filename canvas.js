@@ -1,15 +1,17 @@
 const canvas = document.getElementById("can");
 const ctx = canvas.getContext("2d");
 
+console.time();
+
 const threshold = 2.8;
 
 let resultData = null;
 
 const image = new Image();
-image.src = "images/ (1).jpg";
+// image.src = "images/ (1).jpg";
 
 // image.src = "images/text.jpg";
-// image.src = "images/aitraining/aitraining.png";
+image.src = "images/aitraining/aitraining.png";
 
 image.addEventListener("load", () => {
   canvas.height = image.height;
@@ -37,6 +39,8 @@ image.addEventListener("load", () => {
     }
     //   const A = data[i][r + 3];
   }
+  detectEdges(imageData.data);
+
   for (let r = 0; r < data.length; r += 4) {
     const R = data[r];
     const G = data[r + 1];
@@ -61,15 +65,95 @@ image.addEventListener("load", () => {
         data[r + 2] = 255;
       }
     }
-    //   const A = data[i][r + 3];
+    // const A = data[i][r + 3];
   }
 
   imageData.data = data;
   enhanceText(imageData.data);
+
   ctx.putImageData(imageData, 0, 0);
 
-  recoganizeText();
+  console.timeEnd();
+  // recoganizeText();
 });
+
+function detectEdges(data) {
+  for (let c = 0; c < canvas.height; c++) {
+    for (let r = 0; r < canvas.width; r++) {
+      const R = data[c * 4 * canvas.width + r * 4];
+      const G = data[c * 4 * canvas.width + (r * 4 + 1)];
+      const B = data[c * 4 * canvas.width + (r * 4 + 2)];
+
+      const surrounding = [
+        data[c * 4 * canvas.width + (r + 1) * 4],
+        data[c * 4 * canvas.width + (r + 2) * 4],
+        data[(c + 1) * 4 * canvas.width + r * 4],
+        data[(c + 2) * 4 * canvas.width + r * 4],
+        data[(c + 1) * 4 * canvas.width + (r + 1) * 4],
+        data[(c + 1) * 4 * canvas.width + (r + 2) * 4],
+        data[(c + 2) * 4 * canvas.width + (r + 1) * 4],
+        data[(c + 2) * 4 * canvas.width + (r + 2) * 4],
+        data[c * 4 * canvas.width + (r - 1) * 4],
+        data[c * 4 * canvas.width + (r - 2) * 4],
+        data[(c - 1) * 4 * canvas.width + r * 4],
+        data[(c - 2) * 4 * canvas.width + r * 4],
+        data[(c - 1) * 4 * canvas.width + (r - 1) * 4],
+        data[(c - 1) * 4 * canvas.width + (r - 2) * 4],
+        data[(c - 2) * 4 * canvas.width + (r - 1) * 4],
+        data[(c - 2) * 4 * canvas.width + (r - 2) * 4],
+        data[(c + 1) * 4 * canvas.width + (r - 1) * 4],
+        data[(c + 1) * 4 * canvas.width + (r - 2) * 4],
+        data[(c + 2) * 4 * canvas.width + (r - 1) * 4],
+        data[(c + 2) * 4 * canvas.width + (r - 2) * 4],
+        data[(c - 1) * 4 * canvas.width + (r + 1) * 4],
+        data[(c - 1) * 4 * canvas.width + (r + 2) * 4],
+        data[(c - 2) * 4 * canvas.width + (r + 1) * 4],
+        data[(c - 2) * 4 * canvas.width + (r + 2) * 4],
+      ];
+
+      let whites = 0;
+      blacks = 0;
+
+      const total = R + G + B / 3;
+      let difference = 0;
+      for (let i = 0; i < surrounding.length; i++) {
+        let diff = surrounding[i] - difference;
+        if (diff > difference) {
+          difference = diff;
+        }
+      }
+      for (let i = 0; i < surrounding.length; i++) {
+        if (surrounding[i] < difference) {
+          blacks++;
+        } else {
+          whites++;
+        }
+      }
+      if (difference < 160) {
+        data[c * 4 * canvas.width + r * 4] = 0;
+        data[c * 4 * canvas.width + (r * 4 + 1)] = 0;
+        data[c * 4 * canvas.width + (r * 4 + 2)] = 0;
+      }
+      // if (whites > blacks) {
+      //   data[c * 4 * canvas.width + r * 4] = 255;
+      //   data[c * 4 * canvas.width + (r * 4 + 1)] = 255;
+      //   data[c * 4 * canvas.width + (r * 4 + 2)] = 255;
+      // }
+      // } else {
+      //   data[c * 4 * canvas.width + r * 4] = 255;
+      //   data[c * 4 * canvas.width + (r * 4 + 1)] = 255;
+      //   data[c * 4 * canvas.width + (r * 4 + 2)] = 255;
+      // }
+      // else {
+      //   data[c * 4 * canvas.width + r * 4] = 255;
+      //   data[c * 4 * canvas.width + (r * 4 + 1)] = 255;
+      //   data[c * 4 * canvas.width + (r * 4 + 2)] = 255;
+      // }
+    }
+  }
+
+  data = data;
+}
 
 function enhanceText(data) {
   for (let c = 0; c < canvas.height; c++) {
@@ -150,9 +234,9 @@ function enhanceText(data) {
         max = 0;
       }
 
-      data[c * 4 * canvas.width + r * 4] = max;
-      data[c * 4 * canvas.width + (r * 4 + 1)] = max;
-      data[c * 4 * canvas.width + (r * 4 + 2)] = max;
+      // data[c * 4 * canvas.width + r * 4] = max;
+      // data[c * 4 * canvas.width + (r * 4 + 1)] = max;
+      // data[c * 4 * canvas.width + (r * 4 + 2)] = max;
     }
   }
 
