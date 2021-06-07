@@ -6,7 +6,7 @@ const threshold = 2.8;
 let resultData = null;
 
 const image = new Image();
-image.src = "images/ (2).jpg";
+image.src = "images/ (1).jpg";
 
 // image.src = "images/text.jpg";
 
@@ -62,30 +62,96 @@ image.addEventListener("load", () => {
     }
     //   const A = data[i][r + 3];
   }
-  console.log(difference);
 
   imageData.data = data;
   enhanceText(imageData.data);
   ctx.putImageData(imageData, 0, 0);
 
-  // recoganizeText();
+  recoganizeText();
 });
 
 function enhanceText(data) {
   for (let c = 0; c < canvas.height; c++) {
     for (let r = 0; r < canvas.width; r++) {
+      // let c = 20,
+      //   r = 50;
+
       const R = data[c * 4 * canvas.width + r * 4];
       const G = data[c * 4 * canvas.width + (r * 4 + 1)];
       const B = data[c * 4 * canvas.width + (r * 4 + 2)];
 
       const total = R + G + B / 3;
 
-      if (total < 255) {
-        data[c * 4 * canvas.width + r * 4] = 255;
-        // data[r] = 255;
-        // data[r + 1] = 0;
-        // data[r + 2] = 0;
+      let blacks = 0,
+        whites = 0,
+        max = 0;
+
+      [
+        data[c * 4 * canvas.width + (r + 1) * 4],
+        // data[c * 4 * canvas.width + (r + 2) * 4],
+        data[(c + 1) * 4 * canvas.width + r * 4],
+        // data[(c + 2) * 4 * canvas.width + r * 4],
+        data[(c + 1) * 4 * canvas.width + (r + 1) * 4],
+        // data[(c + 1) * 4 * canvas.width + (r + 2) * 4],
+        // data[(c + 2) * 4 * canvas.width + (r + 1) * 4],
+        // data[(c + 2) * 4 * canvas.width + (r + 2) * 4],
+        // data[c * 4 * canvas.width + (r - 1) * 4],
+        // data[c * 4 * canvas.width + (r - 2) * 4],
+        // data[(c - 1) * 4 * canvas.width + r * 4],
+        // data[(c - 2) * 4 * canvas.width + r * 4],
+        // data[(c - 1) * 4 * canvas.width + (r - 1) * 4],
+        // data[(c - 1) * 4 * canvas.width + (r - 2) * 4],
+        // data[(c - 2) * 4 * canvas.width + (r - 1) * 4],
+        // data[(c - 2) * 4 * canvas.width + (r - 2) * 4],
+        // data[(c + 1) * 4 * canvas.width + (r - 1) * 4],
+        // data[(c + 1) * 4 * canvas.width + (r - 2) * 4],
+        // data[(c + 2) * 4 * canvas.width + (r - 1) * 4],
+        // data[(c + 2) * 4 * canvas.width + (r - 2) * 4],
+        // data[(c - 1) * 4 * canvas.width + (r + 1) * 4],
+        // data[(c - 1) * 4 * canvas.width + (r + 2) * 4],
+        // data[(c - 2) * 4 * canvas.width + (r + 1) * 4],
+        // data[(c - 2) * 4 * canvas.width + (r + 2) * 4],
+      ].forEach((e) => {
+        if (e < 100) {
+          blacks++;
+        } else {
+          whites++;
+        }
+      });
+      // data[c * 4 * canvas.width + (r + 1) * 4] = 255;
+      // data[c * 4 * canvas.width + (r + 2) * 4] = 255;
+      // data[(c + 1) * 4 * canvas.width + r * 4] = 255;
+      // data[(c + 2) * 4 * canvas.width + r * 4] = 255;
+      // data[(c + 1) * 4 * canvas.width + (r + 1) * 4] = 255;
+      // data[(c + 1) * 4 * canvas.width + (r + 2) * 4] = 255;
+      // data[(c + 2) * 4 * canvas.width + (r + 1) * 4] = 255;
+      // data[(c + 2) * 4 * canvas.width + (r + 2) * 4] = 255;
+      // data[c * 4 * canvas.width + (r - 1) * 4] = 255;
+      // data[c * 4 * canvas.width + (r - 2) * 4] = 255;
+      // data[(c - 1) * 4 * canvas.width + r * 4] = 255;
+      // data[(c - 2) * 4 * canvas.width + r * 4] = 255;
+      // data[(c - 1) * 4 * canvas.width + (r - 1) * 4] = 255;
+      // data[(c - 1) * 4 * canvas.width + (r - 2) * 4] = 255;
+      // data[(c - 2) * 4 * canvas.width + (r - 1) * 4] = 255;
+      // data[(c - 2) * 4 * canvas.width + (r - 2) * 4] = 255;
+      // data[(c + 1) * 4 * canvas.width + (r - 1) * 4] = 255;
+      // data[(c + 1) * 4 * canvas.width + (r - 2) * 4] = 255;
+      // data[(c + 2) * 4 * canvas.width + (r - 1) * 4] = 255;
+      // data[(c + 2) * 4 * canvas.width + (r - 2) * 4] = 255;
+      // data[(c - 1) * 4 * canvas.width + (r + 1) * 4] = 255;
+      // data[(c - 1) * 4 * canvas.width + (r + 2) * 4] = 255;
+      // data[(c - 2) * 4 * canvas.width + (r + 1) * 4] = 255;
+      // data[(c - 2) * 4 * canvas.width + (r + 2) * 4] = 255;
+
+      if (whites > blacks) {
+        max = 255;
+      } else {
+        max = 0;
       }
+
+      data[c * 4 * canvas.width + r * 4] = max;
+      data[c * 4 * canvas.width + (r * 4 + 1)] = max;
+      data[c * 4 * canvas.width + (r * 4 + 2)] = max;
     }
   }
 
