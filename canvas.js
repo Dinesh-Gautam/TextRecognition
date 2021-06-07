@@ -9,6 +9,7 @@ const image = new Image();
 image.src = "images/ (1).jpg";
 
 // image.src = "images/text.jpg";
+// image.src = "images/aitraining/aitraining.png";
 
 image.addEventListener("load", () => {
   canvas.height = image.height;
@@ -88,13 +89,13 @@ function enhanceText(data) {
 
       [
         data[c * 4 * canvas.width + (r + 1) * 4],
-        // data[c * 4 * canvas.width + (r + 2) * 4],
+        data[c * 4 * canvas.width + (r + 2) * 4],
         data[(c + 1) * 4 * canvas.width + r * 4],
-        // data[(c + 2) * 4 * canvas.width + r * 4],
+        data[(c + 2) * 4 * canvas.width + r * 4],
         data[(c + 1) * 4 * canvas.width + (r + 1) * 4],
-        // data[(c + 1) * 4 * canvas.width + (r + 2) * 4],
-        // data[(c + 2) * 4 * canvas.width + (r + 1) * 4],
-        // data[(c + 2) * 4 * canvas.width + (r + 2) * 4],
+        data[(c + 1) * 4 * canvas.width + (r + 2) * 4],
+        data[(c + 2) * 4 * canvas.width + (r + 1) * 4],
+        data[(c + 2) * 4 * canvas.width + (r + 2) * 4],
         // data[c * 4 * canvas.width + (r - 1) * 4],
         // data[c * 4 * canvas.width + (r - 2) * 4],
         // data[(c - 1) * 4 * canvas.width + r * 4],
@@ -239,7 +240,7 @@ function recoganizeText() {
       resultData = e;
       const wordResults = e[0].data.words
         .filter(({ confidence }) => {
-          return true;
+          return confidence > 60;
         })
         .map((word) => {
           const div = document.createElement("div");
