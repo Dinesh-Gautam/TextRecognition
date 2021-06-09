@@ -8,10 +8,10 @@ const threshold = 2.8;
 let resultData = null;
 
 const image = new Image();
-// image.src = "images/ (1).jpg";
+image.src = "images/ (1).jpg";
 
 // image.src = "images/text.jpg";
-image.src = "images/aitraining/aitraining.png";
+// image.src = "images/aitraining/aitraining.png";
 
 image.addEventListener("load", () => {
   canvas.height = image.height;
@@ -41,35 +41,35 @@ image.addEventListener("load", () => {
   }
   detectEdges(imageData.data);
 
-  for (let r = 0; r < data.length; r += 4) {
-    const R = data[r];
-    const G = data[r + 1];
-    const B = data[r + 2];
+  // for (let r = 0; r < data.length; r += 4) {
+  //   const R = data[r];
+  //   const G = data[r + 1];
+  //   const B = data[r + 2];
 
-    const total = R + G + B;
+  //   const total = R + G + B;
 
-    const average = total / threshold;
+  //   const average = total / threshold;
 
-    if (average > difference) {
-      data[r] = 255;
-      data[r + 1] = 255;
-      data[r + 2] = 255;
-    } else {
-      if (average < difference / 2) {
-        data[r] = 0;
-        data[r + 1] = 0;
-        data[r + 2] = 0;
-      } else {
-        data[r] = 255;
-        data[r + 1] = 255;
-        data[r + 2] = 255;
-      }
-    }
-    // const A = data[i][r + 3];
-  }
+  //   if (average > difference) {
+  //     data[r] = 255;
+  //     data[r + 1] = 255;
+  //     data[r + 2] = 255;
+  //   } else {
+  //     if (average < difference / 2) {
+  //       data[r] = 0;
+  //       data[r + 1] = 0;
+  //       data[r + 2] = 0;
+  //     } else {
+  //       data[r] = 255;
+  //       data[r + 1] = 255;
+  //       data[r + 2] = 255;
+  //     }
+  //   }
+  //   // const A = data[i][r + 3];
+  // }
 
   imageData.data = data;
-  enhanceText(imageData.data);
+  // enhanceText(imageData.data);
 
   ctx.putImageData(imageData, 0, 0);
 
@@ -77,12 +77,100 @@ image.addEventListener("load", () => {
   // recoganizeText();
 });
 
+// function detectEdges(data) {
+//   for (let c = 0; c < canvas.height; c++) {
+//     for (let r = 0; r < canvas.width; r++) {
+//       const R = data[c * 4 * canvas.width + r * 4];
+//       const G = data[c * 4 * canvas.width + (r * 4 + 1)];
+//       const B = data[c * 4 * canvas.width + (r * 4 + 2)];
+
+//       const surrounding = [
+//         data[c * 4 * canvas.width + (r + 1) * 4],
+//         data[c * 4 * canvas.width + (r + 2) * 4],
+//         data[(c + 1) * 4 * canvas.width + r * 4],
+//         data[(c + 2) * 4 * canvas.width + r * 4],
+//         data[(c + 1) * 4 * canvas.width + (r + 1) * 4],
+//         data[(c + 1) * 4 * canvas.width + (r + 2) * 4],
+//         data[(c + 2) * 4 * canvas.width + (r + 1) * 4],
+//         data[(c + 2) * 4 * canvas.width + (r + 2) * 4],
+//         data[c * 4 * canvas.width + (r - 1) * 4],
+//         data[c * 4 * canvas.width + (r - 2) * 4],
+//         data[(c - 1) * 4 * canvas.width + r * 4],
+//         data[(c - 2) * 4 * canvas.width + r * 4],
+//         data[(c - 1) * 4 * canvas.width + (r - 1) * 4],
+//         data[(c - 1) * 4 * canvas.width + (r - 2) * 4],
+//         data[(c - 2) * 4 * canvas.width + (r - 1) * 4],
+//         data[(c - 2) * 4 * canvas.width + (r - 2) * 4],
+//         data[(c + 1) * 4 * canvas.width + (r - 1) * 4],
+//         data[(c + 1) * 4 * canvas.width + (r - 2) * 4],
+//         data[(c + 2) * 4 * canvas.width + (r - 1) * 4],
+//         data[(c + 2) * 4 * canvas.width + (r - 2) * 4],
+//         data[(c - 1) * 4 * canvas.width + (r + 1) * 4],
+//         data[(c - 1) * 4 * canvas.width + (r + 2) * 4],
+//         data[(c - 2) * 4 * canvas.width + (r + 1) * 4],
+//         data[(c - 2) * 4 * canvas.width + (r + 2) * 4],
+//       ];
+
+//       let whites = 0;
+//       blacks = 0;
+
+//       const total = R + G + B / 3;
+//       let difference = 0;
+//       for (let i = 0; i < surrounding.length; i++) {
+//         let diff = surrounding[i] - difference;
+//         if (diff > difference) {
+//           difference = diff;
+//         }
+//       }
+//       for (let i = 0; i < surrounding.length; i++) {
+//         if (surrounding[i] < difference) {
+//           blacks++;
+//         } else {
+//           whites++;
+//         }
+//       }
+//       if (difference < 160) {
+//         data[c * 4 * canvas.width + r * 4] = 0;
+//         data[c * 4 * canvas.width + (r * 4 + 1)] = 0;
+//         data[c * 4 * canvas.width + (r * 4 + 2)] = 0;
+//       }
+//       // if (whites > blacks) {
+//       //   data[c * 4 * canvas.width + r * 4] = 255;
+//       //   data[c * 4 * canvas.width + (r * 4 + 1)] = 255;
+//       //   data[c * 4 * canvas.width + (r * 4 + 2)] = 255;
+//       // }
+//       // } else {
+//       //   data[c * 4 * canvas.width + r * 4] = 255;
+//       //   data[c * 4 * canvas.width + (r * 4 + 1)] = 255;
+//       //   data[c * 4 * canvas.width + (r * 4 + 2)] = 255;
+//       // }
+//       // else {
+//       //   data[c * 4 * canvas.width + r * 4] = 255;
+//       //   data[c * 4 * canvas.width + (r * 4 + 1)] = 255;
+//       //   data[c * 4 * canvas.width + (r * 4 + 2)] = 255;
+//       // }
+//     }
+//   }
+
+//   data = data;
+// }
+
 function detectEdges(data) {
   for (let c = 0; c < canvas.height; c++) {
     for (let r = 0; r < canvas.width; r++) {
+      // const c = 300,
+      //   r = 300;
+
       const R = data[c * 4 * canvas.width + r * 4];
       const G = data[c * 4 * canvas.width + (r * 4 + 1)];
       const B = data[c * 4 * canvas.width + (r * 4 + 2)];
+
+      const average = R + G + B / 3;
+
+      let max = 0;
+      let min = 255;
+
+      let surroundingAvg = 0;
 
       const surrounding = [
         data[c * 4 * canvas.width + (r + 1) * 4],
@@ -93,61 +181,34 @@ function detectEdges(data) {
         data[(c + 1) * 4 * canvas.width + (r + 2) * 4],
         data[(c + 2) * 4 * canvas.width + (r + 1) * 4],
         data[(c + 2) * 4 * canvas.width + (r + 2) * 4],
-        data[c * 4 * canvas.width + (r - 1) * 4],
-        data[c * 4 * canvas.width + (r - 2) * 4],
-        data[(c - 1) * 4 * canvas.width + r * 4],
-        data[(c - 2) * 4 * canvas.width + r * 4],
-        data[(c - 1) * 4 * canvas.width + (r - 1) * 4],
-        data[(c - 1) * 4 * canvas.width + (r - 2) * 4],
-        data[(c - 2) * 4 * canvas.width + (r - 1) * 4],
-        data[(c - 2) * 4 * canvas.width + (r - 2) * 4],
-        data[(c + 1) * 4 * canvas.width + (r - 1) * 4],
-        data[(c + 1) * 4 * canvas.width + (r - 2) * 4],
-        data[(c + 2) * 4 * canvas.width + (r - 1) * 4],
-        data[(c + 2) * 4 * canvas.width + (r - 2) * 4],
-        data[(c - 1) * 4 * canvas.width + (r + 1) * 4],
-        data[(c - 1) * 4 * canvas.width + (r + 2) * 4],
-        data[(c - 2) * 4 * canvas.width + (r + 1) * 4],
-        data[(c - 2) * 4 * canvas.width + (r + 2) * 4],
       ];
 
-      let whites = 0;
-      blacks = 0;
+      for (let i in surrounding) {
+        surroundingAvg += surrounding[i];
 
-      const total = R + G + B / 3;
-      let difference = 0;
-      for (let i = 0; i < surrounding.length; i++) {
-        let diff = surrounding[i] - difference;
-        if (diff > difference) {
-          difference = diff;
-        }
+        surrounding[i] < min ? (min = surrounding[i]) : null;
+        surrounding[i] > max ? (max = surrounding[i]) : null;
       }
-      for (let i = 0; i < surrounding.length; i++) {
-        if (surrounding[i] < difference) {
-          blacks++;
-        } else {
-          whites++;
-        }
+
+      surroundingAvg /= surrounding.length;
+
+      const diff = max - min;
+
+      // console.log(diff);
+      // data[c * 4 * canvas.width + r * 4] = 255;
+
+      if (diff > 50) {
+        //   // it is the edge
+        data[c * 4 * canvas.width + r * 4] = 255;
+      } else {
       }
-      if (difference < 160) {
-        data[c * 4 * canvas.width + r * 4] = 0;
-        data[c * 4 * canvas.width + (r * 4 + 1)] = 0;
-        data[c * 4 * canvas.width + (r * 4 + 2)] = 0;
-      }
-      // if (whites > blacks) {
-      //   data[c * 4 * canvas.width + r * 4] = 255;
-      //   data[c * 4 * canvas.width + (r * 4 + 1)] = 255;
-      //   data[c * 4 * canvas.width + (r * 4 + 2)] = 255;
-      // }
-      // } else {
-      //   data[c * 4 * canvas.width + r * 4] = 255;
-      //   data[c * 4 * canvas.width + (r * 4 + 1)] = 255;
-      //   data[c * 4 * canvas.width + (r * 4 + 2)] = 255;
-      // }
-      // else {
-      //   data[c * 4 * canvas.width + r * 4] = 255;
-      //   data[c * 4 * canvas.width + (r * 4 + 1)] = 255;
-      //   data[c * 4 * canvas.width + (r * 4 + 2)] = 255;
+      //   // it is black or white
+
+      //   if (average < surroundingAvg) {
+      //     data[c * 4 * canvas.width + r * 4] = 255;
+      //   } else {
+      //     data[c * 4 * canvas.width + r * 4] = 0;
+      //   }
       // }
     }
   }
