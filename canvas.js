@@ -17,6 +17,8 @@ image.addEventListener("load", () => {
   canvas.height = image.height;
   canvas.width = image.width;
 
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
   ctx.drawImage(image, 0, 0);
 
   let difference = 0;
@@ -39,42 +41,50 @@ image.addEventListener("load", () => {
     }
     //   const A = data[i][r + 3];
   }
-  detectEdges(imageData.data);
+  // detectEdges(imageData.data);
 
-  // for (let r = 0; r < data.length; r += 4) {
-  //   const R = data[r];
-  //   const G = data[r + 1];
-  //   const B = data[r + 2];
+  for (let r = 0; r < data.length; r += 4) {
+    const R = data[r];
+    const G = data[r + 1];
+    const B = data[r + 2];
 
-  //   const total = R + G + B;
+    const total = R + G + B;
 
-  //   const average = total / threshold;
-
-  //   if (average > difference) {
-  //     data[r] = 255;
-  //     data[r + 1] = 255;
-  //     data[r + 2] = 255;
-  //   } else {
-  //     if (average < difference / 2) {
-  //       data[r] = 0;
-  //       data[r + 1] = 0;
-  //       data[r + 2] = 0;
-  //     } else {
-  //       data[r] = 255;
-  //       data[r + 1] = 255;
-  //       data[r + 2] = 255;
-  //     }
-  //   }
-  //   // const A = data[i][r + 3];
-  // }
+    const average = total / threshold;
+    // const average = total / 3;
+    // if (average < minAverage * 8) {
+    //   data[r] = 0;
+    //   data[r + 1] = 0;
+    //   data[r + 2] = 0;
+    // } else {
+    //   data[r] = 255;
+    //   data[r + 1] = 255;
+    //   data[r + 2] = 255;
+    // }
+    if (average > difference) {
+      data[r] = 255;
+      data[r + 1] = 255;
+      data[r + 2] = 255;
+    } else {
+      if (average < difference / 2) {
+        data[r] = 0;
+        data[r + 1] = 0;
+        data[r + 2] = 0;
+      } else {
+        data[r] = 255;
+        data[r + 1] = 255;
+        data[r + 2] = 255;
+      }
+    }
+  }
 
   imageData.data = data;
-  // enhanceText(imageData.data);
+  enhanceText(imageData.data);
 
   ctx.putImageData(imageData, 0, 0);
 
   console.timeEnd();
-  // recoganizeText();
+  recoganizeText();
 });
 
 // function detectEdges(data) {
@@ -155,6 +165,9 @@ image.addEventListener("load", () => {
 //   data = data;
 // }
 
+let minAverage = 255;
+let maxaverage = 0;
+
 function detectEdges(data) {
   for (let c = 0; c < canvas.height; c++) {
     for (let r = 0; r < canvas.width; r++) {
@@ -195,11 +208,17 @@ function detectEdges(data) {
       const diff = max - min;
 
       // console.log(diff);
-      // data[c * 4 * canvas.width + r * 4] = 255;
+      // data[c * 4 * canvas.width + r * 4 + 1] = 255;
 
       if (diff > 50) {
         //   // it is the edge
-        data[c * 4 * canvas.width + r * 4] = 255;
+
+        data[c * 4 * canvas.width + r * 4] = 0;
+        data[c * 4 * canvas.width + (r * 4 + 1)] = 0;
+        data[c * 4 * canvas.width + (r * 4 + 2)] = 0;
+        if (surroundingAvg < minAverage) {
+          minAverage = surroundingAvg;
+        }
       } else {
       }
       //   // it is black or white
@@ -212,7 +231,7 @@ function detectEdges(data) {
       // }
     }
   }
-
+  console.log(minAverage);
   data = data;
 }
 
@@ -298,6 +317,94 @@ function enhanceText(data) {
       // data[c * 4 * canvas.width + r * 4] = max;
       // data[c * 4 * canvas.width + (r * 4 + 1)] = max;
       // data[c * 4 * canvas.width + (r * 4 + 2)] = max;
+    }
+  }
+
+  data = data;
+}
+
+function enhanceText(data) {
+  for (let c = 0; c < canvas.height; c++) {
+    for (let r = 0; r < canvas.width; r++) {
+      // let c = 20,
+      //   r = 50;
+
+      const R = data[c * 4 * canvas.width + r * 4];
+      const G = data[c * 4 * canvas.width + (r * 4 + 1)];
+      const B = data[c * 4 * canvas.width + (r * 4 + 2)];
+
+      const total = R + G + B / 3;
+
+      let blacks = 0,
+        whites = 0,
+        max = 0;
+
+      [
+        data[c * 4 * canvas.width + (r + 1) * 4],
+        data[c * 4 * canvas.width + (r + 2) * 4],
+        data[(c + 1) * 4 * canvas.width + r * 4],
+        data[(c + 2) * 4 * canvas.width + r * 4],
+        data[(c + 1) * 4 * canvas.width + (r + 1) * 4],
+        data[(c + 1) * 4 * canvas.width + (r + 2) * 4],
+        data[(c + 2) * 4 * canvas.width + (r + 1) * 4],
+        data[(c + 2) * 4 * canvas.width + (r + 2) * 4],
+        // data[c * 4 * canvas.width + (r - 1) * 4],
+        // data[c * 4 * canvas.width + (r - 2) * 4],
+        // data[(c - 1) * 4 * canvas.width + r * 4],
+        // data[(c - 2) * 4 * canvas.width + r * 4],
+        // data[(c - 1) * 4 * canvas.width + (r - 1) * 4],
+        // data[(c - 1) * 4 * canvas.width + (r - 2) * 4],
+        // data[(c - 2) * 4 * canvas.width + (r - 1) * 4],
+        // data[(c - 2) * 4 * canvas.width + (r - 2) * 4],
+        // data[(c + 1) * 4 * canvas.width + (r - 1) * 4],
+        // data[(c + 1) * 4 * canvas.width + (r - 2) * 4],
+        // data[(c + 2) * 4 * canvas.width + (r - 1) * 4],
+        // data[(c + 2) * 4 * canvas.width + (r - 2) * 4],
+        // data[(c - 1) * 4 * canvas.width + (r + 1) * 4],
+        // data[(c - 1) * 4 * canvas.width + (r + 2) * 4],
+        // data[(c - 2) * 4 * canvas.width + (r + 1) * 4],
+        // data[(c - 2) * 4 * canvas.width + (r + 2) * 4],
+      ].forEach((e) => {
+        if (e < 100) {
+          blacks++;
+        } else {
+          whites++;
+        }
+      });
+      // data[c * 4 * canvas.width + (r + 1) * 4] = 255;
+      // data[c * 4 * canvas.width + (r + 2) * 4] = 255;
+      // data[(c + 1) * 4 * canvas.width + r * 4] = 255;
+      // data[(c + 2) * 4 * canvas.width + r * 4] = 255;
+      // data[(c + 1) * 4 * canvas.width + (r + 1) * 4] = 255;
+      // data[(c + 1) * 4 * canvas.width + (r + 2) * 4] = 255;
+      // data[(c + 2) * 4 * canvas.width + (r + 1) * 4] = 255;
+      // data[(c + 2) * 4 * canvas.width + (r + 2) * 4] = 255;
+      // data[c * 4 * canvas.width + (r - 1) * 4] = 255;
+      // data[c * 4 * canvas.width + (r - 2) * 4] = 255;
+      // data[(c - 1) * 4 * canvas.width + r * 4] = 255;
+      // data[(c - 2) * 4 * canvas.width + r * 4] = 255;
+      // data[(c - 1) * 4 * canvas.width + (r - 1) * 4] = 255;
+      // data[(c - 1) * 4 * canvas.width + (r - 2) * 4] = 255;
+      // data[(c - 2) * 4 * canvas.width + (r - 1) * 4] = 255;
+      // data[(c - 2) * 4 * canvas.width + (r - 2) * 4] = 255;
+      // data[(c + 1) * 4 * canvas.width + (r - 1) * 4] = 255;
+      // data[(c + 1) * 4 * canvas.width + (r - 2) * 4] = 255;
+      // data[(c + 2) * 4 * canvas.width + (r - 1) * 4] = 255;
+      // data[(c + 2) * 4 * canvas.width + (r - 2) * 4] = 255;
+      // data[(c - 1) * 4 * canvas.width + (r + 1) * 4] = 255;
+      // data[(c - 1) * 4 * canvas.width + (r + 2) * 4] = 255;
+      // data[(c - 2) * 4 * canvas.width + (r + 1) * 4] = 255;
+      // data[(c - 2) * 4 * canvas.width + (r + 2) * 4] = 255;
+
+      if (whites > blacks) {
+        max = 255;
+      } else {
+        max = 0;
+      }
+
+      data[c * 4 * canvas.width + r * 4] = max;
+      data[c * 4 * canvas.width + (r * 4 + 1)] = max;
+      data[c * 4 * canvas.width + (r * 4 + 2)] = max;
     }
   }
 

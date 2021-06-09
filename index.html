@@ -7,6 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImageToText</title>
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .training{
+            position: fixed;
+            top: 2%;
+            right: 2%;
+            z-index: 100;
+            background-color: white;
+            padding: 4px;
+            display: none;
+        }
+        button {
+            padding: 4px;
+        }
         canvas {
             background-color: red;
             border: 1px solid black;
@@ -18,14 +35,24 @@
 <body>
     <!-- <div class="root"></div> -->
 
-    <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
+    <!-- <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script> -->
     <!-- <script src="./main.js"></script> -->
 
-    <!-- <script src="//unpkg.com/brain.js"></script> -->
+    <script src="//unpkg.com/brain.js"></script>
+
+    <div class="training">
+        <button class="black">
+            black
+        </button>
+        <button class="white">
+            white
+        </button>
+    </div>
     <canvas id="can"></canvas>
     <!-- <canvas id="can2"></canvas> -->
 
-    <script src="./canvas.js"></script>
+    <!-- <script src="./canvas.js"></script> -->
+    <script src="./aiTraning.js"></script>
     <!-- <script src="./ai.js"></script> -->
 </body>
 
