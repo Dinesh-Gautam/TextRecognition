@@ -8,7 +8,7 @@ const threshold = 2.8;
 let resultData = null;
 
 const image = new Image();
-image.src = "images/ (1).jpg";
+image.src = "images/ (2).jpg";
 
 // image.src = "images/text.jpg";
 // image.src = "images/aitraining/aitraining.png";
@@ -41,7 +41,7 @@ image.addEventListener("load", () => {
     }
     //   const A = data[i][r + 3];
   }
-  // detectEdges(imageData.data);
+  detectEdges(imageData.data);
 
   for (let r = 0; r < data.length; r += 4) {
     const R = data[r];

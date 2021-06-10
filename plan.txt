@@ -1,0 +1,10 @@
+plan
+
+make refined code and clean code
+(use getImageData insted of for loops)
+
+make text recoganised by using enhance text and thickenEdges function (try different variation). Don't use it for the first time when recoganising text.
+
+remove any part which is not text or make it white (after recoganizing get the mean x and y value to determine the height and width in which the text is placed)
+
+..... more will be added.
