@@ -65,12 +65,6 @@ function thickenEdges(data, canvas, edgeThreshold) {
 
   for (let c = 0; c < canvas.height; c++) {
     for (let r = 0; r < canvas.width; r++) {
-      const R = data[c * 4 * canvas.width + r * 4];
-      const G = data[c * 4 * canvas.width + (r * 4 + 1)];
-      const B = data[c * 4 * canvas.width + (r * 4 + 2)];
-
-      const average = R + G + B / 3;
-
       let max = 0;
       let min = 255;
 
