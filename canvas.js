@@ -39,7 +39,6 @@ image.addEventListener("load", () => {
     if (average > difference) {
       difference = average;
     }
-    //   const A = data[i][r + 3];
   }
   detectEdges(imageData.data);
 
@@ -171,68 +170,6 @@ let minAverage = 255;
 let maxaverage = 0;
 
 function detectEdges(data) {
-  for (let c = 0; c < canvas.height; c++) {
-    for (let r = 0; r < canvas.width; r++) {
-      // const c = 300,
-      //   r = 300;
-
-      const R = data[c * 4 * canvas.width + r * 4];
-      const G = data[c * 4 * canvas.width + (r * 4 + 1)];
-      const B = data[c * 4 * canvas.width + (r * 4 + 2)];
-
-      const average = R + G + B / 3;
-
-      let max = 0;
-      let min = 255;
-
-      let surroundingAvg = 0;
-
-      const surrounding = [
-        data[c * 4 * canvas.width + (r + 1) * 4],
-        data[c * 4 * canvas.width + (r + 2) * 4],
-        data[(c + 1) * 4 * canvas.width + r * 4],
-        data[(c + 2) * 4 * canvas.width + r * 4],
-        data[(c + 1) * 4 * canvas.width + (r + 1) * 4],
-        data[(c + 1) * 4 * canvas.width + (r + 2) * 4],
-        data[(c + 2) * 4 * canvas.width + (r + 1) * 4],
-        data[(c + 2) * 4 * canvas.width + (r + 2) * 4],
-      ];
-
-      for (let i in surrounding) {
-        surroundingAvg += surrounding[i];
-
-        surrounding[i] < min ? (min = surrounding[i]) : null;
-        surrounding[i] > max ? (max = surrounding[i]) : null;
-      }
-
-      surroundingAvg /= surrounding.length;
-
-      const diff = max - min;
-
-      // console.log(diff);
-      // data[c * 4 * canvas.width + r * 4 + 1] = 255;
-
-      if (diff > 50) {
-        //   // it is the edge
-
-        data[c * 4 * canvas.width + r * 4] = 0;
-        data[c * 4 * canvas.width + (r * 4 + 1)] = 0;
-        data[c * 4 * canvas.width + (r * 4 + 2)] = 0;
-        if (surroundingAvg < minAverage) {
-          minAverage = surroundingAvg;
-        }
-      } else {
-      }
-      //   // it is black or white
-
-      //   if (average < surroundingAvg) {
-      //     data[c * 4 * canvas.width + r * 4] = 255;
-      //   } else {
-      //     data[c * 4 * canvas.width + r * 4] = 0;
-      //   }
-      // }
-    }
-  }
   console.log(minAverage);
   data = data;
 }

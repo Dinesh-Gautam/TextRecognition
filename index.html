@@ -13,6 +13,16 @@
             box-sizing: border-box;
         }
 
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: grid;
+            place-items: center;
+        }
+
         .training {
             position: fixed;
             top: 2%;
@@ -28,9 +38,9 @@
         }
 
         canvas {
-            background-color: red;
             border: 1px solid black;
             position: relative;
+            max-height: 100vh;
         }
     </style>
 </head>
@@ -50,10 +60,11 @@
             white
         </button>
     </div>
-    <canvas id="can"></canvas>
+    <!-- <canvas id="can"></canvas> -->
     <!-- <canvas id="can2"></canvas> -->
 
-    <script src="./canvas.js"></script>
+    <!-- <script src="./canvas.js"></script> -->
+    <script src="./refined.js"></script>
     <!-- <script src="./aiTraning.js"></script> -->
     <!-- <script src="./ai.js"></script> -->
 </body>
