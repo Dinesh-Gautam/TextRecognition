@@ -77,11 +77,13 @@ image.addEventListener("load", () => {
       }
     }
   }
+  ctx.imageSmoothingEnabled = true;
 
   imageData.data = data;
   enhanceText(imageData.data);
 
   ctx.putImageData(imageData, 0, 0);
+  ctx.imageSmoothingEnabled = true;
 
   console.timeEnd();
   recoganizeText();
