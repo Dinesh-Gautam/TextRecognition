@@ -1,7 +1,7 @@
 plan
 
 make refined code and clean code
-(use getImageData insted of for loops)
+
 
 make text recoganised by using enhance text and thickenEdges function (try different variation). Don't use it for the first time when recoganising text.
 

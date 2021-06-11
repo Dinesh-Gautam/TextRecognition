@@ -1,9 +1,15 @@
 const blackAndWhiteThreshold = 2.8, // 1-10 //can be determined by ai
   edgeThreshold = 50; // 1 - 255
 
+let originalImageData = [];
+const canvas = document.createElement("canvas"),
+  canvas2 = document.createElement("canvas"),
+  ctx = canvas.getContext("2d"),
+  ctx2 = canvas.getContext("2d");
+
 function createCanvas() {
-  const canvas = document.createElement("canvas"),
-    ctx = canvas.getContext("2d"),
+  const ctx = canvas.getContext("2d"),
+    ctx2 = canvas.getContext("2d"),
     image = createImage("images/ (1).jpg");
 
   image.addEventListener("load", () => {
@@ -11,15 +17,20 @@ function createCanvas() {
     canvas.width = image.width;
     ctx.drawImage(image, 0, 0);
 
+    canvas2.height = image.height;
+    canvas2.width = image.width;
+    ctx2.drawImage(image, 0, 0);
+
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    originalImageData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
 
     console.time();
 
     //----filters------
 
-    // thickenEdges(imageData.data, canvas, edgeThreshold);
     mkImgBlackAndWhite(imageData.data, blackAndWhiteThreshold);
     // enhanceText(imageData.data, canvas);
+    // thickenEdges(imageData.data, canvas, edgeThreshold);
 
     ///-----------------
 
@@ -127,7 +138,6 @@ function mkImgBlackAndWhite(data, threshold) {
       difference = average;
     }
   }
-
   for (let r = 0; r < data.length; r += 4) {
     const R = data[r];
     const G = data[r + 1];
@@ -162,6 +172,8 @@ function createImage(imgSrc) {
 function recognizeText(canvas) {
   let heightBox = 0,
     widthBox = 0;
+
+  let errorRecognizingText = [];
 
   const div = document.createElement("div");
   Object.assign(div.style, {
@@ -246,7 +258,7 @@ function recognizeText(canvas) {
     scheduler.addWorker(worker11);
     scheduler.addWorker(worker12);
 
-    const results = await Promise.all(
+    await Promise.all(
       Array(1)
         .fill(0)
         .map(() => scheduler.addJob("recognize", canvas))
@@ -254,7 +266,45 @@ function recognizeText(canvas) {
       resultData = e;
       e[0].data.words
         .filter((e) => {
-          console.log(e);
+          if (e.confidence < 60) {
+            const div = document.createElement("div");
+            const { x0, x1, y0, y1 } = e.bbox;
+            div.classList.add("word-element");
+            Object.assign(div.style, {
+              top: `${y0}px`,
+              left: `${x0}px`,
+              width: `${x1 - x0}px`,
+              height: `${y1 - y0}px`,
+              border: "1px solid red",
+              position: "absolute",
+              fontSize: `${Math.round(y1 - y0)}px`,
+            });
+            document.body.appendChild(div);
+
+            const errorImageData = ctx2.getImageData(x0, y0, x1 - x0, y1 - y0);
+            thickenEdges(
+              errorImageData.data,
+              {
+                height: y1 - y0,
+                width: x1 - x0,
+              },
+              edgeThreshold
+            );
+            enhanceText(errorImageData.data, {
+              height: y1 - y0,
+              width: x1 - x0,
+            });
+
+            ctx.putImageData(errorImageData, x0, y0);
+
+            errorRecognizingText.push({
+              left: x0,
+              top: y0,
+              width: x1 - x0,
+              height: y1 - y0,
+            });
+          }
+
           return e.confidence > 60;
         })
         .map((word) => {
@@ -282,6 +332,8 @@ function recognizeText(canvas) {
           document.body.appendChild(div);
         });
 
+      // console.log(errorRecognizingText);
+
       const wordsDiv = document.createElement("div");
       wordsDiv.classList.add("words-container");
       Object.assign(wordsDiv.style, {
@@ -293,8 +345,15 @@ function recognizeText(canvas) {
         position: "absolute",
         zIndex: 1000,
       });
-      document.body.appendChild(wordsDiv);
+      // document.body.appendChild(wordsDiv);
     });
+
+    // await Promise.all(
+    //   errorRecognizingText.map((rectangle) =>
+    //     // (rectangle) => console.log(rectangle)
+    //     scheduler.addJob("recognize", canvas, { rectangle })
+    //   )
+    // );
 
     await scheduler.terminate();
   })();
