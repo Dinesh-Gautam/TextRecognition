@@ -1,3 +1,6 @@
+const blackAndWhiteThreshold = 2.8, // 1-10 //can be determined by ai
+  edgeThreshold = 50; // 1 - 255
+
 function createCanvas() {
   const canvas = document.createElement("canvas"),
     ctx = canvas.getContext("2d"),
@@ -10,15 +13,18 @@ function createCanvas() {
 
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    const blackAndWhiteThreshold = 2.8, // 1-10 //can be determined by ai
-      edgeThreshold = 50; // 1 - 255
-
     console.time();
+
+    //----filters------
+
     thickenEdges(imageData.data, canvas, edgeThreshold);
     mkImgBlackAndWhite(imageData.data, blackAndWhiteThreshold);
     enhanceText(imageData.data, canvas);
 
+    ///-----------------
+
     ctx.putImageData(imageData, 0, 0);
+
     console.timeEnd();
     document.body.appendChild(canvas);
   });
@@ -30,7 +36,7 @@ function enhanceText(data, canvas) {
       let blacks = 0,
         whites = 0,
         max = 0;
-      [
+      const surrounding = [
         data[c * 4 * canvas.width + (r + 1) * 4],
         data[c * 4 * canvas.width + (r + 2) * 4],
         data[(c + 1) * 4 * canvas.width + r * 4],
@@ -39,13 +45,15 @@ function enhanceText(data, canvas) {
         data[(c + 1) * 4 * canvas.width + (r + 2) * 4],
         data[(c + 2) * 4 * canvas.width + (r + 1) * 4],
         data[(c + 2) * 4 * canvas.width + (r + 2) * 4],
-      ].forEach((e) => {
-        if (e < 100) {
+      ];
+
+      for (let i = 0; i < surrounding.length; i++) {
+        if (surrounding[i] < 100) {
           blacks++;
         } else {
           whites++;
         }
-      });
+      }
 
       if (whites > blacks) {
         max = 255;
@@ -81,7 +89,7 @@ function thickenEdges(data, canvas, edgeThreshold) {
         data[(c + 2) * 4 * canvas.width + (r + 2) * 4],
       ];
 
-      for (let i in surrounding) {
+      for (let i = 0; i < surrounding.length; i++) {
         surroundingAvg += surrounding[i];
         surrounding[i] < min ? (min = surrounding[i]) : null;
         surrounding[i] > max ? (max = surrounding[i]) : null;
