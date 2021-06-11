@@ -17,9 +17,9 @@ function createCanvas() {
 
     //----filters------
 
-    thickenEdges(imageData.data, canvas, edgeThreshold);
+    // thickenEdges(imageData.data, canvas, edgeThreshold);
     mkImgBlackAndWhite(imageData.data, blackAndWhiteThreshold);
-    enhanceText(imageData.data, canvas);
+    // enhanceText(imageData.data, canvas);
 
     ///-----------------
 
@@ -160,6 +160,9 @@ function createImage(imgSrc) {
 }
 
 function recognizeText(canvas) {
+  let heightBox = 0,
+    widthBox = 0;
+
   const div = document.createElement("div");
   Object.assign(div.style, {
     position: "absolute",
@@ -249,9 +252,10 @@ function recognizeText(canvas) {
         .map(() => scheduler.addJob("recognize", canvas))
     ).then((e) => {
       resultData = e;
-      const wordResults = e[0].data.words
-        .filter(({ confidence }) => {
-          return confidence > 60;
+      e[0].data.words
+        .filter((e) => {
+          console.log(e);
+          return e.confidence > 60;
         })
         .map((word) => {
           const div = document.createElement("div");
@@ -268,8 +272,28 @@ function recognizeText(canvas) {
             background: "white",
             fontSize: `${Math.round(y1 - y0)}px`,
           });
+
+          if (x1 > widthBox) {
+            widthBox = x1;
+          }
+          if (y1 > heightBox) {
+            heightBox = y1;
+          }
           document.body.appendChild(div);
         });
+
+      const wordsDiv = document.createElement("div");
+      wordsDiv.classList.add("words-container");
+      Object.assign(wordsDiv.style, {
+        top: `${0}px`,
+        left: `${0}px`,
+        width: `${widthBox}px`,
+        height: `${heightBox}px`,
+        border: "20px solid red",
+        position: "absolute",
+        zIndex: 1000,
+      });
+      document.body.appendChild(wordsDiv);
     });
 
     await scheduler.terminate();
