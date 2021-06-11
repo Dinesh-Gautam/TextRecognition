@@ -85,7 +85,7 @@ image.addEventListener("load", () => {
   ctx.imageSmoothingEnabled = true;
 
   console.timeEnd();
-  recoganizeText();
+  recognizeText();
 });
 
 // function detectEdges(data) {
@@ -350,7 +350,7 @@ function enhanceText(data) {
   data = data;
 }
 
-function recoganizeText() {
+function recognizeText() {
   const scheduler = Tesseract.createScheduler();
   const worker1 = Tesseract.createWorker({
     logger: (m) => {
