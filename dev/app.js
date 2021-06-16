@@ -4,35 +4,30 @@ const express = require("express"),
   path = require("path"),
   multer = require("multer");
 
-const storage = multer.diskStorage({
-  destination: (req, res, cb) => {
-    cb(null, "save");
-  },
-  filename: (req, res, cb) => {
-    cb(null, req.filename);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: (req, res, cb) => {
+//     cb(null, "save");
+//   },
+//   filename: (req, res, cb) => {
+//     cb(null, req.filename);
+//   },
+// });
 
-const saveData = multer({ storage }).single("imgToText");
+// const saveData = multer({ storage }).single("imgToText");
 
-app.set("view engine", "ejs");
-app.use(express.static("images"));
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
   res.render("index");
 });
 
 app.get("/images", (req, res) => {
-  const directoryPath = path.join(__dirname, "images");
-  const AllImages = [];
+  const directoryPath = path.join(__dirname, "public/images");
   fs.readdir(directoryPath, function (err, files) {
     if (err) {
       return console.log("Unable to scan directory: " + err);
     }
-    files.forEach(function (img) {
-      AllImages.push(img);
-    });
-    res.send(AllImages);
+    res.send(files.map((img) => img));
   });
 });
 
