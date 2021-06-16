@@ -260,7 +260,7 @@ function recognizeText(canvas) {
 
     await Promise.all(
       Array(1)
-        .fill(0)
+        .fill(10)
         .map(() => scheduler.addJob("recognize", canvas))
     ).then((e) => {
       resultData = e;
