@@ -356,6 +356,7 @@ function recognizeText(canvas) {
     // );
 
     await scheduler.terminate();
+    // await recognizeText(canvas);
   })();
 }
 
