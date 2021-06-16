@@ -2,9 +2,17 @@ plan
 
 make refined code and clean code
 
+[
+make text recognized by using enhance text and thickenEdges function (try different variation). Don't use it for the first time when recognized text.
 
-make text recoganised by using enhance text and thickenEdges function (try different variation). Don't use it for the first time when recoganising text.
+remove any part which is not text or make it white (after recognized get the mean x and y value to determine the height and width in which the text is placed)
+](To Be Done Later)
 
-remove any part which is not text or make it white (after recoganizing get the mean x and y value to determine the height and width in which the text is placed)
+fetch all the images form a folder using nodeJS
+
+save the recognized data with image ID(will be used later when asking question and knowing which image is to be cropped) using nodeJS.
+
+start making q and answering with text which is recognized form the images
+after that make user choose that they want the image cropped or full page image
 
 ..... more will be added.
