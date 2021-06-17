@@ -1,6 +1,6 @@
 const blackAndWhiteThreshold = 2.8, // 1-10 //can be determined by ai
-  edgeThreshold = 50; // 1 - 255
-
+  edgeThreshold = 50, // 1 - 255
+  allImagesTextData = [];
 //-------------------
 
 function createCanvas(imgSrc) {
@@ -168,7 +168,7 @@ function initTessrect() {
     position: "fixed",
     top: 0,
     left: 0,
-    height: "2vh",
+    height: "0.5vh",
     background: "red",
     width: "0px",
     zIndex: 100,
@@ -258,12 +258,34 @@ function recognizeText(scheduler, index) {
       .addJob("recognize", document.querySelectorAll("canvas")[index])
       .then((e) => {
         console.log(e);
+        const { blocks, lines, confidence, hocr, paragraphs, text, words } =
+          e.data;
+        const deStructuredData = {
+          confidence,
+          hocr,
+          text,
+        };
+
+        allImagesTextData.push(deStructuredData);
         recognizeText(scheduler, (index += 1));
       });
   } else {
     console.log("terminating scheduler");
+    allTextRecognized();
     scheduler.terminate();
   }
+}
+
+function allTextRecognized() {
+  fetch("/text", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(allImagesTextData),
+  });
+
+  allImagesTextData = [];
 }
 
 function fetchImages() {
