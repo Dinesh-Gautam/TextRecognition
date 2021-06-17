@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image to Text Converter</title>
+</head>
+
+<body>
+  <h1>Hello World</h1>
+
+  <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
+  <script>
+    fetch('/images', {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(result => result.json()).then(res => {
+      res.forEach(createImages);
+    })
+
+    function createImages(img) {
+      const image = new Image();
+      image.src = "/images/" + img;
+      document.body.appendChild(image);
+    }
+    const div = document.createElement("div");
+    Object.assign(div.style, {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      height: "4px",
+      background: "red",
+      width: "0px",
+      zIndex: 100,
+    });
+    document.body.appendChild(div);
+    const scheduler = Tesseract.createScheduler();
+    const worker1 = Tesseract.createWorker({
+      logger: (m) => {
+        const progress = Math.round(m.progress * 100);
+        console.log(progress);
+        div.style.width = progress + "%";
+        if (progress > 99) {
+          div.style.display = "none";
+        } else[(div.style.display = "initial")];
+      },
+    });
+    const worker2 = Tesseract.createWorker();
+    const worker3 = Tesseract.createWorker();
+    const worker4 = Tesseract.createWorker();
+    const worker5 = Tesseract.createWorker();
+    const worker6 = Tesseract.createWorker();
+    const worker7 = Tesseract.createWorker();
+    const worker8 = Tesseract.createWorker();
+    const worker9 = Tesseract.createWorker();
+    const worker10 = Tesseract.createWorker();
+    const worker11 = Tesseract.createWorker();
+    const worker12 = Tesseract.createWorker();
+    (async () => {
+      await worker1.load();
+      await worker2.load();
+      await worker3.load();
+      await worker4.load();
+      await worker5.load();
+      await worker6.load();
+      await worker7.load();
+      await worker8.load();
+      await worker9.load();
+      await worker10.load();
+      await worker11.load();
+      await worker12.load();
+      await worker1.loadLanguage("eng");
+      await worker2.loadLanguage("eng");
+      await worker3.loadLanguage("eng");
+      await worker4.loadLanguage("eng");
+      await worker5.loadLanguage("eng");
+      await worker6.loadLanguage("eng");
+      await worker7.loadLanguage("eng");
+      await worker8.loadLanguage("eng");
+      await worker9.loadLanguage("eng");
+      await worker10.loadLanguage("eng");
+      await worker11.loadLanguage("eng");
+      await worker12.loadLanguage("eng");
+      await worker1.initialize("eng");
+      await worker2.initialize("eng");
+      await worker3.initialize("eng");
+      await worker4.initialize("eng");
+      await worker5.initialize("eng");
+      await worker6.initialize("eng");
+      await worker7.initialize("eng");
+      await worker8.initialize("eng");
+      await worker9.initialize("eng");
+      await worker10.initialize("eng");
+      await worker11.initialize("eng");
+      await worker12.initialize("eng");
+      scheduler.addWorker(worker1);
+      scheduler.addWorker(worker2);
+      scheduler.addWorker(worker3);
+      scheduler.addWorker(worker4);
+      scheduler.addWorker(worker5);
+      scheduler.addWorker(worker6);
+      scheduler.addWorker(worker7);
+      scheduler.addWorker(worker8);
+      scheduler.addWorker(worker9);
+      scheduler.addWorker(worker10);
+      scheduler.addWorker(worker11);
+      scheduler.addWorker(worker12);
+    })().then(() => {
+      recognizeText(0)
+    })
+
+    function recognizeText(index) {
+      scheduler.addJob('recognize', document.querySelectorAll('img')[index]).then(e => {
+        console.log(e);
+        if (index < document.querySelectorAll('img').length) {
+          recognizeText(index++)
+        } else {
+          scheduler.terminate()
+        }
+
+      })
+    }
+  </script>
+</body>
+
+</html>
