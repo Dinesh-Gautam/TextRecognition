@@ -30,7 +30,7 @@ function createCanvas(imgSrc) {
     // recognizeText(canvas);
 
     console.timeEnd();
-    document.body.appendChild(canvas);
+    document.querySelector(".root").appendChild(canvas);
   });
 }
 
@@ -247,7 +247,10 @@ function initTessrect() {
     scheduler.addWorker(worker12);
   })().then(() => {
     console.log("worker loaded...");
-    recognizeText(scheduler, 0);
+    // recognizeText(scheduler, 0);
+    console.warn(
+      "Recognizing Text is paused, resume it by removing comment of the function call"
+    );
   });
 }
 

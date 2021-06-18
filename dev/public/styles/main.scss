@@ -1,0 +1,48 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.root {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2vh;
+}
+
+canvas {
+  width: 10em;
+  border: 4px solid rgba($color: #000000, $alpha: 0.1);
+}
+
+.btns {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8vh;
+  background-color: rgba($color: #444d54, $alpha: 0.2);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    text-transform: uppercase;
+    background-color: #325cd9;
+    padding: 2vh 4vh;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-weight: normal;
+    color: white;
+    border-radius: 1vh;
+    font-size: 2vh;
+  }
+}
