@@ -42,9 +42,10 @@ canvas {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0 4%;
 }
 
 .btns button {
@@ -64,5 +65,27 @@ canvas {
   background: grey;
   opacity: 0.5;
   pointer-events: none;
+}
+
+.btns form {
+  font-family: "Segoe UI";
+  font-size: 2vh;
+}
+
+.btns form label {
+  font-size: 2vh;
+}
+
+.btns form input {
+  padding: 0.5vh 1vw;
+  font-size: 2vh;
+  border: none;
+  outline: none;
+}
+
+.btns form input::-webkit-inner-spin-button {
+  -webkit-box-flex: 1;
+          flex: 1;
+  font-size: 2vw;
 }
 /*# sourceMappingURL=main.css.map */
