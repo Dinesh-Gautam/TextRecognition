@@ -1,6 +1,6 @@
 const blackAndWhiteThreshold = 2.8, // 1-10 //can be determined by ai
-  edgeThreshold = 50, // 1 - 255
-  allImagesTextData = [];
+  edgeThreshold = 50; // 1 - 255
+let allImagesTextData = [];
 //-------------------
 
 function createCanvas(imgSrc) {
@@ -168,7 +168,7 @@ function initTessrect() {
     position: "fixed",
     top: 0,
     left: 0,
-    height: "0.5vh",
+    height: "0.2vh",
     background: "red",
     width: "0px",
     zIndex: 100,
@@ -253,10 +253,25 @@ function initTessrect() {
 
 function recognizeText(scheduler, index) {
   if (index < document.querySelectorAll("canvas").length) {
-    console.log("recognizing Text of Image No. :" + (index + 1));
-    scheduler
-      .addJob("recognize", document.querySelectorAll("canvas")[index])
-      .then((e) => {
+    const continues = Math.min(
+      3,
+      document.querySelectorAll("canvas").length,
+      document.querySelectorAll("canvas").length - index
+    );
+    console.log(continues);
+    const ImagesArr = [];
+
+    for (let i = 0; i < continues; i++) {
+      console.log("recognizing Text of Image No. :" + (index + i));
+      ImagesArr.push(
+        scheduler.addJob(
+          "recognize",
+          document.querySelectorAll("canvas")[index + i]
+        )
+      );
+    }
+    Promise.all(ImagesArr).then((eArr) => {
+      eArr.forEach((e) => {
         console.log(e);
         const { blocks, lines, confidence, hocr, paragraphs, text, words } =
           e.data;
@@ -265,14 +280,16 @@ function recognizeText(scheduler, index) {
           hocr,
           text,
         };
-
         allImagesTextData.push(deStructuredData);
-        recognizeText(scheduler, (index += 1));
       });
+      recognizeText(scheduler, (index += continues));
+    });
   } else {
     console.log("terminating scheduler");
     allTextRecognized();
     scheduler.terminate();
+
+    alert("Text Data is Saved.");
   }
 }
 
