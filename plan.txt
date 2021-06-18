@@ -13,7 +13,7 @@ fetch all the images form a folder using nodeJS
 save the recognized data with image ID(will be used later when asking question and knowing which image is to be cropped) using nodeJS.
 
 start making q and answering with text which is recognized form the images
-after that make user choose that they want the image cropped or full page image
+after that make user choose that they want the image cropped or full page image or the text
 
 
 add crop image
