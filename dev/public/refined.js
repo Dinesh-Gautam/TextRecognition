@@ -175,7 +175,7 @@ function initTessrect() {
     bottom: 0,
     left: 0,
     height: "0.2vh",
-    background: "red",
+    background: "rgba(242, 5, 25 , 0.5)",
     width: "0px",
     zIndex: 100,
   });
@@ -261,23 +261,26 @@ function recognizeText(scheduler, index) {
   recoBtn.disabled = true;
   if (index < document.querySelectorAll("canvas").length) {
     const continues = Math.min(
-      3,
+      Number(document.querySelector("#continuesImages").value),
       document.querySelectorAll("canvas").length,
       document.querySelectorAll("canvas").length - index
     );
     console.log(continues);
     const ImagesArr = [];
-
+    const recoImages = [];
     for (let i = 0; i < continues; i++) {
       console.log("recognizing Text of Image No. :" + (index + i));
-      ImagesArr.push(
-        scheduler.addJob(
-          "recognize",
-          document.querySelectorAll("canvas")[index + i]
-        )
-      );
+      const element = document.querySelectorAll("canvas")[index + i];
+
+      element.style.borderColor = "rgba(242, 5, 25 , 0.5)";
+      recoImages.push(element);
+
+      ImagesArr.push(scheduler.addJob("recognize", element));
     }
     Promise.all(ImagesArr).then((eArr) => {
+      recoImages.forEach(
+        (e) => (e.style.borderColor = "rgba(5, 245, 25 , 0.5)")
+      );
       eArr.forEach((e) => {
         console.log(e);
         const { blocks, lines, confidence, hocr, paragraphs, text, words } =
@@ -309,6 +312,7 @@ function allTextRecognized() {
     body: JSON.stringify(allImagesTextData),
   });
 
+  document.querySelector(".btns").style.display = "none";
   // recoBtn.disabled = false;
   allImagesTextData = [];
 }
