@@ -1,7 +1,13 @@
 const blackAndWhiteThreshold = 2.8, // 1-10 //can be determined by ai
   edgeThreshold = 50; // 1 - 255
 let allImagesTextData = [];
+
+const scheduler = Tesseract.createScheduler();
 //-------------------
+
+const recoBtn = document.querySelector(".reco-btn");
+
+recoBtn.addEventListener("click", (event) => recognizeText(scheduler, 0));
 
 function createCanvas(imgSrc) {
   const canvas = document.createElement("canvas"),
@@ -166,7 +172,7 @@ function initTessrect() {
   const div = document.createElement("div");
   Object.assign(div.style, {
     position: "fixed",
-    top: 0,
+    bottom: 0,
     left: 0,
     height: "0.2vh",
     background: "red",
@@ -174,7 +180,7 @@ function initTessrect() {
     zIndex: 100,
   });
   document.body.appendChild(div);
-  const scheduler = Tesseract.createScheduler();
+
   const worker1 = Tesseract.createWorker({
     logger: (m) => {
       const progress = Math.round(m.progress * 100);
@@ -247,14 +253,12 @@ function initTessrect() {
     scheduler.addWorker(worker12);
   })().then(() => {
     console.log("worker loaded...");
-    // recognizeText(scheduler, 0);
-    console.warn(
-      "Recognizing Text is paused, resume it by removing comment of the function call"
-    );
+    recoBtn.disabled = false;
   });
 }
 
 function recognizeText(scheduler, index) {
+  recoBtn.disabled = true;
   if (index < document.querySelectorAll("canvas").length) {
     const continues = Math.min(
       3,
@@ -305,6 +309,7 @@ function allTextRecognized() {
     body: JSON.stringify(allImagesTextData),
   });
 
+  // recoBtn.disabled = false;
   allImagesTextData = [];
 }
 

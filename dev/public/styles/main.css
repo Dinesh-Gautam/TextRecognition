@@ -59,4 +59,10 @@ canvas {
   border-radius: 1vh;
   font-size: 2vh;
 }
+
+.btns button:disabled {
+  background: grey;
+  opacity: 0.5;
+  pointer-events: none;
+}
 /*# sourceMappingURL=main.css.map */

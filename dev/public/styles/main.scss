@@ -45,4 +45,9 @@ canvas {
     border-radius: 1vh;
     font-size: 2vh;
   }
+  button:disabled {
+    background: grey;
+    opacity: 0.5;
+    pointer-events: none;
+  }
 }
