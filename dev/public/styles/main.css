@@ -3,7 +3,6 @@
   margin: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  font-size: 2vh;
 }
 
 html,
@@ -65,11 +64,16 @@ button.primary {
 }
 
 button.secondary {
-  background: grey;
+  background: rgba(128, 128, 128, 0.5);
 }
 
-canvas {
+button.danger {
+  background: rgba(255, 0, 0, 0.5);
+}
+
+.root canvas {
   width: 10em;
+  height: auto;
   border: 4px solid rgba(0, 0, 0, 0.1);
   position: relative;
   cursor: pointer;
@@ -79,7 +83,7 @@ canvas {
   transition: transform 200ms ease-in-out, -webkit-transform 200ms ease-in-out;
 }
 
-canvas:hover {
+.root canvas:hover {
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
   border: 4px solid rgba(0, 0, 0, 0.9);
@@ -120,6 +124,7 @@ canvas:hover {
 }
 
 .canvas-edit {
+  display: none;
   position: fixed;
   height: 100vh;
   width: 100vw;
@@ -127,10 +132,24 @@ canvas:hover {
   top: 0;
   left: 0;
   z-index: 100000;
-  display: -ms-grid;
-  display: grid;
   -ms-grid-columns: 1fr 1fr;
       grid-template-columns: 1fr 1fr;
+}
+
+.canvas-edit .canvas-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.canvas-edit canvas {
+  height: 96vmin;
 }
 
 .canvas-edit .edit-container {
@@ -138,11 +157,19 @@ canvas:hover {
   display: -ms-flexbox;
   display: flex;
   padding: 2vh;
+  width: 100%;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 
 .canvas-edit .edit-btn {
   -ms-flex-item-align: end;
       align-self: flex-end;
-  margin-left: auto;
+}
+
+.canvas-edit.display {
+  display: -ms-grid;
+  display: grid;
 }
 /*# sourceMappingURL=main.css.map */

@@ -22,18 +22,20 @@
         <button disabled class="reco-btn">Recognize</button>
     </div>
     <div class="canvas-edit">
-<div class="canvas-container"></div>
-<div class="edit-container">
-    <div class="edit-btn">
-        <button class="secondary">Cancel</button>
-        <button class="primary">Save</button>
-    </div>
-</div>
-
-   
+        <div class="canvas-container">
+                <canvas></canvas>
+        </div>
+        <div class="edit-container">
+            <div class="edit-btn">
+                <button class="danger">Reset</button>
+                <button class="cancel secondary">Cancel</button>
+                <button class="primary">Save</button>
+            </div>
+        </div>
     </div>
     <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
     <script src="./refined.js"></script>
+    <script src="./editCanvas.js"></script>
 </body>
 
 </html>
