@@ -27,4 +27,6 @@ improve ui little bit
 show reduced size of images in preview
 allow users to click the preview image and after clicking new poup opens after that give them all the options such as edit the image and preview the oupt live(edit options may contain crop, sharpen , threshold value, reduce size,erase,etc.)
 
+add rectanbgles to select a part of canvas in only edit its value in when eidt a canvas
+
 ..... more will be added.
