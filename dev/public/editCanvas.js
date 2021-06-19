@@ -8,7 +8,6 @@ document.addEventListener("click", (event) => {
     const imageData = ctx.getImageData(0, 0, target.width, target.height);
     const cloneCanvas = document.querySelector(".canvas-container canvas");
     const cloneCtx = cloneCanvas.getContext("2d");
-    console.log(imageData);
     cloneCanvas.height = imageData.height;
     cloneCanvas.width = imageData.width;
     cloneCtx.putImageData(imageData, 0, 0);
