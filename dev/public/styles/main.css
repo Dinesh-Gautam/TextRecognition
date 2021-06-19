@@ -3,6 +3,7 @@
   margin: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-size: 2vh;
 }
 
 html,
@@ -20,6 +21,51 @@ body {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   gap: 2vh;
+}
+
+form {
+  font-family: "Segoe UI";
+  font-size: 2vh;
+}
+
+form label {
+  font-size: 2vh;
+}
+
+form input {
+  padding: 0.5vh 1vw;
+  font-size: 2vh;
+  border: none;
+  outline: none;
+  border-radius: 1vh;
+  margin: 0.2vw;
+}
+
+form input::-webkit-inner-spin-button {
+  -webkit-box-flex: 1;
+          flex: 1;
+  font-size: 2vw;
+}
+
+button {
+  text-transform: uppercase;
+  background: #325cd9;
+  padding: 1vh 2vh;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: normal;
+  color: white;
+  border-radius: 1vh;
+  font-size: 1.5vh;
+}
+
+button.primary {
+  background: #325cd9;
+}
+
+button.secondary {
+  background: grey;
 }
 
 canvas {
@@ -63,15 +109,7 @@ canvas:hover {
 }
 
 .btns button {
-  text-transform: uppercase;
-  background-color: #325cd9;
   padding: 2vh 4vh;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-weight: normal;
-  color: white;
-  border-radius: 1vh;
   font-size: 2vh;
 }
 
@@ -81,27 +119,30 @@ canvas:hover {
   pointer-events: none;
 }
 
-.btns form {
-  font-family: "Segoe UI";
-  font-size: 2vh;
+.canvas-edit {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(255, 255, 255, 0.9);
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
 }
 
-.btns form label {
-  font-size: 2vh;
+.canvas-edit .edit-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 2vh;
 }
 
-.btns form input {
-  padding: 0.5vh 1vw;
-  font-size: 2vh;
-  border: none;
-  outline: none;
-  border-radius: 1vh;
-  margin: 0.2vw;
-}
-
-.btns form input::-webkit-inner-spin-button {
-  -webkit-box-flex: 1;
-          flex: 1;
-  font-size: 2vw;
+.canvas-edit .edit-btn {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  margin-left: auto;
 }
 /*# sourceMappingURL=main.css.map */
