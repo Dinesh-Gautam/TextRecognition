@@ -18,7 +18,7 @@ document.addEventListener("click", (event) => {
 });
 
 document.querySelector(".edit-btn .cancel").addEventListener("click", () => {
-  canvasEdit.classList.remove("display");
+  cancelEdit();
 });
 
 ///////////////----values Definer----////////////////
@@ -82,4 +82,26 @@ function changeCanvasImageData(changeValue, imageSrc) {
 
     ctx.putImageData(imageData, 0, 0);
   });
+}
+
+function saveEdit() {
+  const cloneCanvas = document.querySelector(".canvas-container canvas");
+  const ctx = cloneCanvas.getContext("2d");
+  const imageData = ctx.getImageData(
+    0,
+    0,
+    cloneCanvas.width,
+    cloneCanvas.height
+  );
+
+  document
+    .getElementById(clickCanvasId)
+    .getContext("2d")
+    .putImageData(imageData, 0, 0);
+
+  cancelEdit();
+}
+
+function cancelEdit() {
+  canvasEdit.classList.remove("display");
 }
