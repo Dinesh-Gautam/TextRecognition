@@ -17,3 +17,33 @@ document.addEventListener("click", (event) => {
 document.querySelector(".edit-btn .cancel").addEventListener("click", () => {
   canvasEdit.classList.remove("display");
 });
+
+///////////////----values Definer----////////////////
+
+const EDIT_VALUES = {
+  threshold: {
+    min: 0.1,
+    max: 10,
+    step: 0.1,
+    value: 2,
+  },
+};
+
+//value assigner
+const thresholdValue = document.querySelectorAll(".thresholdValue");
+
+assignDefaultAndChangedValue(thresholdValue, EDIT_VALUES.threshold);
+
+function assignDefaultAndChangedValue(input, ObjValue) {
+  input.forEach((e) => {
+    //assigning default values
+    Object.assign(e, ObjValue);
+
+    e.addEventListener("change", (event) => {
+      const changedValue = event.target.value;
+      input.forEach((element) => {
+        element.value = changedValue;
+      });
+    });
+  });
+}

@@ -29,22 +29,29 @@ input[type="number"] {
 form {
   font-family: "Segoe UI";
   font-size: 2vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-label {
+form label {
   font-size: 2vh;
 }
 
-input {
+form input {
   padding: 0.5vh 1vw;
   font-size: 2vh;
   border: none;
   outline: none;
   border-radius: 1vh;
   margin: 0.2vw;
+  border: 1px solid grey;
 }
 
-input::-webkit-inner-spin-button {
+form input::-webkit-inner-spin-button {
   -webkit-box-flex: 1;
           flex: 1;
   font-size: 2vw;
@@ -128,7 +135,6 @@ button.danger {
 }
 
 .canvas-edit {
-  display: none;
   display: -ms-grid;
   display: grid;
   position: fixed;
