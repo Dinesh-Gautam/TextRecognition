@@ -1,5 +1,7 @@
 const canvasEdit = document.querySelector(".canvas-edit");
 
+let clickCanvasId = null;
+
 document.addEventListener("click", (event) => {
   const target = event.target;
   if (target.nodeName === "CANVAS") {
@@ -11,6 +13,7 @@ document.addEventListener("click", (event) => {
     cloneCanvas.height = imageData.height;
     cloneCanvas.width = imageData.width;
     cloneCtx.putImageData(imageData, 0, 0);
+    clickCanvasId = target.id;
   }
 });
 
@@ -49,7 +52,7 @@ function createInput(inputType) {
 
   console.log(form);
 }
-createInput("range");
+
 function assignDefaultAndChangedValue(input, ObjValue) {
   input.forEach((e) => {
     //assigning default values
@@ -60,6 +63,23 @@ function assignDefaultAndChangedValue(input, ObjValue) {
       input.forEach((element) => {
         element.value = changedValue;
       });
+      console.log(Number(changedValue));
+      changeCanvasImageData(Number(changedValue), clickCanvasId);
     });
+  });
+}
+
+function changeCanvasImageData(changeValue, imageSrc) {
+  const canvas = document.querySelector(".canvas-container canvas");
+  const ctx = canvas.getContext("2d");
+  const originalImage = createImage(imageSrc);
+
+  originalImage.addEventListener("load", () => {
+    ctx.drawImage(originalImage, 0, 0);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    mkImgBlackAndWhite(imageData.data, changeValue);
+
+    ctx.putImageData(imageData, 0, 0);
   });
 }

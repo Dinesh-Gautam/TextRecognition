@@ -21,8 +21,6 @@ function createCanvas(imgSrc) {
 
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    console.time();
-
     //----filters------
 
     mkImgBlackAndWhite(imageData.data, blackAndWhiteThreshold);
@@ -33,7 +31,7 @@ function createCanvas(imgSrc) {
 
     ctx.putImageData(imageData, 0, 0);
 
-    console.timeEnd();
+    canvas.id = imgSrc;
     document.querySelector(".root").appendChild(canvas);
   });
 }
@@ -124,6 +122,9 @@ function thickenEdges(data, canvas, edgeThreshold) {
 
 //----------------------------------------------------------
 function mkImgBlackAndWhite(data, threshold) {
+  console.log("Making image black and white!");
+  console.time();
+
   let difference = 0;
   for (let r = 0; r < data.length; r += 4) {
     const R = data[r];
@@ -158,6 +159,7 @@ function mkImgBlackAndWhite(data, threshold) {
       data[r + 2] = value;
     }
   }
+  console.timeEnd();
 }
 
 function createImage(imgSrc) {
