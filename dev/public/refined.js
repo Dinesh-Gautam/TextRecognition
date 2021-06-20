@@ -33,8 +33,6 @@ function createCanvas(imgSrc) {
 
     ctx.putImageData(imageData, 0, 0);
 
-    // recognizeText(canvas);
-
     console.timeEnd();
     document.querySelector(".root").appendChild(canvas);
   });
@@ -184,7 +182,6 @@ function initTessrect() {
   const worker1 = Tesseract.createWorker({
     logger: (m) => {
       const progress = Math.round(m.progress * 100);
-      console.log(progress);
       div.style.width = progress + "%";
       if (progress > 99) {
         div.style.display = "none";
@@ -265,7 +262,6 @@ function recognizeText(scheduler, index) {
       document.querySelectorAll("canvas").length,
       document.querySelectorAll("canvas").length - index
     );
-    console.log(continues);
     const ImagesArr = [];
     const recoImages = [];
     for (let i = 0; i < continues; i++) {
@@ -282,7 +278,6 @@ function recognizeText(scheduler, index) {
         (e) => (e.style.borderColor = "rgba(5, 245, 25 , 0.5)")
       );
       eArr.forEach((e) => {
-        console.log(e);
         const { blocks, lines, confidence, hocr, paragraphs, text, words } =
           e.data;
         const deStructuredData = {
