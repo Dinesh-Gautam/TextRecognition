@@ -76,6 +76,7 @@ button.primary {
 
 button.secondary {
   background: rgba(128, 128, 128, 0.5);
+  color: black;
 }
 
 button.danger {

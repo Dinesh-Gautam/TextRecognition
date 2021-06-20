@@ -60,6 +60,7 @@ button {
   }
   &.secondary {
     background: rgba($color: grey, $alpha: 0.5);
+    color: black;
   }
   &.danger {
     background: rgba($color: red, $alpha: 0.5);

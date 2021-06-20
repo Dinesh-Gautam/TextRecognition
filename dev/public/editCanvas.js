@@ -34,6 +34,22 @@ const thresholdValue = document.querySelectorAll(".thresholdValue");
 
 assignDefaultAndChangedValue(thresholdValue, EDIT_VALUES.threshold);
 
+function createInput(inputType) {
+  const form = document.createElement("form");
+  const label = document.createElement("label");
+  let input = [];
+  if (inputType === "range") {
+    input.push(document.createElement("input"));
+    input.push(document.createElement("input"));
+  }
+  input.forEach((inputElement) => {
+    form.appendChild(inputElement);
+  });
+  form.appendChild(label);
+
+  console.log(form);
+}
+createInput("range");
 function assignDefaultAndChangedValue(input, ObjValue) {
   input.forEach((e) => {
     //assigning default values
