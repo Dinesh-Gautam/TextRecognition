@@ -2,6 +2,18 @@ const canvasEdit = document.querySelector(".canvas-edit");
 
 let clickCanvasId = null;
 
+const thresholdValue = document.querySelectorAll(".thresholdValue");
+const changedEditValues = {};
+const EDIT_VALUES = {
+  threshold: {
+    for: ".thresholdValue",
+    min: 0.1,
+    max: 10,
+    step: 0.1,
+    value: blackAndWhiteThreshold,
+  },
+};
+
 document.addEventListener("click", (event) => {
   const target = event.target;
   if (target.nodeName === "CANVAS") {
@@ -14,29 +26,17 @@ document.addEventListener("click", (event) => {
     cloneCanvas.width = imageData.width;
     cloneCtx.putImageData(imageData, 0, 0);
     clickCanvasId = target.id;
-  }
-});
 
-document.querySelector(".edit-btn .cancel").addEventListener("click", () => {
-  cancelEdit();
+    const values = changedEditValues[clickCanvasId] || EDIT_VALUES.threshold;
+
+    assignEditValues(thresholdValue, values);
+  }
 });
 
 ///////////////----values Definer----////////////////
 
-const EDIT_VALUES = {
-  threshold: {
-    for: ".thresholdValue",
-    min: 0.1,
-    max: 10,
-    step: 0.1,
-    value: blackAndWhiteThreshold,
-  },
-};
-
-//value assigner
-const thresholdValue = document.querySelectorAll(".thresholdValue");
-
-assignDefaultAndChangedValue(thresholdValue, EDIT_VALUES.threshold);
+assignEditValues(thresholdValue, EDIT_VALUES.threshold);
+addEventListenerToInputs(thresholdValue);
 
 function createInput(inputType) {
   const form = document.createElement("form");
@@ -54,18 +54,23 @@ function createInput(inputType) {
   console.log(form);
 }
 
-function assignDefaultAndChangedValue(input, ObjValue) {
+function addEventListenerToInputs(input) {
   input.forEach((e) => {
-    //assigning default values
-    Object.assign(e, ObjValue);
-
     e.addEventListener("change", (event) => {
       const changedValue = event.target.value;
       input.forEach((element) => {
         element.value = changedValue;
       });
+
       changeCanvasImageData(Number(changedValue), clickCanvasId);
     });
+  });
+}
+
+function assignEditValues(input, ObjValue) {
+  input.forEach((e) => {
+    //assigning  values
+    Object.assign(e, ObjValue);
   });
 }
 
@@ -99,20 +104,51 @@ function saveEdit() {
     .getContext("2d")
     .putImageData(imageData, 0, 0);
 
-  cancelEdit();
+  canvasEdit.classList.remove("display");
+
+  const thresholdValueEdit = document.querySelectorAll(".thresholdValue");
+  thresholdValueEdit.forEach((e) => {
+    const className = e.className;
+    Object.assign(changedEditValues, {
+      [clickCanvasId]: {
+        for: className,
+        value: e.value,
+      },
+    });
+  });
+  resetEdit();
 }
 
 function cancelEdit() {
   canvasEdit.classList.remove("display");
+
   resetEdit();
 }
 
 function resetEdit() {
+  if (changedEditValues[clickCanvasId]) {
+    for (let key in changedEditValues) {
+      const className = changedEditValues[key].for;
+      document.querySelectorAll(className).forEach((e) => {
+        Object.assign(e, { value: changedEditValues.value });
+      });
+    }
+  } else {
+    for (let key in EDIT_VALUES) {
+      const className = EDIT_VALUES[key].for;
+      document.querySelectorAll(className).forEach((e) => {
+        Object.assign(e, EDIT_VALUES[key]);
+      });
+    }
+  }
+}
+
+function resetEditAllValues() {
   for (let key in EDIT_VALUES) {
     const className = EDIT_VALUES[key].for;
     document.querySelectorAll(className).forEach((e) => {
       Object.assign(e, EDIT_VALUES[key]);
     });
   }
-  changeCanvasImageData(Number(EDIT_VALUES.value), clickCanvasId);
+  changeCanvasImageData(Number(EDIT_VALUES.threshold.value), clickCanvasId);
 }
