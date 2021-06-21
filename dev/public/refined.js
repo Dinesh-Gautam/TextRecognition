@@ -175,9 +175,9 @@ function initTessrect() {
     bottom: 0,
     left: 0,
     height: "0.2vh",
-    background: "rgba(242, 5, 25 , 0.5)",
+    background: "rgba(242, 5, 25 , 0.8)",
     width: "0px",
-    zIndex: 100,
+    zIndex: 1000,
   });
   document.body.appendChild(div);
 
