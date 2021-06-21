@@ -25,10 +25,11 @@ document.querySelector(".edit-btn .cancel").addEventListener("click", () => {
 
 const EDIT_VALUES = {
   threshold: {
+    for: ".thresholdValue",
     min: 0.1,
     max: 10,
     step: 0.1,
-    value: 2,
+    value: blackAndWhiteThreshold,
   },
 };
 
@@ -63,7 +64,6 @@ function assignDefaultAndChangedValue(input, ObjValue) {
       input.forEach((element) => {
         element.value = changedValue;
       });
-      console.log(Number(changedValue));
       changeCanvasImageData(Number(changedValue), clickCanvasId);
     });
   });
@@ -104,4 +104,14 @@ function saveEdit() {
 
 function cancelEdit() {
   canvasEdit.classList.remove("display");
+}
+
+function resetEdit() {
+  for (let key in EDIT_VALUES) {
+    const className = EDIT_VALUES[key].for;
+    document.querySelectorAll(className).forEach((e) => {
+      Object.assign(e, EDIT_VALUES[key]);
+    });
+  }
+  changeCanvasImageData(Number(EDIT_VALUES.value), clickCanvasId);
 }

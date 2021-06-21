@@ -17,25 +17,26 @@
     </div>
     <div class="btns">
         <form class="recognize-options">
-            <label for="continuesImages">Images Collection </label><div></div>
+            <label for="continuesImages">Images Collection </label>
+            <div></div>
             <input type="number" name="" id="continuesImages" value="3" min="1" max="10">
         </form>
         <button disabled class="reco-btn">Recognize</button>
     </div>
     <div class="canvas-edit">
         <div class="canvas-container">
-                <canvas></canvas>
+            <canvas></canvas>
         </div>
         <div class="edit-container">
             <div class="range-controllers">
-             <form class="thresholdContainer">
-                <label for="thresholdRange">Threshold:</label>
-                <input id="thresholdRange" class = "thresholdValue" type="range">
-                <input class="thresholdValue" type="number">
-             </form>
+                <form class="thresholdContainer">
+                    <label for="thresholdRange">Threshold:</label>
+                    <input id="thresholdRange" class="thresholdValue" type="range">
+                    <input class="thresholdValue" type="number">
+                </form>
             </div>
             <div class="edit-btn">
-                <button class="danger">Reset</button>
+                <button onclick="resetEdit()" class="danger">Reset</button>
                 <button class="cancel secondary">Cancel</button>
                 <button onclick="saveEdit()" class="primary">Save</button>
             </div>
