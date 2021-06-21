@@ -143,25 +143,18 @@ button.danger {
   background: rgba(255, 255, 255, 0.99);
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 10000;
   -ms-grid-columns: 1fr 1fr;
       grid-template-columns: 1fr 1fr;
 }
 
 .canvas-edit .canvas-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  display: block;
 }
 
 .canvas-edit canvas {
-  height: 96vmin;
+  display: block;
+  max-width: 100%;
 }
 
 .canvas-edit .edit-container {

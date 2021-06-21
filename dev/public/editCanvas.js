@@ -14,6 +14,8 @@ const EDIT_VALUES = {
   },
 };
 
+let cropper;
+
 document.addEventListener("click", (event) => {
   const target = event.target;
   if (target.nodeName === "CANVAS") {
@@ -21,10 +23,24 @@ document.addEventListener("click", (event) => {
     const ctx = target.getContext("2d");
     const imageData = ctx.getImageData(0, 0, target.width, target.height);
     const cloneCanvas = document.querySelector(".canvas-container canvas");
+
     const cloneCtx = cloneCanvas.getContext("2d");
     cloneCanvas.height = imageData.height;
     cloneCanvas.width = imageData.width;
     cloneCtx.putImageData(imageData, 0, 0);
+    cropper = new Cropper(cloneCanvas, {
+      aspectRatio: 16 / 9,
+      crop(event) {
+        console.log(event.detail.x);
+        console.log(event.detail.y);
+        console.log(event.detail.width);
+        console.log(event.detail.height);
+        console.log(event.detail.rotate);
+        console.log(event.detail.scaleX);
+        console.log(event.detail.scaleY);
+      },
+    });
+
     clickCanvasId = target.id;
 
     const values = changedEditValues[clickCanvasId] || EDIT_VALUES.threshold;

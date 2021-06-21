@@ -117,12 +117,16 @@ button {
   z-index: 10000;
   grid-template-columns: 1fr 1fr;
   .canvas-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    display: block;
   }
   canvas {
-    height: 96vmin;
+    // height: 96vmin;
+
+    display: block;
+    max-width: 100%;
   }
   .edit-container {
     display: flex;

@@ -7,7 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImageToText</title>
     <link rel="stylesheet" href="./styles/main.css">
+    <script src="https://kit.fontawesome.com/47416bf3fd.js" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"
+        integrity="sha512-0SPWAwpC/17yYyZ/4HSllgaK7/gg9OlVozq8K7rf3J8LvCjYEEIfzzpnA2/SSjpGIunCSD18r3UhvDcu/xncWA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"
+        integrity="sha512-ooSWpxJsiXe6t4+PPjCgYmVfr1NS5QXJACcR/FPpsdm6kqG1FmQ2SVyg2RXeVuCRBLr0lWHnWJP6Zs1Efvxzww=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -33,6 +40,7 @@
                     <label for="thresholdRange">Threshold:</label>
                     <input id="thresholdRange" class="thresholdValue" type="range">
                     <input class="thresholdValue" type="number">
+                    <button class="secondary thresholdReset"><i class="fas fa-undo"></i></button>
                 </form>
             </div>
             <div class="edit-btn">
