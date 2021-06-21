@@ -104,6 +104,7 @@ function saveEdit() {
 
 function cancelEdit() {
   canvasEdit.classList.remove("display");
+  resetEdit();
 }
 
 function resetEdit() {
