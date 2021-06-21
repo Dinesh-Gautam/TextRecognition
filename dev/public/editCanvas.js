@@ -29,16 +29,9 @@ document.addEventListener("click", (event) => {
     cloneCanvas.width = imageData.width;
     cloneCtx.putImageData(imageData, 0, 0);
     cropper = new Cropper(cloneCanvas, {
-      aspectRatio: 16 / 9,
-      crop(event) {
-        console.log(event.detail.x);
-        console.log(event.detail.y);
-        console.log(event.detail.width);
-        console.log(event.detail.height);
-        console.log(event.detail.rotate);
-        console.log(event.detail.scaleX);
-        console.log(event.detail.scaleY);
-      },
+      viewMode: 1,
+      background: false,
+      autoCrop: false,
     });
 
     clickCanvasId = target.id;
