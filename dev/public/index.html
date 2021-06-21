@@ -11,19 +11,39 @@
 </head>
 
 <body>
+    <script> const GLOBAL = {};</script>
     <div class="root">
 
     </div>
     <div class="btns">
-        <form class="Recognize options">
+        <form class="recognize-options">
             <label for="continuesImages">Images Collection </label><div></div>
             <input type="number" name="" id="continuesImages" value="3" min="1" max="10">
         </form>
         <button disabled class="reco-btn">Recognize</button>
     </div>
-
+    <div class="canvas-edit">
+        <div class="canvas-container">
+                <canvas></canvas>
+        </div>
+        <div class="edit-container">
+            <div class="range-controllers">
+             <form class="thresholdContainer">
+                <label for="thresholdRange">Threshold:</label>
+                <input id="thresholdRange" class = "thresholdValue" type="range">
+                <input class="thresholdValue" type="number">
+             </form>
+            </div>
+            <div class="edit-btn">
+                <button class="danger">Reset</button>
+                <button class="cancel secondary">Cancel</button>
+                <button onclick="saveEdit()" class="primary">Save</button>
+            </div>
+        </div>
+    </div>
     <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
     <script src="./refined.js"></script>
+    <script src="./editCanvas.js"></script>
 </body>
 
 </html>

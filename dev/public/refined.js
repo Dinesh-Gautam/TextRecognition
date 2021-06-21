@@ -21,8 +21,6 @@ function createCanvas(imgSrc) {
 
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    console.time();
-
     //----filters------
 
     mkImgBlackAndWhite(imageData.data, blackAndWhiteThreshold);
@@ -33,9 +31,7 @@ function createCanvas(imgSrc) {
 
     ctx.putImageData(imageData, 0, 0);
 
-    // recognizeText(canvas);
-
-    console.timeEnd();
+    canvas.id = imgSrc;
     document.querySelector(".root").appendChild(canvas);
   });
 }
@@ -126,6 +122,9 @@ function thickenEdges(data, canvas, edgeThreshold) {
 
 //----------------------------------------------------------
 function mkImgBlackAndWhite(data, threshold) {
+  console.log("Making image black and white!");
+  console.time();
+
   let difference = 0;
   for (let r = 0; r < data.length; r += 4) {
     const R = data[r];
@@ -160,6 +159,7 @@ function mkImgBlackAndWhite(data, threshold) {
       data[r + 2] = value;
     }
   }
+  console.timeEnd();
 }
 
 function createImage(imgSrc) {
@@ -184,7 +184,6 @@ function initTessrect() {
   const worker1 = Tesseract.createWorker({
     logger: (m) => {
       const progress = Math.round(m.progress * 100);
-      console.log(progress);
       div.style.width = progress + "%";
       if (progress > 99) {
         div.style.display = "none";
@@ -265,7 +264,6 @@ function recognizeText(scheduler, index) {
       document.querySelectorAll("canvas").length,
       document.querySelectorAll("canvas").length - index
     );
-    console.log(continues);
     const ImagesArr = [];
     const recoImages = [];
     for (let i = 0; i < continues; i++) {
@@ -282,7 +280,6 @@ function recognizeText(scheduler, index) {
         (e) => (e.style.borderColor = "rgba(5, 245, 25 , 0.5)")
       );
       eArr.forEach((e) => {
-        console.log(e);
         const { blocks, lines, confidence, hocr, paragraphs, text, words } =
           e.data;
         const deStructuredData = {

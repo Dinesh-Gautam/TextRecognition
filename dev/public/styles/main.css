@@ -22,8 +22,70 @@ body {
   gap: 2vh;
 }
 
-canvas {
+input[type="number"] {
+  width: 4rem;
+}
+
+form {
+  font-family: "Segoe UI";
+  font-size: 2vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+form label {
+  font-size: 2vh;
+}
+
+form input {
+  padding: 0.5vmin 1vmin;
+  font-size: 2vh;
+  border: none;
+  outline: none;
+  border-radius: 1vh;
+  margin: 0.2vw;
+  border: 1px solid grey;
+}
+
+form input::-webkit-inner-spin-button {
+  -webkit-box-flex: 1;
+          flex: 1;
+  font-size: 2vw;
+}
+
+button {
+  text-transform: uppercase;
+  background: #325cd9;
+  padding: 1vh 2vh;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: normal;
+  color: white;
+  border-radius: 1vh;
+  font-size: 1.5vh;
+}
+
+button.primary {
+  background: #325cd9;
+}
+
+button.secondary {
+  background: rgba(128, 128, 128, 0.5);
+  color: black;
+}
+
+button.danger {
+  background: rgba(255, 0, 0, 0.5);
+}
+
+.root canvas {
   width: 10em;
+  height: auto;
   border: 4px solid rgba(0, 0, 0, 0.1);
   position: relative;
   cursor: pointer;
@@ -33,7 +95,7 @@ canvas {
   transition: transform 200ms ease-in-out, -webkit-transform 200ms ease-in-out;
 }
 
-canvas:hover {
+.root canvas:hover {
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
   border: 4px solid rgba(0, 0, 0, 0.9);
@@ -63,15 +125,7 @@ canvas:hover {
 }
 
 .btns button {
-  text-transform: uppercase;
-  background-color: #325cd9;
   padding: 2vh 4vh;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-weight: normal;
-  color: white;
-  border-radius: 1vh;
   font-size: 2vh;
 }
 
@@ -81,28 +135,53 @@ canvas:hover {
   pointer-events: none;
 }
 
-.btns form {
-  font-family: "Segoe UI";
-  font-size: 2vh;
+.canvas-edit {
+  display: none;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(255, 255, 255, 0.99);
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
 }
 
-.btns form label {
-  font-size: 2vh;
+.canvas-edit .canvas-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-.btns form input {
-  padding: 0.5vh 1vw;
-  font-size: 2vh;
-  border: none;
-  outline: none;
-  border-radius: 1vh;
-  margin: 0.2vw;
-  border: 0.1vh solid grey;
+.canvas-edit canvas {
+  height: 96vmin;
 }
 
-.btns form input::-webkit-inner-spin-button {
-  -webkit-box-flex: 1;
-          flex: 1;
-  font-size: 2vw;
+.canvas-edit .edit-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 2vh;
+  width: 100%;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.canvas-edit .edit-btn {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
+.canvas-edit.display {
+  display: -ms-grid;
+  display: grid;
 }
 /*# sourceMappingURL=main.css.map */
