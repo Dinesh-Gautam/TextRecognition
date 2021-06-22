@@ -133,7 +133,7 @@ function saveEdit() {
 
 function cancelEdit() {
   canvasEdit.classList.remove("display");
-
+  cropper?.destroy();
   resetEdit();
 }
 
@@ -162,5 +162,6 @@ function resetEditAllValues() {
       Object.assign(e, EDIT_VALUES[key]);
     });
   }
+
   changeCanvasImageData(Number(EDIT_VALUES.threshold.value), clickCanvasId);
 }
