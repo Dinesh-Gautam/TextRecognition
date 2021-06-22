@@ -28,11 +28,6 @@ document.addEventListener("click", (event) => {
     cloneCanvas.height = imageData.height;
     cloneCanvas.width = imageData.width;
     cloneCtx.putImageData(imageData, 0, 0);
-    cropper = new Cropper(cloneCanvas, {
-      viewMode: 1,
-      background: false,
-      autoCrop: false,
-    });
 
     clickCanvasId = target.id;
 
@@ -41,6 +36,14 @@ document.addEventListener("click", (event) => {
     assignEditValues(thresholdValue, values);
   }
 });
+
+function makeCropper() {
+  cropper = new Cropper(document.querySelector(".canvas-container canvas"), {
+    viewMode: 1,
+    background: false,
+    autoCrop: false,
+  });
+}
 
 ///////////////----values Definer----////////////////
 

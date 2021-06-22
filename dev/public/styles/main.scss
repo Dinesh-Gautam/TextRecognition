@@ -105,6 +105,24 @@ button {
   }
 }
 
+.canvas-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 100vh;
+  div {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  canvas {
+    max-height: 96vh;
+    border: 1px solid grey;
+  }
+}
+
 .canvas-edit {
   display: none;
   // display: grid;
