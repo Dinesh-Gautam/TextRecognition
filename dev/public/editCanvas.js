@@ -37,13 +37,24 @@ document.addEventListener("click", (event) => {
   }
 });
 
-function makeCropper() {
-  cropper = new Cropper(document.querySelector(".canvas-container canvas"), {
-    viewMode: 1,
-    background: false,
-    autoCrop: false,
-  });
-}
+const CROPPER = {
+  makeCropper() {
+    cropper = new Cropper(document.querySelector(".canvas-container canvas"), {
+      viewMode: 1,
+      background: false,
+      autoCrop: false,
+    });
+  },
+  destroyCropper() {
+    cropper?.destroy();
+  },
+  resetCropper() {
+    cropper?.reset();
+  },
+  clearCropper() {
+    cropper?.clear();
+  },
+};
 
 ///////////////----values Definer----////////////////
 
