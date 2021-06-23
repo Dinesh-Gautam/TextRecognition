@@ -195,5 +195,10 @@ function resetEditAllValues() {
     });
   }
 
+  const canvas = document.querySelector(".canvas-container div canvas");
+  const originalCanvas = document.getElementById(clickCanvasId);
+  canvas.height = originalCanvas.height;
+  canvas.width = originalCanvas.width;
+
   changeCanvasImageData(Number(EDIT_VALUES.threshold.value), clickCanvasId);
 }
