@@ -55,11 +55,14 @@ const CROPPER = {
     cropper?.clear();
   },
   crop() {
-  const croppedData = cropper?.getCroppedCanvas();
-    cropper.destroy()
-  // document.querySelector('.canvas-container div').innerHTML = "";
-  document.querySelector('.canvas-container div').appendChild(croppedData)
-  }
+    const croppedData = cropper?.getCroppedCanvas();
+    cropper.destroy();
+    document.querySelector(".canvas-container").innerHTML = "";
+
+    const div = document.createElement("div");
+    div.appendChild(croppedData);
+    document.querySelector(".canvas-container").appendChild(div);
+  },
 };
 
 ///////////////----values Definer----////////////////
