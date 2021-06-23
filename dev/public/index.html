@@ -46,7 +46,9 @@
                 </form>
                 <div class="croper-btn">
                     <p>Crop: </p>
-                    <button title="crop the image" onclick="CROPPER.makeCropper()"><i
+                    <button 
+                    class="cropper-maker-btn"
+                    title="crop the image" onclick="CROPPER.makeCropper()"><i
                             class="fas fa-crop-alt"></i></button>
                     <button title="clear the crop box" onclick="CROPPER.clearCropper()">
                         <i class="fas fa-crop"></i>
@@ -54,7 +56,7 @@
                     <button title="reset crop box" onclick="CROPPER.resetCropper()">
                         <i class="fas fa-undo"></i>
                     </button>
-                    <button onclick="CROPPER.destroyCropper()" class="danger" title="delete cropper"><i
+                    <button onclick="CROPPER.destroyCropper()" class="danger cropper-destroyer-btn" title="delete cropper"><i
                             class="fas fa-trash-alt"></i></button>
                     <button class="secondary" title="crop the image" onclick="CROPPER.crop()">Crop</button>
                 </div>

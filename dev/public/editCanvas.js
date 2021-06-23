@@ -38,15 +38,26 @@ document.querySelector(".root").addEventListener("click", (event) => {
 });
 
 const CROPPER = {
+  instance: false,
   makeCropper() {
     cropper = new Cropper(document.querySelector(".canvas-container canvas"), {
       viewMode: 1,
       background: false,
       autoCrop: false,
     });
+    this.instanceCreated();
+  },
+  instanceCreated() {
+    this.instance = true;
+    document.querySelector(".cropper-maker-btn").style.display = "none";
+  },
+  instanceDestroyed() {
+    this.instance = false;
+    document.querySelector(".cropper-maker-btn").style.display = "initial";
   },
   destroyCropper() {
     cropper?.destroy();
+    this.instanceDestroyed();
   },
   resetCropper() {
     cropper?.reset();
@@ -56,7 +67,7 @@ const CROPPER = {
   },
   crop() {
     const croppedData = cropper?.getCroppedCanvas();
-    cropper.destroy();
+    this.destroyCropper();
     document.querySelector(".canvas-container").innerHTML = "";
 
     const div = document.createElement("div");
