@@ -49,11 +49,11 @@ const CROPPER = {
   },
   instanceCreated() {
     this.instance = true;
-    document.querySelector(".cropper-maker-btn").style.display = "none";
+    hideOrShowBtn(true, [".cropper-btn button:not(.cropper-maker-btn)"]);
   },
   instanceDestroyed() {
     this.instance = false;
-    document.querySelector(".cropper-maker-btn").style.display = "initial";
+    hideOrShowBtn(false, [".cropper-btn button:not(.cropper-maker-btn)"]);
   },
   destroyCropper() {
     cropper?.destroy();
@@ -75,6 +75,23 @@ const CROPPER = {
     document.querySelector(".canvas-container").appendChild(div);
   },
 };
+
+function hideOrShowBtn(show, buttons) {
+  if (typeof buttons === "object") {
+    buttons.forEach((e) => hideOrShowBtn(show, e));
+  } else {
+    console.log(document.querySelectorAll(buttons));
+    if (!show) {
+      document
+        .querySelectorAll(buttons)
+        .forEach((e) => (e.style.display = "none"));
+    } else {
+      document
+        .querySelectorAll(buttons)
+        .forEach((e) => (e.style.display = "initial"));
+    }
+  }
+}
 
 ///////////////----values Definer----////////////////
 
