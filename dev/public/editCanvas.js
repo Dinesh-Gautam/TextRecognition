@@ -16,7 +16,7 @@ const EDIT_VALUES = {
 
 let cropper;
 
-document.addEventListener("click", (event) => {
+document.querySelector(".root").addEventListener("click", (event) => {
   const target = event.target;
   if (target.nodeName === "CANVAS") {
     canvasEdit.classList.add("display");
@@ -131,10 +131,11 @@ function saveEdit() {
     cloneCanvas.height
   );
 
-  document
-    .getElementById(clickCanvasId)
-    .getContext("2d")
-    .putImageData(imageData, 0, 0);
+  const originalCanvas = document.getElementById(clickCanvasId);
+
+  originalCanvas.height = cloneCanvas.height;
+  originalCanvas.width = cloneCanvas.width;
+  originalCanvas.getContext("2d").putImageData(imageData, 0, 0);
 
   canvasEdit.classList.remove("display");
 
