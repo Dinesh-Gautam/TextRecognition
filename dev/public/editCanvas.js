@@ -50,10 +50,12 @@ const CROPPER = {
   instanceCreated() {
     this.instance = true;
     hideOrShowBtn(true, [".cropper-btn button:not(.cropper-maker-btn)"]);
+    hideOrShowBtn(false, ".cropper-maker-btn");
   },
   instanceDestroyed() {
     this.instance = false;
     hideOrShowBtn(false, [".cropper-btn button:not(.cropper-maker-btn)"]);
+    hideOrShowBtn(true, ".cropper-maker-btn");
   },
   destroyCropper() {
     cropper?.destroy();
