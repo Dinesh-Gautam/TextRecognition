@@ -14,6 +14,8 @@ const EDIT_VALUES = {
   },
 };
 
+const CROPPER_VALUES = {};
+
 let cropper;
 
 document.querySelector(".root").addEventListener("click", (event) => {
@@ -69,6 +71,8 @@ const CROPPER = {
   },
   crop() {
     const croppedData = cropper?.getCroppedCanvas();
+    CROPPER_VALUES[clickCanvasId] = cropper?.getData();
+
     this.destroyCropper();
     document.querySelector(".canvas-container").innerHTML = "";
 
@@ -141,7 +145,16 @@ function changeCanvasImageData(changeValue, imageSrc) {
   const originalImage = createImage(imageSrc);
 
   originalImage.addEventListener("load", () => {
-    ctx.drawImage(originalImage, 0, 0);
+    const currentImageCroppedValues = CROPPER_VALUES[clickCanvasId];
+    if (currentImageCroppedValues) {
+      ctx.drawImage(
+        originalImage,
+        -currentImageCroppedValues.x,
+        -currentImageCroppedValues.y
+      );
+    } else {
+      ctx.drawImage(originalImage, 0, 0);
+    }
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
     mkImgBlackAndWhite(imageData.data, changeValue);
