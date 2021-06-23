@@ -54,6 +54,12 @@ const CROPPER = {
   clearCropper() {
     cropper?.clear();
   },
+  crop() {
+  const croppedData = cropper?.getCroppedCanvas();
+    cropper.destroy()
+  // document.querySelector('.canvas-container div').innerHTML = "";
+  document.querySelector('.canvas-container div').appendChild(croppedData)
+  }
 };
 
 ///////////////----values Definer----////////////////
