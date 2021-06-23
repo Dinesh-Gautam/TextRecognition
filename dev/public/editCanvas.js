@@ -80,7 +80,6 @@ function hideOrShowBtn(show, buttons) {
   if (typeof buttons === "object") {
     buttons.forEach((e) => hideOrShowBtn(show, e));
   } else {
-    console.log(document.querySelectorAll(buttons));
     if (!show) {
       document
         .querySelectorAll(buttons)
