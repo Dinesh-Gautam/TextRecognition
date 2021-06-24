@@ -10,6 +10,10 @@ body {
   height: 100%;
 }
 
+body {
+  font-family: "Segoe UI";
+}
+
 .root {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -27,7 +31,6 @@ input[type="number"] {
 }
 
 form {
-  font-family: "Segoe UI";
   font-size: 2vh;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -216,5 +219,9 @@ button.danger {
 .canvas-edit.display {
   display: -ms-grid;
   display: grid;
+}
+
+.cropper-btn button:not(.cropper-maker-btn) {
+  display: none;
 }
 /*# sourceMappingURL=main.css.map */

@@ -52,12 +52,15 @@ const CROPPER = {
   instanceCreated() {
     this.instance = true;
     hideOrShowBtn(true, [".cropper-btn button:not(.cropper-maker-btn)"]);
-    hideOrShowBtn(false, ".cropper-maker-btn");
+    hideOrShowBtn(
+      false,
+      ".cropper-maker-btn , .edit-btn , .thresholdContainer"
+    );
   },
   instanceDestroyed() {
     this.instance = false;
     hideOrShowBtn(false, [".cropper-btn button:not(.cropper-maker-btn)"]);
-    hideOrShowBtn(true, ".cropper-maker-btn");
+    hideOrShowBtn(true, ".cropper-maker-btn , .edit-btn , .thresholdContainer");
   },
   destroyCropper() {
     cropper?.destroy();
@@ -146,7 +149,7 @@ function changeCanvasImageData(changeValue, imageSrc) {
 
   originalImage.addEventListener("load", () => {
     const currentImageCroppedValues = CROPPER_VALUES[clickCanvasId];
-    if (currentImageCroppedValues) {
+    if (currentImageCroppedValues && currentImageCroppedValues.saved) {
       ctx.drawImage(
         originalImage,
         -currentImageCroppedValues.x,
@@ -172,6 +175,8 @@ function saveEdit() {
     cloneCanvas.width,
     cloneCanvas.height
   );
+
+  CROPPER_VALUES[clickCanvasId].saved = true;
 
   const originalCanvas = document.getElementById(clickCanvasId);
 

@@ -9,6 +9,10 @@ body {
   height: 100%;
 }
 
+body {
+  font-family: "Segoe UI";
+}
+
 .root {
   display: flex;
   justify-content: center;
@@ -21,7 +25,6 @@ input[type="number"] {
 }
 
 form {
-  font-family: "Segoe UI";
   font-size: 2vh;
   display: flex;
   align-items: center;
@@ -156,4 +159,8 @@ button {
   &.display {
     display: grid;
   }
+}
+
+.cropper-btn button:not(.cropper-maker-btn) {
+  display: none;
 }
