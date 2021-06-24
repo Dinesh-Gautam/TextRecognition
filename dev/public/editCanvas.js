@@ -64,7 +64,6 @@ const CROPPER = {
   },
   destroyCropper() {
     cropper?.destroy();
-    this.instanceDestroyed();
   },
   resetCropper() {
     cropper?.reset();
@@ -74,10 +73,16 @@ const CROPPER = {
   },
   crop() {
     const croppedData = cropper?.getCroppedCanvas();
-    CROPPER_VALUES[clickCanvasId] = [];
-    CROPPER_VALUES[clickCanvasId].push(cropper?.getData());
 
-    this.destroyCropper();
+    if (CROPPER_VALUES[clickCanvasId]) {
+      CROPPER_VALUES[clickCanvasId].x += cropper?.getData().x;
+      CROPPER_VALUES[clickCanvasId].y += cropper?.getData().y;
+    } else {
+      CROPPER_VALUES[clickCanvasId] = cropper?.getData();
+    }
+
+    this.instanceDestroyed();
+
     document.querySelector(".canvas-container").innerHTML = "";
 
     const div = document.createElement("div");
@@ -150,17 +155,14 @@ function changeCanvasImageData(changeValue, imageSrc) {
 
   originalImage.addEventListener("load", () => {
     const currentImageCroppedValues = CROPPER_VALUES[clickCanvasId];
-    let x = 0,
-      y = 0;
 
-    currentImageCroppedValues?.forEach((e) => {
-      x += e.x;
-      y += e.y;
-    });
-
-    console.log(x, y);
+    console.log(currentImageCroppedValues);
     if (currentImageCroppedValues) {
-      ctx.drawImage(originalImage, -x, -y);
+      ctx.drawImage(
+        originalImage,
+        -currentImageCroppedValues.x,
+        -currentImageCroppedValues.y
+      );
     } else {
       canvas.height = originalImage.height;
       canvas.width = originalImage.width;
