@@ -74,7 +74,8 @@ const CROPPER = {
   },
   crop() {
     const croppedData = cropper?.getCroppedCanvas();
-    CROPPER_VALUES[clickCanvasId] = cropper?.getData();
+    CROPPER_VALUES[clickCanvasId] = [];
+    CROPPER_VALUES[clickCanvasId].push(cropper?.getData());
 
     this.destroyCropper();
     document.querySelector(".canvas-container").innerHTML = "";
@@ -149,13 +150,17 @@ function changeCanvasImageData(changeValue, imageSrc) {
 
   originalImage.addEventListener("load", () => {
     const currentImageCroppedValues = CROPPER_VALUES[clickCanvasId];
-    console.log(currentImageCroppedValues);
+    let x = 0,
+      y = 0;
+
+    currentImageCroppedValues?.forEach((e) => {
+      x += e.x;
+      y += e.y;
+    });
+
+    console.log(x, y);
     if (currentImageCroppedValues) {
-      ctx.drawImage(
-        originalImage,
-        currentImageCroppedValues.x,
-        currentImageCroppedValues.y
-      );
+      ctx.drawImage(originalImage, -x, -y);
     } else {
       canvas.height = originalImage.height;
       canvas.width = originalImage.width;
@@ -234,10 +239,18 @@ function resetEditAllValues() {
 
   delete CROPPER_VALUES[clickCanvasId];
 
-  const canvas = document.querySelector(".canvas-container div canvas");
   const originalCanvas = document.getElementById(clickCanvasId);
-  canvas.height = originalCanvas.height;
-  canvas.width = originalCanvas.width;
+  const ctx = originalCanvas.getContext("2d");
+  const imageData = ctx.getImageData(
+    0,
+    0,
+    originalCanvas.width,
+    originalCanvas.height
+  );
 
-  changeCanvasImageData(Number(EDIT_VALUES.threshold.value), clickCanvasId);
+  const cloneCanvas = document.querySelector(".canvas-container canvas");
+
+  cloneCanvas.height = originalCanvas.height;
+  cloneCanvas.width = originalCanvas.width;
+  cloneCanvas.getContext("2d").putImageData(imageData, 0, 0);
 }
