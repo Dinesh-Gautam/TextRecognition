@@ -157,7 +157,6 @@ function changeCanvasImageData(changeValue, imageSrc) {
   originalImage.addEventListener("load", () => {
     const currentImageCroppedValues = CROPPER_VALUES[clickCanvasId];
 
-    console.log(currentImageCroppedValues);
     if (currentImageCroppedValues) {
       ctx.drawImage(
         originalImage,
