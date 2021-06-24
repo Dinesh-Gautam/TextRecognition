@@ -15,6 +15,7 @@ const EDIT_VALUES = {
 };
 
 const CROPPER_VALUES = {};
+const SAVED_CROPPER_VALUES = {};
 
 let cropper;
 
@@ -204,6 +205,9 @@ function saveEdit() {
       },
     });
   });
+
+  SAVED_CROPPER_VALUES[clickCanvasId] = CROPPER_VALUES[clickCanvasId];
+
   resetEdit();
 }
 
@@ -239,7 +243,7 @@ function resetEditAllValues() {
     });
   }
 
-  delete CROPPER_VALUES[clickCanvasId];
+  CROPPER_VALUES[clickCanvasId] = SAVED_CROPPER_VALUES[clickCanvasId];
 
   const originalCanvas = document.getElementById(clickCanvasId);
   const ctx = originalCanvas.getContext("2d");
