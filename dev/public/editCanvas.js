@@ -149,13 +149,16 @@ function changeCanvasImageData(changeValue, imageSrc) {
 
   originalImage.addEventListener("load", () => {
     const currentImageCroppedValues = CROPPER_VALUES[clickCanvasId];
-    if (currentImageCroppedValues && currentImageCroppedValues.saved) {
+    console.log(currentImageCroppedValues);
+    if (currentImageCroppedValues) {
       ctx.drawImage(
         originalImage,
-        -currentImageCroppedValues.x,
-        -currentImageCroppedValues.y
+        currentImageCroppedValues.x,
+        currentImageCroppedValues.y
       );
     } else {
+      canvas.height = originalImage.height;
+      canvas.width = originalImage.width;
       ctx.drawImage(originalImage, 0, 0);
     }
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -175,8 +178,6 @@ function saveEdit() {
     cloneCanvas.width,
     cloneCanvas.height
   );
-
-  CROPPER_VALUES[clickCanvasId].saved = true;
 
   const originalCanvas = document.getElementById(clickCanvasId);
 
@@ -230,6 +231,8 @@ function resetEditAllValues() {
       Object.assign(e, EDIT_VALUES[key]);
     });
   }
+
+  delete CROPPER_VALUES[clickCanvasId];
 
   const canvas = document.querySelector(".canvas-container div canvas");
   const originalCanvas = document.getElementById(clickCanvasId);
