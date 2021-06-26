@@ -2,15 +2,7 @@ let clickCanvasId = null;
 
 const thresholdValue = document.querySelectorAll(".thresholdValue");
 const changedEditValues = {};
-const EDIT_VALUES = {
-  threshold: {
-    for: ".thresholdValue",
-    min: 0.1,
-    max: 10,
-    step: 0.1,
-    value: blackAndWhiteThreshold,
-  },
-};
+const EDIT_VALUES = {};
 
 const CROPPER_VALUES = {};
 const SAVED_CROPPER_VALUES = {};
