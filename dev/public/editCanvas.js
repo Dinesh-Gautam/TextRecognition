@@ -64,6 +64,7 @@ const CROPPER = {
     hideOrShowBtn(true, ".cropper-maker-btn , .edit-btn , .thresholdContainer");
   },
   destroyCropper() {
+    this.instanceDestroyed();
     cropper?.destroy();
   },
   resetCropper() {
@@ -82,7 +83,7 @@ const CROPPER = {
       CROPPER_VALUES[clickCanvasId] = cropper?.getData();
     }
 
-    this.instanceDestroyed();
+    this.destroyCropper();
 
     document.querySelector(".canvas-container").innerHTML = "";
 
@@ -143,13 +144,7 @@ function addEventListenerToInputs(input) {
 
 function assignEditValues(input, ObjValue) {
   input.forEach((input) => {
-    //assigning  values
-    const className = input.className;
-    // if (changedEditValues[clickCanvasId]) {
-    //   Object.assign(input, changedEditValues[clickCanvasId]);
-    // } else {
     Object.assign(input, ObjValue);
-    // }
   });
 }
 
@@ -238,12 +233,6 @@ function resetEdit() {
 
 function resetEditAllValues() {
   resetEdit();
-  // for (let key in EDIT_VALUES) {
-  //   const className = EDIT_VALUES[key].for;
-  //   document.querySelectorAll(className).forEach((e) => {
-  //     Object.assign(e, EDIT_VALUES[key]);
-  //   });
-  // }
 
   CROPPER_VALUES[clickCanvasId] = SAVED_CROPPER_VALUES[clickCanvasId];
 
