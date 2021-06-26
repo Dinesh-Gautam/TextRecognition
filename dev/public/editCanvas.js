@@ -1,5 +1,3 @@
-const canvasEdit = document.querySelector(".canvas-edit");
-
 let clickCanvasId = null;
 
 const thresholdValue = document.querySelectorAll(".thresholdValue");
