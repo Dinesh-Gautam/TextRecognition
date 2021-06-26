@@ -231,6 +231,27 @@ function resetEdit() {
   }
 }
 
+document.querySelectorAll(".resetValue").forEach((button) => {
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    const resetValueOf = "." + event.target.dataset.reset;
+    let resetValue;
+
+    for (let key in EDIT_VALUES) {
+      const className = EDIT_VALUES[key].for;
+      if (resetValueOf === className) {
+        document.querySelectorAll(className).forEach((e) => {
+          Object.assign(e, EDIT_VALUES[key]);
+        });
+
+        resetValue = EDIT_VALUES[key].value;
+      }
+    }
+
+    changeCanvasImageData(Number(resetValue), clickCanvasId);
+  });
+});
+
 function resetEditAllValues() {
   resetEdit();
 

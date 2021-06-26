@@ -42,13 +42,12 @@
                     <label for="thresholdRange">Threshold:</label>
                     <input id="thresholdRange" class="thresholdValue" type="range">
                     <input class="thresholdValue" type="number">
-                    <button class="secondary thresholdReset"><i class="fas fa-undo"></i></button>
+                    <button type="button" class="secondary thresholdReset resetValue" data-reset="thresholdValue"><i
+                            class="fas fa-undo"></i></button>
                 </form>
                 <div class="cropper-btn">
                     <p>Crop: </p>
-                    <button 
-                    class="cropper-maker-btn"
-                    title="crop the image" onclick="CROPPER.makeCropper()"><i
+                    <button class="cropper-maker-btn" title="crop the image" onclick="CROPPER.makeCropper()"><i
                             class="fas fa-crop-alt"></i></button>
                     <button title="clear the crop box" onclick="CROPPER.clearCropper()">
                         <i class="fas fa-crop"></i>
@@ -56,8 +55,8 @@
                     <button title="reset crop box" onclick="CROPPER.resetCropper()">
                         <i class="fas fa-undo"></i>
                     </button>
-                    <button onclick="CROPPER.destroyCropper()" class="danger cropper-destroyer-btn" title="delete cropper"><i
-                            class="fas fa-trash-alt"></i></button>
+                    <button onclick="CROPPER.destroyCropper()" class="danger cropper-destroyer-btn"
+                        title="delete cropper"><i class="fas fa-trash-alt"></i></button>
                     <button class="secondary" title="crop the image" onclick="CROPPER.crop()">Crop</button>
                 </div>
             </div>
