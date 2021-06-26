@@ -71,15 +71,14 @@ button {
 }
 
 .root canvas {
-  width: 10em;
-  height: auto;
-  border: 4px solid rgba($color: #000000, $alpha: 0.1);
+  width: 10rem;
+  border: 2px solid rgba($color: #000000, $alpha: 0.1);
   position: relative;
   cursor: pointer;
   transition: transform 200ms ease-in-out;
   &:hover {
     transform: scale(1.05);
-    border: 4px solid rgba($color: #000000, $alpha: 0.9);
+    border: 2px solid rgba($color: #000000, $alpha: 0.9);
     z-index: 100;
   }
 }
@@ -113,6 +112,7 @@ button {
   align-items: center;
   justify-content: center;
   max-height: 100vh;
+  border-right: 2px solid grey;
   div {
     height: 100%;
     display: flex;
@@ -150,12 +150,14 @@ button {
     display: flex;
     padding: 2vh;
     width: 100%;
-    justify-content: flex-end;
+    flex-direction: column;
+  }
+  .range-controllers {
+    flex: 1;
   }
   .edit-btn {
     align-self: flex-end;
   }
-
   &.display {
     display: grid;
   }
