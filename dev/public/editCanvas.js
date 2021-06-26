@@ -136,16 +136,20 @@ function addEventListenerToInputs(input) {
       input.forEach((element) => {
         element.value = changedValue;
       });
-
       changeCanvasImageData(Number(changedValue), clickCanvasId);
     });
   });
 }
 
 function assignEditValues(input, ObjValue) {
-  input.forEach((e) => {
+  input.forEach((input) => {
     //assigning  values
-    Object.assign(e, ObjValue);
+    const className = input.className;
+    // if (changedEditValues[clickCanvasId]) {
+    //   Object.assign(input, changedEditValues[clickCanvasId]);
+    // } else {
+    Object.assign(input, ObjValue);
+    // }
   });
 }
 
@@ -199,7 +203,7 @@ function saveEdit() {
     const className = e.className;
     Object.assign(changedEditValues, {
       [clickCanvasId]: {
-        for: className,
+        for: "." + className,
         value: e.value,
       },
     });
@@ -218,12 +222,10 @@ function cancelEdit() {
 
 function resetEdit() {
   if (changedEditValues[clickCanvasId]) {
-    for (let key in changedEditValues) {
-      const className = changedEditValues[key].for;
-      document.querySelectorAll(className).forEach((e) => {
-        Object.assign(e, { value: changedEditValues.value });
-      });
-    }
+    const className = changedEditValues[clickCanvasId].for;
+    document.querySelectorAll(className).forEach((e) => {
+      Object.assign(e, { value: changedEditValues[clickCanvasId].value });
+    });
   } else {
     for (let key in EDIT_VALUES) {
       const className = EDIT_VALUES[key].for;
@@ -235,12 +237,13 @@ function resetEdit() {
 }
 
 function resetEditAllValues() {
-  for (let key in EDIT_VALUES) {
-    const className = EDIT_VALUES[key].for;
-    document.querySelectorAll(className).forEach((e) => {
-      Object.assign(e, EDIT_VALUES[key]);
-    });
-  }
+  resetEdit();
+  // for (let key in EDIT_VALUES) {
+  //   const className = EDIT_VALUES[key].for;
+  //   document.querySelectorAll(className).forEach((e) => {
+  //     Object.assign(e, EDIT_VALUES[key]);
+  //   });
+  // }
 
   CROPPER_VALUES[clickCanvasId] = SAVED_CROPPER_VALUES[clickCanvasId];
 
