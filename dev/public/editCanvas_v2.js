@@ -31,9 +31,17 @@ const VALUES = {
 const CANVAS_EDIT = {
   modalBox: document.querySelector(".canvas-edit"),
   editCanvas: document.querySelector(".canvas-container canvas"),
+  editInputsParentElement: document.querySelector(".range-controllers"),
 
-  open() {
+  open(clickCanvasId) {
     this.modalBox.classList.add("display");
+
+    //assigning values to edit inputs
+    this.assignEditValues(
+      VALUES.editValues,
+      this.editInputsParentElement,
+      clickCanvasId
+    );
   },
   assignEditValues(values, inputParent, clickCanvasId) {
     const defaultValues = values.default;
@@ -85,20 +93,10 @@ const CANVAS = {
       this.clickCanvasId = target.id;
 
       //open canvas edit modal
-      CANVAS_EDIT.open();
+      CANVAS_EDIT.open(this.clickCanvasId);
 
       //copying original canvas image data to clone canvas
       copyOriginalCanvasToCloneCanvas(target, CANVAS_EDIT.editCanvas);
-
-      //assigning values to edit inputs
-      const editValues = VALUES.editValues;
-      const inputsParentElement = document.querySelector(".range-controllers");
-
-      CANVAS_EDIT.assignEditValues(
-        editValues,
-        inputsParentElement,
-        this.clickCanvasId
-      );
     }
   },
 };
