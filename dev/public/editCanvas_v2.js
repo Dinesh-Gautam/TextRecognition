@@ -13,6 +13,36 @@ function copyOriginalCanvasToCloneCanvas(targetCanvas, cloneCanvas) {
   cloneCtx.putImageData(imageData, 0, 0);
 }
 
+function changeCanvasEditImageData(editCanvas, changeValue, originalImageSrc) {
+  const canvas = editCanvas;
+  const ctx = canvas.getContext("2d");
+  const originalImage = createImage(originalImageSrc);
+
+  originalImage.addEventListener("load", () => {
+    const currentImageCroppedValues = false && CROPPER_VALUES[clickCanvasId];
+
+    if (currentImageCroppedValues) {
+      // ctx.drawImage(
+      //   originalImage,
+      //   -currentImageCroppedValues.x,
+      //   -currentImageCroppedValues.y
+      // );
+    } else {
+      canvas.height = originalImage.height;
+      canvas.width = originalImage.width;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(originalImage, 0, 0);
+    }
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    mkImgBlackAndWhite(imageData.data, changeValue);
+
+    ctx.putImageData(imageData, 0, 0);
+  });
+}
+
+let clickCanvasId = null;
+
 const VALUES = {
   editValues: {
     default: {
@@ -29,21 +59,18 @@ const VALUES = {
 };
 
 const CANVAS_EDIT = {
+  //selectors
   modalBox: document.querySelector(".canvas-edit"),
   editCanvas: document.querySelector(".canvas-container canvas"),
   editInputsParentElement: document.querySelector(".range-controllers"),
 
-  open(clickCanvasId) {
+  open() {
     this.modalBox.classList.add("display");
 
     //assigning values to edit inputs
-    this.assignEditValues(
-      VALUES.editValues,
-      this.editInputsParentElement,
-      clickCanvasId
-    );
+    this.assignEditValues(VALUES.editValues, this.editInputsParentElement);
   },
-  assignEditValues(values, inputParent, clickCanvasId) {
+  assignEditValues(values, inputParent) {
     const defaultValues = values.default;
     const savedEditValues = values.saved[clickCanvasId];
 
@@ -69,7 +96,7 @@ const CANVAS_EDIT = {
       // add event listener for change in input values
       document.querySelectorAll(className).forEach((input) => {
         //syncing input values on change.
-        input.addEventListener("input", setInputValue);
+        input.addEventListener("change", setInputValue);
       });
     }
     function setInputValue(event) {
@@ -77,12 +104,18 @@ const CANVAS_EDIT = {
       document
         .querySelectorAll("." + className)
         .forEach((element) => (element.value = value));
+
+      //changing edit canvas data with changed input values
+      changeCanvasEditImageData(
+        document.querySelector(".canvas-container canvas"),
+        Number(value),
+        clickCanvasId
+      );
     }
   },
 };
 
 const CANVAS = {
-  clickCanvasId: null,
   parentElement: document.querySelector(".root"),
 
   onClick(event) {
@@ -90,10 +123,10 @@ const CANVAS = {
 
     if (target.nodeName === "CANVAS") {
       //changing canvas id
-      this.clickCanvasId = target.id;
+      clickCanvasId = target.id;
 
       //open canvas edit modal
-      CANVAS_EDIT.open(this.clickCanvasId);
+      CANVAS_EDIT.open();
 
       //copying original canvas image data to clone canvas
       copyOriginalCanvasToCloneCanvas(target, CANVAS_EDIT.editCanvas);
