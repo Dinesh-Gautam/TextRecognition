@@ -70,6 +70,26 @@ const CANVAS_EDIT = {
     //assigning values to edit inputs
     this.assignEditValues(VALUES.editValues, this.editInputsParentElement);
   },
+  close() {
+    this.modalBox.classList.remove("display");
+  },
+  save() {
+    copyOriginalCanvasToCloneCanvas(
+      this.editCanvas,
+      document.getElementById(clickCanvasId)
+    );
+    Object.keys(VALUES.editValues.default).forEach((inputClass) => {
+      const className = "." + inputClass;
+      const inputValue = document.querySelector("input" + className).value;
+      VALUES.editValues.saved[clickCanvasId] = {};
+      Object.assign(VALUES.editValues.saved[clickCanvasId], {
+        [inputClass]: {
+          value: inputValue,
+        },
+      });
+    });
+    this.close();
+  },
   assignEditValues(values, inputParent) {
     const defaultValues = values.default;
     const savedEditValues = values.saved[clickCanvasId];
