@@ -90,6 +90,13 @@ const CANVAS_EDIT = {
     });
     this.close();
   },
+  reset() {
+    this.assignEditValues(VALUES.editValues, this.editInputsParentElement);
+    copyOriginalCanvasToCloneCanvas(
+      document.getElementById(clickCanvasId),
+      CANVAS_EDIT.editCanvas
+    );
+  },
   assignEditValues(values, inputParent) {
     const defaultValues = values.default;
     const savedEditValues = values.saved[clickCanvasId];
