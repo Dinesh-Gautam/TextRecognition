@@ -55,6 +55,22 @@ const CANVAS_EDIT = {
       }
     }
   },
+  syncEditValues() {
+    for (let key in VALUES.editValues.default) {
+      const className = "." + key;
+      // add event listener for change in input values
+      document.querySelectorAll(className).forEach((input) => {
+        //syncing input values on change.
+        input.addEventListener("input", setInputValue);
+      });
+    }
+    function setInputValue(event) {
+      const { value, className } = event.target;
+      document
+        .querySelectorAll("." + className)
+        .forEach((element) => (element.value = value));
+    }
+  },
 };
 
 const CANVAS = {
@@ -88,3 +104,9 @@ const CANVAS = {
 };
 
 CANVAS.parentElement.addEventListener("click", CANVAS.onClick);
+
+function init() {
+  CANVAS_EDIT.syncEditValues();
+}
+
+init();
