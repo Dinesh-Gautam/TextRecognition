@@ -95,6 +95,9 @@ const CANVAS_EDIT = {
     document.querySelector(this.modalBox).classList.remove("display");
   },
   save() {
+    VALUES.cropValues.saved[clickCanvasId] =
+      VALUES.cropValues.data[clickCanvasId];
+
     copyOriginalCanvasToCloneCanvas(
       document.querySelector(this.editCanvas),
       document.getElementById(clickCanvasId)
@@ -110,9 +113,6 @@ const CANVAS_EDIT = {
         },
       });
     });
-
-    VALUES.cropValues.saved[clickCanvasId] =
-      VALUES.cropValues.data[clickCanvasId];
 
     this.close();
   },
@@ -208,12 +208,11 @@ const CANVAS_EDIT = {
   },
   crop() {
     const croppedData = cropper?.getCroppedCanvas();
-    CROPPER_VALUES = VALUES.cropValues.data;
-    if (CROPPER_VALUES[clickCanvasId]) {
-      CROPPER_VALUES[clickCanvasId].x += cropper?.getData().x;
-      CROPPER_VALUES[clickCanvasId].y += cropper?.getData().y;
+    if (VALUES.cropValues.data[clickCanvasId]) {
+      VALUES.cropValues.data[clickCanvasId].x += cropper?.getData().x;
+      VALUES.cropValues.data[clickCanvasId].y += cropper?.getData().y;
     } else {
-      CROPPER_VALUES[clickCanvasId] = cropper?.getData();
+      VALUES.cropValues.data[clickCanvasId] = cropper?.getData();
     }
 
     this.destroyCropper();
