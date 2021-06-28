@@ -15,9 +15,10 @@ body {
 
 .root {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 2vh;
+  padding: 2rem;
 }
 
 input[type="number"] {
@@ -132,7 +133,6 @@ button {
 
 .canvas-edit {
   display: none;
-  // display: grid;
   position: fixed;
   height: 100vh;
   width: 100vw;
