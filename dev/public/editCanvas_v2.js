@@ -1,36 +1,40 @@
-function copyOriginalCanvasToCloneCanvas(targetCanvas, cloneCanvas) {
-  const ctx = targetCanvas.getContext("2d");
+function copyOriginalCanvasToCloneCanvas(cloneCanvas, originalCanvas) {
+  const ctx = cloneCanvas.getContext("2d");
   const imageData = ctx.getImageData(
     0,
     0,
-    targetCanvas.width,
-    targetCanvas.height
+    cloneCanvas.width,
+    cloneCanvas.height
   );
 
-  const cloneCtx = cloneCanvas.getContext("2d");
-  cloneCanvas.height = imageData.height;
-  cloneCanvas.width = imageData.width;
-  cloneCtx.putImageData(imageData, 0, 0);
+  originalCanvas.height = cloneCanvas.height;
+  originalCanvas.width = cloneCanvas.width;
+  originalCanvas.getContext("2d").putImageData(imageData, 0, 0);
 }
 
-function changeCanvasEditImageData(editCanvas, changeValue, originalImageSrc) {
+function changeCanvasEditImageData(
+  editCanvas,
+  changeValue,
+  originalImageSrc,
+  VALUES = {}
+) {
   const canvas = editCanvas;
   const ctx = canvas.getContext("2d");
   const originalImage = createImage(originalImageSrc);
 
   originalImage.addEventListener("load", () => {
-    const currentImageCroppedValues = false && CROPPER_VALUES[clickCanvasId];
+    const currentImageCroppedValues = VALUES?.cropValues?.data[clickCanvasId];
 
     if (currentImageCroppedValues) {
-      // ctx.drawImage(
-      //   originalImage,
-      //   -currentImageCroppedValues.x,
-      //   -currentImageCroppedValues.y
-      // );
+      ctx.drawImage(
+        originalImage,
+        -currentImageCroppedValues.x,
+        -currentImageCroppedValues.y
+      );
     } else {
       canvas.height = originalImage.height;
       canvas.width = originalImage.width;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(originalImage, 0, 0);
     }
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -41,7 +45,17 @@ function changeCanvasEditImageData(editCanvas, changeValue, originalImageSrc) {
   });
 }
 
-let clickCanvasId = null;
+function hideAndShowBtn(showBtn, hideBtn) {
+  document.querySelectorAll(showBtn).forEach((element) => {
+    element.style.display = "initial";
+  });
+  document.querySelectorAll(hideBtn).forEach((element) => {
+    element.style.display = "none";
+  });
+}
+
+let clickCanvasId = null,
+  cropper = null;
 
 const VALUES = {
   editValues: {
@@ -55,29 +69,37 @@ const VALUES = {
     },
     saved: {},
   },
-  cropValues: {},
+  cropValues: {
+    data: {},
+    saved: {},
+  },
 };
 
 const CANVAS_EDIT = {
   //selectors
-  modalBox: document.querySelector(".canvas-edit"),
-  editCanvas: document.querySelector(".canvas-container canvas"),
-  editInputsParentElement: document.querySelector(".range-controllers"),
-
+  modalBox: ".canvas-edit",
+  editCanvas: ".canvas-container canvas",
+  editInputsParentElement: ".range-controllers",
+  // features
+  cropInstance: false,
   open() {
-    this.modalBox.classList.add("display");
+    document.querySelector(this.modalBox).classList.add("display");
 
     //assigning values to edit inputs
-    this.assignEditValues(VALUES.editValues, this.editInputsParentElement);
+    this.assignEditValues(
+      VALUES.editValues,
+      document.querySelector(this.editInputsParentElement)
+    );
   },
   close() {
-    this.modalBox.classList.remove("display");
+    document.querySelector(this.modalBox).classList.remove("display");
   },
   save() {
     copyOriginalCanvasToCloneCanvas(
-      this.editCanvas,
+      document.querySelector(this.editCanvas),
       document.getElementById(clickCanvasId)
     );
+
     Object.keys(VALUES.editValues.default).forEach((inputClass) => {
       const className = "." + inputClass;
       const inputValue = document.querySelector("input" + className).value;
@@ -88,13 +110,24 @@ const CANVAS_EDIT = {
         },
       });
     });
+
+    VALUES.cropValues.saved[clickCanvasId] =
+      VALUES.cropValues.data[clickCanvasId];
+
     this.close();
   },
   reset() {
-    this.assignEditValues(VALUES.editValues, this.editInputsParentElement);
+    this.assignEditValues(
+      VALUES.editValues,
+      document.querySelector(this.editInputsParentElement)
+    );
+
+    VALUES.cropValues.data[clickCanvasId] =
+      VALUES.cropValues.saved[clickCanvasId];
+
     copyOriginalCanvasToCloneCanvas(
       document.getElementById(clickCanvasId),
-      CANVAS_EDIT.editCanvas
+      document.querySelector(this.editCanvas)
     );
   },
   assignEditValues(values, inputParent) {
@@ -136,9 +169,60 @@ const CANVAS_EDIT = {
       changeCanvasEditImageData(
         document.querySelector(".canvas-container canvas"),
         Number(value),
-        clickCanvasId
+        clickCanvasId,
+        VALUES
       );
     }
+  },
+  makeCropper() {
+    cropper = new Cropper(document.querySelector(this.editCanvas), {
+      viewMode: 1,
+      background: false,
+      autoCrop: false,
+    });
+    this.cropInstanceCreated();
+  },
+  cropInstanceCreated() {
+    this.cropInstance = true;
+    hideAndShowBtn(
+      ".cropper-btn button:not(.cropper-maker-btn)",
+      ".cropper-maker-btn , .edit-btn , .thresholdContainer"
+    );
+  },
+  cropInstanceDestroyed() {
+    this.cropInstance = false;
+    hideAndShowBtn(
+      ".cropper-maker-btn , .edit-btn , .thresholdContainer",
+      ".cropper-btn button:not(.cropper-maker-btn)"
+    );
+  },
+  destroyCropper() {
+    this.cropInstanceDestroyed();
+    cropper?.destroy();
+  },
+  resetCropper() {
+    cropper?.reset();
+  },
+  clearCropper() {
+    cropper?.clear();
+  },
+  crop() {
+    const croppedData = cropper?.getCroppedCanvas();
+    CROPPER_VALUES = VALUES.cropValues.data;
+    if (CROPPER_VALUES[clickCanvasId]) {
+      CROPPER_VALUES[clickCanvasId].x += cropper?.getData().x;
+      CROPPER_VALUES[clickCanvasId].y += cropper?.getData().y;
+    } else {
+      CROPPER_VALUES[clickCanvasId] = cropper?.getData();
+    }
+
+    this.destroyCropper();
+
+    document.querySelector(".canvas-container").innerHTML = "";
+
+    const div = document.createElement("div");
+    div.appendChild(croppedData);
+    document.querySelector(".canvas-container").appendChild(div);
   },
 };
 
@@ -156,7 +240,10 @@ const CANVAS = {
       CANVAS_EDIT.open();
 
       //copying original canvas image data to clone canvas
-      copyOriginalCanvasToCloneCanvas(target, CANVAS_EDIT.editCanvas);
+      copyOriginalCanvasToCloneCanvas(
+        target,
+        document.querySelector(CANVAS_EDIT.editCanvas)
+      );
     }
   },
 };
