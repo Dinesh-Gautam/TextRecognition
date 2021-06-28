@@ -116,8 +116,16 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   max-height: 100vh;
   border-right: 2px solid grey;
+  section {
+    background: #fff;
+    padding: 1rem;
+    button {
+      font-size: 14px;
+    }
+  }
   div {
     height: 100%;
     display: flex;

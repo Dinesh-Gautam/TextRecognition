@@ -152,8 +152,21 @@ button.danger {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   max-height: 100vh;
   border-right: 2px solid grey;
+}
+
+.canvas-container section {
+  background: #fff;
+  padding: 1rem;
+}
+
+.canvas-container section button {
+  font-size: 14px;
 }
 
 .canvas-container div {
