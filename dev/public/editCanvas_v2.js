@@ -254,3 +254,29 @@ function init() {
 }
 
 init();
+
+////////////////-------------------///////////////////
+const canvasSelections = [];
+
+class Selection {
+  constructor(canvasElement, cropperOptions) {
+    this.cropper = new Cropper(canvasElement, cropperOptions);
+    this.selected = false;
+  }
+  show() {}
+  hide() {}
+  getSelectionData() {}
+}
+
+function addSelection() {
+  canvasSelections.push(
+    new Selection(document.querySelector(".canvas-container canvas"), {
+      viewMode: 1,
+      autoCrop: false,
+      movable: false,
+      rotatable: false,
+      scalable: false,
+      zoomable: false,
+    })
+  );
+}
