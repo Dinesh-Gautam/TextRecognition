@@ -257,26 +257,52 @@ init();
 
 ////////////////-------------------///////////////////
 const canvasSelections = [];
-
+const SelectedSelection = [];
 class Selection {
-  constructor(canvasElement, cropperOptions) {
-    this.cropper = new Cropper(canvasElement, cropperOptions);
+  constructor(canvasElement, cropperOptions, id) {
+    // this.cropper = new Cropper(canvasElement, cropperOptions);
     this.selected = false;
+    this.data = this.getSelectionData();
+    this.id = id;
   }
-  show() {}
+  show() {
+    SelectedSelection[SelectedSelection.length - 1].hide();
+    SelectedSelection = [];
+    SelectedSelection.push(this);
+  }
   hide() {}
-  getSelectionData() {}
+  getSelectionData() {
+    // return this.cropper.getData();
+  }
 }
 
 function addSelection() {
   canvasSelections.push(
-    new Selection(document.querySelector(".canvas-container canvas"), {
-      viewMode: 1,
-      autoCrop: false,
-      movable: false,
-      rotatable: false,
-      scalable: false,
-      zoomable: false,
-    })
+    new Selection(
+      document.querySelector(".canvas-container canvas"),
+      {
+        viewMode: 1,
+        autoCrop: false,
+        movable: false,
+        rotatable: false,
+        scalable: false,
+        zoomable: false,
+      },
+      canvasSelections.length
+    )
   );
+
+  updateSelectionBtns();
 }
+
+function updateSelectionBtns() {
+  const btn = document.createElement("button");
+  const btnRef = canvasSelections[canvasSelections.length - 1];
+  btn.innerText = btnRef.id + 1;
+  btn.id = btnRef.id;
+  btn.onclick = selectionBtnSelected;
+
+  document.querySelector(".selection-container").appendChild(btn);
+}
+
+function selectionBtnSelected(event) {}
