@@ -305,4 +305,11 @@ function updateSelectionBtns() {
   document.querySelector(".selection-container").appendChild(btn);
 }
 
-function selectionBtnSelected(event) {}
+function selectionBtnSelected(event) {
+  const id = event.target.id;
+  SelectedSelection.length = 0;
+
+  SelectedSelection.push(canvasSelections.find((e) => e.id == id));
+
+  console.log(SelectedSelection.id);
+}
