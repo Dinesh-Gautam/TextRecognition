@@ -287,6 +287,7 @@ function recognizeText(scheduler, index) {
           hocr,
           text,
         };
+        postImagesTextData(deStructuredData);
         allImagesTextData.push(deStructuredData);
       });
       recognizeText(scheduler, (index += continues));
@@ -300,15 +301,31 @@ function recognizeText(scheduler, index) {
   }
 }
 
-function allTextRecognized() {
-  fetch("/text", {
+function postImagesTextData(data) {
+  fetch("/preText", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(allImagesTextData),
+    body: JSON.stringify(data),
   });
+}
 
+function allTextRecognized() {
+  // fetch("/text", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(allImagesTextData),
+  // });
+
+  fetch("/finalPost", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   document.querySelector(".btns").style.display = "none";
   // recoBtn.disabled = false;
   allImagesTextData = [];
@@ -335,3 +352,5 @@ function init() {
 }
 
 init();
+
+/////////////
