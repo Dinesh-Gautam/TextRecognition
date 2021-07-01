@@ -175,6 +175,12 @@ button {
   }
 }
 
+.selection-btn-focus {
+  border: 1px solid black;
+  background: rgba($color: grey, $alpha: 0.5);
+  color: black;
+}
+
 .cropper-btn button:not(.cropper-maker-btn) {
   display: none;
 }

@@ -257,7 +257,7 @@ init();
 
 ////////////////-------------------///////////////////
 const canvasSelections = [];
-const SelectedSelection = [];
+let SelectedSelection;
 class Selection {
   constructor(canvasElement, cropperOptions, id) {
     // this.cropper = new Cropper(canvasElement, cropperOptions);
@@ -307,9 +307,13 @@ function updateSelectionBtns() {
 
 function selectionBtnSelected(event) {
   const id = event.target.id;
-  SelectedSelection.length = 0;
+  const target = event.target;
 
-  SelectedSelection.push(canvasSelections.find((e) => e.id == id));
+  document
+    .querySelectorAll(".selection-container button:not(.selectionAdderBtn)")
+    .forEach((e) => e.classList.remove("selection-btn-focus"));
 
-  console.log(SelectedSelection.id);
+  target.classList.add("selection-btn-focus");
+
+  SelectedSelection = canvasSelections.find((e) => e.id == id);
 }

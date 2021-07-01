@@ -247,6 +247,12 @@ button.danger {
   display: grid;
 }
 
+.selection-btn-focus {
+  border: 1px solid black;
+  background: rgba(128, 128, 128, 0.5);
+  color: black;
+}
+
 .cropper-btn button:not(.cropper-maker-btn) {
   display: none;
 }
