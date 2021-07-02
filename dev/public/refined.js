@@ -258,7 +258,7 @@ function initTessrect() {
 
 function recognizeText(scheduler, index) {
   recoBtn.disabled = true;
-  if (index < document.querySelectorAll("canvas").length) {
+  if (index < document.querySelectorAll(".root canvas").length) {
     const continues = Math.min(
       Number(document.querySelector("#continuesImages").value),
       document.querySelectorAll("canvas").length,
@@ -284,7 +284,6 @@ function recognizeText(scheduler, index) {
           e.data;
         const deStructuredData = {
           confidence,
-          hocr,
           text,
         };
         postImagesTextData(deStructuredData);
