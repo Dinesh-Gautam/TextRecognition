@@ -1,5 +1,6 @@
 let data = null;
 let filteredData = [];
+let indexArr = [];
 
 fetch("../recognized.json", { method: "GET", type: "JSON" })
   .then((e) => e.json())
@@ -59,7 +60,23 @@ function allParagraphsSearched() {
     return;
   }
 
-  console.log(finalAnswer);
+  const refIndexArr = [];
+  finalAnswer.forEach((e) => refIndexArr.push(e.index));
+
+  indexArr = [...new Set(refIndexArr)];
+  displayAnswers(finalAnswer);
+}
+
+function displayAnswers(answers) {
+  const resultElement = document.querySelector(".result");
+  resultElement.innerHTML = "";
+  const ul = document.createElement("ul");
+  answers.forEach((e) => {
+    const li = document.createElement("li");
+    li.innerText = e.text;
+    ul.appendChild(li);
+  });
+  resultElement.appendChild(ul);
 }
 
 // model
