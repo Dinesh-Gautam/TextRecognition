@@ -1,6 +1,5 @@
 const blackAndWhiteThreshold = 2.8, // 1-10 //can be determined by ai
   edgeThreshold = 50; // 1 - 255
-let allImagesTextData = [];
 
 const scheduler = Tesseract.createScheduler();
 //-------------------
@@ -261,14 +260,14 @@ function recognizeText(scheduler, index) {
   if (index < document.querySelectorAll(".root canvas").length) {
     const continues = Math.min(
       Number(document.querySelector("#continuesImages").value),
-      document.querySelectorAll("canvas").length,
-      document.querySelectorAll("canvas").length - index
+      document.querySelectorAll(".root canvas").length,
+      document.querySelectorAll(" .root canvas").length - index
     );
     const ImagesArr = [];
     const recoImages = [];
     for (let i = 0; i < continues; i++) {
       console.log("recognizing Text of Image No. :" + (index + i));
-      const element = document.querySelectorAll("canvas")[index + i];
+      const element = document.querySelectorAll(".root canvas")[index + i];
 
       element.style.borderColor = "rgba(242, 5, 25 , 0.5)";
       recoImages.push(element);
@@ -279,15 +278,15 @@ function recognizeText(scheduler, index) {
       recoImages.forEach(
         (e) => (e.style.borderColor = "rgba(5, 245, 25 , 0.5)")
       );
-      eArr.forEach((e) => {
+      eArr.forEach((e, index) => {
         const { blocks, lines, confidence, hocr, paragraphs, text, words } =
           e.data;
         const deStructuredData = {
           confidence,
           text,
+          imgSrc: recoImages[index].id,
         };
         postImagesTextData(deStructuredData);
-        allImagesTextData.push(deStructuredData);
       });
       recognizeText(scheduler, (index += continues));
     });
@@ -327,7 +326,6 @@ function allTextRecognized() {
   });
   document.querySelector(".btns").style.display = "none";
   // recoBtn.disabled = false;
-  allImagesTextData = [];
 }
 
 function fetchImages() {
