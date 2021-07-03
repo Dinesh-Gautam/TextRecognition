@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/main.css">
+    <!-- Make sure your page supports utf-8 characterset. -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Load TensorFlow.js. This is required to use the qna model. -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"> </script>
+    <!-- Load the qna model. -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/qna"> </script>
     <title>Questioning and Answering</title>
 </head>
 
@@ -15,12 +21,9 @@
         <input id="questionInput" type="text" placeholder="Type Here...">
         <button class="question-searcher-btn">Search</button>
     </form>
-    <!-- Make sure your page supports utf-8 characterset. -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Load TensorFlow.js. This is required to use the qna model. -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"> </script>
-    <!-- Load the qna model. -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/qna"> </script>
+    <div class="result"></div>
+
+
     <script src="./main.js"></script>
 </body>
 

@@ -37,7 +37,16 @@ function findQuestionsAnswers(model) {
           filteredData
         )
         .then((answers) => {
-          console.log("Answers: ", answers);
+          const resultElement = document.querySelector(".result");
+          resultElement.innerHTML = "";
+          const ul = document.createElement("ul");
+          answers.forEach((e) => {
+            const li = document.createElement("li");
+            li.innerText = e.text;
+            ul.appendChild(li);
+          });
+
+          resultElement.appendChild(ul);
         });
     });
 }
