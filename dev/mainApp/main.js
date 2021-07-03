@@ -77,6 +77,20 @@ function displayAnswers(answers) {
     ul.appendChild(li);
   });
   resultElement.appendChild(ul);
+  const paragraphs = indexArr.map((e) => {
+    const p = document.createElement("p");
+    p.innerText = data[e].text;
+    return p;
+  });
+
+  paragraphs.forEach((p) => resultElement.appendChild(p));
+
+  indexArr.forEach((e) => {
+    const { imgSrc } = data[e];
+    const image = document.createElement("img");
+    image.src = "../public" + imgSrc;
+    resultElement.appendChild(image);
+  });
 }
 
 // model
