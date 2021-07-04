@@ -266,7 +266,7 @@ function recognizeText(scheduler, index) {
     const ImagesArr = [];
     const recoImages = [];
     for (let i = 0; i < continues; i++) {
-      console.log("recognizing Text of Image No. :" + (index + i));
+      console.log("recognizing Text of Image No. :" + (index + 1 + i));
       const element = document.querySelectorAll(".root canvas")[index + i];
 
       element.style.borderColor = "rgba(242, 5, 25 , 0.5)";
@@ -279,13 +279,22 @@ function recognizeText(scheduler, index) {
         (e) => (e.style.borderColor = "rgba(5, 245, 25 , 0.5)")
       );
       eArr.forEach((e, index) => {
-        const { blocks, lines, confidence, hocr, paragraphs, text, words } =
-          e.data;
-        const deStructuredData = {
-          confidence,
-          text,
+        // const { blocks, lines, confidence, hocr, paragraphs, text, words } =
+        //   e.data;
+
+        // const deStructuredData = {
+        //   confidence,
+        //   text,
+        //   imgSrc: recoImages[index].id,
+        // };
+        // console.log(e);
+        // postImagesTextData(deStructuredData);
+        console.log(e);
+
+        const deStructuredData = deStructure(e.data, {
           imgSrc: recoImages[index].id,
-        };
+        });
+        console.log(deStructuredData);
         postImagesTextData(deStructuredData);
       });
       recognizeText(scheduler, (index += continues));
@@ -297,6 +306,14 @@ function recognizeText(scheduler, index) {
 
     alert("Text Data is Saved.");
   }
+}
+function deStructure(data, attachedData) {
+  const newObj = {
+    paragraphs: data.paragraphs.map((paragraph) => paragraph.text),
+  };
+
+  Object.assign(newObj, attachedData);
+  return newObj;
 }
 
 function postImagesTextData(data) {
