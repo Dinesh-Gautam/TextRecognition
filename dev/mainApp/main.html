@@ -43,13 +43,13 @@
         <div class="card-header">
             <ul class="nav nav-pills card-header-pills">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">A.I Search</a>
+                    <a class="search nav-link active" href="#">A.I Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Simple Search</a>
+                    <a class="search nav-link" href="#">Simple Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Both</a>
+                    <a class="search nav-link" href="#">Both</a>
                 </li>
             </ul>
         </div>
@@ -65,7 +65,7 @@
             </div>
         </form>
 
-        <form class="simple-search m-2">
+        <form class="d-none simple-search m-2">
             <label class="col-form-label" for="questionInputSimple">Your Question</label>
             <div class="row g-3 align-items-center">
                 <div class="col-10">
@@ -77,7 +77,7 @@
             </div>
         </form>
 
-        <form class="both-Search m-2">
+        <form class="d-none both-Search m-2">
             <label class="col-form-label" for="questionInputSimple">Your Question</label>
             <div class="row g-3 align-items-center">
                 <div class="col-10">
@@ -156,7 +156,7 @@
         </div>
     </div>
 
-    <div class="simple-search-result">
+    <div class="d-none simple-search-result">
         <div class="card">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
@@ -216,6 +216,28 @@
         </div>
     </div>
 
+    <script>
+        function hideUnhideElemnets(hide, unhide) {
+            document.querySelectorAll(hide).forEach(element => {
+                element.classList.add('d-none');
+            })
+            document.querySelectorAll(unhide).forEach(element => {
+                element.classList.remove('d-none');
+            })
+        }
+
+        function navBtnsEventListner(elementClass, toggleClass, cb) {
+            elementClass.forEach(btn => {
+                btn.addEventListener('click', (event) => {
+                    elementClass.forEach(e => e.classList.remove(toggleClass))
+                    event.target.classList.add(toggleClass)
+                    cb()
+                })
+            })
+        }
+
+        navBtnsEventListner(document.querySelectorAll('.search.nav-link'), 'active')
+    </script>
 
 
 
