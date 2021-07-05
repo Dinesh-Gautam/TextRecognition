@@ -38,23 +38,26 @@ function parseSimpleSearchValue(value) {
 
   const resultArr = [];
 
-  const SearchData = data.map((eachData) => {
-    const mapPara = eachData.paragraphs
-      .map((para) => {
-        return para.toLowerCase().match(new RegExp(separateValues[0]), "g");
-      })
-      .filter((para) => para);
-
-    return { ...eachData, paragraphs: mapPara };
-  });
+  const SearchData = data
+    .map((eachData) => {
+      const mapPara = eachData.paragraphs
+        .map((para) => {
+          return separateValues
+            .map((value) => para.toLowerCase().match(new RegExp(value), "g"))
+            .filter((para) => para);
+        })
+        .filter((para) => para.length > 0);
+      return { ...eachData, paragraphs: mapPara };
+    })
+    .filter((arr) => arr.paragraphs.length > 0);
   console.log(SearchData);
 }
 
 // A.I Search
-qna.load().then(
-  // Find the answers
-  findQuestionsAnswers
-);
+// qna.load().then(
+//   // Find the answers
+//   findQuestionsAnswers
+// );
 
 const finalAnswer = [];
 let searchingDone = false;
