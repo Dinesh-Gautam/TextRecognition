@@ -8,7 +8,7 @@ fetch("../recognized.json", { method: "GET", type: "JSON" })
     data = e;
     modifyData();
   })
-  .catch((e) => console.log(e));
+  .catch((e) => console.error(e));
 
 console.log("model loading...");
 
