@@ -289,12 +289,10 @@ function recognizeText(scheduler, index) {
         // };
         // console.log(e);
         // postImagesTextData(deStructuredData);
-        console.log(e);
 
         const deStructuredData = deStructure(e.data, {
           imgSrc: recoImages[index].id,
         });
-        console.log(deStructuredData);
         postImagesTextData(deStructuredData);
       });
       recognizeText(scheduler, (index += continues));

@@ -12,11 +12,6 @@ fetch("../recognized.json", { method: "GET", type: "JSON" })
 
 console.log("model loading...");
 
-qna.load().then(
-  // Find the answers
-  findQuestionsAnswers
-);
-
 function modifyData() {
   data.forEach((e) => {
     e.paragraphs.forEach((para) => {
@@ -26,6 +21,27 @@ function modifyData() {
     });
   });
 }
+// Simple Search
+
+const simpleSearchForm = document.querySelector(".simple-search");
+simpleSearchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const value = simpleSearchForm.querySelector("#questionInputSimple").value;
+
+  const simpleSearchResult = parseSimpleSearchValue(value);
+});
+
+function parseSimpleSearchValue(value) {
+  const separateValues = value
+    .split(" ")
+    .filter((valueWord) => valueWord.length > 2);
+}
+
+// A.I Search
+qna.load().then(
+  // Find the answers
+  findQuestionsAnswers
+);
 
 const finalAnswer = [];
 let searchingDone = false;
