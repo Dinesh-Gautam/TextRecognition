@@ -1,6 +1,6 @@
 const blackAndWhiteThreshold = 2.8, // 1-10 //can be determined by ai
   edgeThreshold = 50; // 1 - 255
-let allImagesTextData = [];
+
 
 const scheduler = Tesseract.createScheduler();
 //-------------------
@@ -288,7 +288,6 @@ function recognizeText(scheduler, index) {
           text,
         };
         postImagesTextData(deStructuredData);
-        allImagesTextData.push(deStructuredData);
       });
       recognizeText(scheduler, (index += continues));
     });
@@ -328,7 +327,6 @@ function allTextRecognized() {
   });
   document.querySelector(".btns").style.display = "none";
   // recoBtn.disabled = false;
-  allImagesTextData = [];
 }
 
 function fetchImages() {
