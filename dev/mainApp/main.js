@@ -35,6 +35,19 @@ function parseSimpleSearchValue(value) {
   const separateValues = value
     .split(" ")
     .filter((valueWord) => valueWord.length > 2);
+
+  const resultArr = [];
+
+  const SearchData = data.map((eachData) => {
+    const mapPara = eachData.paragraphs
+      .map((para) => {
+        return para.toLowerCase().match(new RegExp(separateValues[0]), "g");
+      })
+      .filter((para) => para);
+
+    return { ...eachData, paragraphs: mapPara };
+  });
+  console.log(SearchData);
 }
 
 // A.I Search
