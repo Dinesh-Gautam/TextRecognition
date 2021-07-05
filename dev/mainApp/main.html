@@ -48,9 +48,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Simple Search</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Both</a>
+                </li>
             </ul>
         </div>
-        <form class="A.I Search m-2">
+        <form class="ai-search m-2">
             <label class="col-form-label" for="questionInput">Your Question</label>
             <div class="row g-3 align-items-center">
                 <div class="col-10">
@@ -62,11 +65,24 @@
             </div>
         </form>
 
-        <form class="Simple Search m-2">
+        <form class="simple-search m-2">
             <label class="col-form-label" for="questionInputSimple">Your Question</label>
             <div class="row g-3 align-items-center">
                 <div class="col-10">
                     <input class="form-control" id="questionInputSimple" type="text" placeholder="Simple Search">
+                </div>
+                <div class="col-auto">
+                    <button class=" question-searcher-btn btn btn-primary m-2">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <form class="both-Search m-2">
+            <label class="col-form-label" for="questionInputSimple">Your Question</label>
+            <div class="row g-3 align-items-center">
+                <div class="col-10">
+                    <input class="form-control" id="questionInputSimple" type="text"
+                        placeholder="A.I and Simple Search">
                 </div>
                 <div class="col-auto">
                     <button class=" question-searcher-btn btn btn-primary m-2">Search</button>
@@ -87,7 +103,7 @@
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                         data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
                         aria-controls="panelsStayOpen-collapseOne">
-                        Accordion Item #1
+                        A.I Search result
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
@@ -176,7 +192,7 @@
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
                     aria-controls="panelsStayOpen-collapseTwo">
-                    Accordion Item #2
+                    Simple Search result
                 </button>
             </h2>
             <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
