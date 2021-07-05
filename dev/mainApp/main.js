@@ -1,5 +1,4 @@
 let data = null;
-let filteredData = [];
 let indexArr = [];
 
 fetch("../recognized.json", { method: "GET", type: "JSON" })
@@ -20,11 +19,14 @@ qna.load().then(
 
 function modifyData() {
   data.forEach((e) => {
-    let filteredString = e.text.replace(/[|&;$%@"<>()+,]/g, " ");
-    filteredString = filteredString.replace(/\n/g, " ");
-    filteredData.push(` ${filteredString}`);
+    e.paragraphs.forEach((para) => {
+      let filteredString = para.replace(/[|&;$%@"<>()+,]/g, " ");
+      filteredString = filteredString.replace(/\n/g, " ");
+      para = filteredString;
+    });
   });
 }
+
 const finalAnswer = [];
 let searchingDone = false;
 
