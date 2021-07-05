@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/main.css">
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap -->
+
+
+    <!-- Make sure your page supports utf-8 characterset. -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Load TensorFlow.js. This is required to use the qna model. -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"> </script>
+    <!-- Load the qna model. -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/qna"> </script>
+    <title>Questioning and Answering</title>
+</head>
+
+<body>
+    <!-- <form class="m-2">
+        <label class="col-form-label" for="questionInput">Your Question</label>
+        <div class="row g-3 align-items-center">
+            <div class="col-10">
+                <input class="form-control" id="questionInput" type="text" placeholder="A.I Search...">
+            </div>
+            <div class="col-auto">
+                <button class=" question-searcher-btn btn btn-primary m-2">Search</button>
+            </div>
+        </div>
+    </form> -->
+
+    <div class="card search-container">
+        <div class="card-header">
+            <ul class="nav nav-pills card-header-pills">
+                <li class="nav-item">
+                    <a class="search nav-link active" data-nonTarget="form, .search-result"
+                        data-parent=".search-container" data-target=".ai-search, .ai-search-result">A.I Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="search nav-link" data-nontarget="form, .search-result" data-parent=".search-container"
+                        data-target=".simple-search, .simple-search-result">Simple Search</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="search nav-link" data-nontarget="form" data-parent=".search-container"
+                        data-target=".both-search">Both</a>
+                </li> -->
+            </ul>
+        </div>
+        <form class="ai-search m-2">
+            <label class="col-form-label" for="questionInput">Your Question</label>
+            <div class="row g-3 align-items-center">
+                <div class="col-10">
+                    <input class="form-control" id="questionInput" type="text" placeholder="A.I Search">
+                </div>
+                <div class="col-auto">
+                    <button class=" question-searcher-btn btn btn-primary m-2">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <form class="d-none simple-search m-2">
+            <label class="col-form-label" for="questionInputSimple">Your Question</label>
+            <div class="row g-3 align-items-center">
+                <div class="col-10">
+                    <input class="form-control" id="questionInputSimple" type="text" placeholder="Simple Search">
+                </div>
+                <div class="col-auto">
+                    <button class=" question-searcher-btn btn btn-primary m-2">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <form class="d-none both-search m-2">
+            <label class="col-form-label" for="questionInputSimple">Your Question</label>
+            <div class="row g-3 align-items-center">
+                <div class="col-10">
+                    <input class="form-control" id="questionInputSimple" type="text"
+                        placeholder="A.I and Simple Search">
+                </div>
+                <div class="col-auto">
+                    <button class=" question-searcher-btn btn btn-primary m-2">Search</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <!-- <div class="result"></div> -->
+
+
+
+
+    <div class="ai-search-result search-result">
+        <div class="card">
+            <div class="card-header">
+                <h4>AI Search Result</h4>
+
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="result nav-link active" data-nontarget=".result-body" data-target=".result-body.short"
+                            data-parent=".ai-search-result " aria-current="true">Short Answers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="result nav-link" data-nontarget=".result-body" data-parent=".ai-search-result "
+                            data-target=".result-body.paragraph">Paragraph</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="result nav-link" data-nontarget=".result-body" data-parent=".ai-search-result "
+                            data-target=".image">Image</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="result-body short">
+                    <ul>
+                        <li>The future technology In Wireless communication</li>
+                        <li>The future technology In Wireless communication ABSTRACT</li>
+                        <li>future technology In Wireless communication</li>
+                        <li>future technology In Wireless communication ABSTRACT</li>
+                        <li>Fidetity The future technology In Wireless communication</li>
+                    </ul>
+                </div>
+                <div class="result-body d-none paragraph">
+                    <p>Li-Fi (Light Fidetity)<br>The future technology In Wireless
+                        communication<br>ABSTRACT<br><br>Vehuther
+                        yours
+                        using wirelessinemet i coffe shop, stesling it from the guy et door.or<br>Compating tor
+                        handwidih o
+                        contarence. you have probably sotien trustrted ot the stow<br>Specds ot whetn e than one device
+                        i
+                        tapped
+                        into e netwvork. AS more and more<br>4 One germen phycistHorsld Has b com up with &amp; solution
+                        be
+                        alls
+                        “dots through<br>llumimation” taking e tbber out ot tiber opis by sending dots gl an LED light
+                        bulh<br>b s i
+                        ety fster i th hums cye o follow. 1s the swme idso band behind<br>e remots convols hut tar more
+                        povertal.
+                        Hass sags his invention. which he cols<br>DLIGHT. can produce dats raes taster than 1 megahivs
+                        per
+                        sevond.
+                        which is speedicr than<br>your average brosdhand connecton. He envisions &amp; tutuse where dats
+                        tor
+                        Lptops.
+                        st<br>phoes.wnd talets s st hrough the light n 0 voom. And securty would he suap. it<br>ou a5
+                        the L,
+                        you
+                        con’ s the dut,<br><br>V¥ i o VLC, visible light communisation. eshnology<br>eveloped by o ot
+                        scintists
+                        inluding Dr Gordon Povey. Prot. Harald Haas and Dr<br>Mostats Atgani a the University ot
+                        Edinburgh,
+                        The lem
+                        Li Fi s soined by Irot. Hoas<br>when he sz people by stssming high detiniion video trom o
+                        stndsed
+                        LED Lamp.
+                        o<br>TED Glohsl in July 2001, 13 ¥ is now part ot the Visihle Light Communications 1V1.C<br>PAN
+                        IEEE
+                        502157
+                        standird. “Li Fi i pically implemented using white LED light hulb.<br>hese devices are nommally
+                        wsed
+                        tor
+                        llumintion by aplying s constant current troush the<br>LED, Howsver. by tast nd sublle variaions
+                        o
+                        the
+                        curtent. the optcal output can b mads 1o<br>vary s extemety high speeds. Unseen by the human ey,
+                        tis
+                        soriaton i wsed 10y high<br>Spivd dhtn” suys Dr Povey: . Produst Mansger of the University ot
+                        Edinburghs 1
+                        Fi<br>Progren D Light Projeat<br></p>
+                </div>
+                <div class="result-body d-none image">
+                    <img src="../public/images/text.jpg">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="d-none simple-search-result search-result">
+        <div class="card">
+
+            <div class="card-header">
+                <h4>Simple Search Result</h4>
+
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="result nav-link active" data-nontarget=".result-body" data-target=".result-body.short"
+                            data-parent=".simple-search-result " aria-current="true">Short Answers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="result nav-link" data-nontarget=".result-body" data-parent=".simple-search-result "
+                            data-target=".result-body.paragraph">Paragraph</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="result nav-link" data-nontarget=".result-body" data-parent=".simple-search-result "
+                            data-target=".image">Image</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="result-body short">
+                    <ul>
+                        <li>The future technology In Wireless communication</li>
+                        <li>The future technology In Wireless communication ABSTRACT</li>
+                        <li>future technology In Wireless communication</li>
+                        <li>future technology In Wireless communication ABSTRACT</li>
+                        <li>Fidetity The future technology In Wireless communication</li>
+                    </ul>
+                </div>
+                <div class="result-body d-none paragraph">
+                    <p>Li-Fi (Light Fidetity)<br>The future technology In Wireless
+                        communication<br>ABSTRACT<br><br>Vehuther
+                        yours
+                        using wirelessinemet i coffe shop, stesling it from the guy et door.or<br>Compating tor
+                        handwidih o
+                        contarence. you have probably sotien trustrted ot the stow<br>Specds ot whetn e than one device
+                        i
+                        tapped
+                        into e netwvork. AS more and more<br>4 One germen phycistHorsld Has b com up with &amp; solution
+                        be
+                        alls
+                        “dots through<br>llumimation” taking e tbber out ot tiber opis by sending dots gl an LED light
+                        bulh<br>b s i
+                        ety fster i th hums cye o follow. 1s the swme idso band behind<br>e remots convols hut tar more
+                        povertal.
+                        Hass sags his invention. which he cols<br>DLIGHT. can produce dats raes taster than 1 megahivs
+                        per
+                        sevond.
+                        which is speedicr than<br>your average brosdhand connecton. He envisions &amp; tutuse where dats
+                        tor
+                        Lptops.
+                        st<br>phoes.wnd talets s st hrough the light n 0 voom. And securty would he suap. it<br>ou a5
+                        the L,
+                        you
+                        con’ s the dut,<br><br>V¥ i o VLC, visible light communisation. eshnology<br>eveloped by o ot
+                        scintists
+                        inluding Dr Gordon Povey. Prot. Harald Haas and Dr<br>Mostats Atgani a the University ot
+                        Edinburgh,
+                        The lem
+                        Li Fi s soined by Irot. Hoas<br>when he sz people by stssming high detiniion video trom o
+                        stndsed
+                        LED Lamp.
+                        o<br>TED Glohsl in July 2001, 13 ¥ is now part ot the Visihle Light Communications 1V1.C<br>PAN
+                        IEEE
+                        502157
+                        standird. “Li Fi i pically implemented using white LED light hulb.<br>hese devices are nommally
+                        wsed
+                        tor
+                        llumintion by aplying s constant current troush the<br>LED, Howsver. by tast nd sublle variaions
+                        o
+                        the
+                        curtent. the optcal output can b mads 1o<br>vary s extemety high speeds. Unseen by the human ey,
+                        tis
+                        soriaton i wsed 10y high<br>Spivd dhtn” suys Dr Povey: . Produst Mansger of the University ot
+                        Edinburghs 1
+                        Fi<br>Progren D Light Projeat<br></p>
+                </div>
+                <div class="result-body d-none image">
+                    <img src="../public/images/text.jpg">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function hideUnhideElemnets(hide, unhide) {
+            document.querySelectorAll(hide).forEach(element => {
+                element.classList.add('d-none');
+            })
+            document.querySelectorAll(unhide).forEach(element => {
+                element.classList.remove('d-none');
+            })
+        }
+
+        function navBtnsEventListner(elementClass, toggleClass, cb) {
+            elementClass.forEach(btn => {
+                btn.addEventListener('click', (event) => {
+                    elementClass.forEach(e => { e.classList.remove(toggleClass) })
+                    event.target.classList.add(toggleClass)
+                    const ds = event.target.dataset
+                    cb(ds)
+                })
+            })
+        }
+
+        navBtnsEventListner(document.querySelectorAll('.search.nav-link'), 'active', navBtnCB)
+        navBtnsEventListner(document.querySelectorAll('.result.nav-link'), 'active', navBtnCB)
+
+        function navBtnCB(ds) {
+
+            const { target, parent, nontarget } = ds;;
+            hideUnhideElemnets(nontarget, target)
+        }
+    </script>
+
+
+
+
+
+    <script src="./main.js"></script>
+</body>
+
+</html>

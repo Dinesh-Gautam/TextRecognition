@@ -1,7 +1,6 @@
 const blackAndWhiteThreshold = 2.8, // 1-10 //can be determined by ai
   edgeThreshold = 50; // 1 - 255
 
-
 const scheduler = Tesseract.createScheduler();
 //-------------------
 
@@ -258,17 +257,17 @@ function initTessrect() {
 
 function recognizeText(scheduler, index) {
   recoBtn.disabled = true;
-  if (index < document.querySelectorAll("canvas").length) {
+  if (index < document.querySelectorAll(".root canvas").length) {
     const continues = Math.min(
       Number(document.querySelector("#continuesImages").value),
-      document.querySelectorAll("canvas").length,
-      document.querySelectorAll("canvas").length - index
+      document.querySelectorAll(".root canvas").length,
+      document.querySelectorAll(" .root canvas").length - index
     );
     const ImagesArr = [];
     const recoImages = [];
     for (let i = 0; i < continues; i++) {
-      console.log("recognizing Text of Image No. :" + (index + i));
-      const element = document.querySelectorAll("canvas")[index + i];
+      console.log("recognizing Text of Image No. :" + (index + 1 + i));
+      const element = document.querySelectorAll(".root canvas")[index + i];
 
       element.style.borderColor = "rgba(242, 5, 25 , 0.5)";
       recoImages.push(element);
@@ -279,14 +278,23 @@ function recognizeText(scheduler, index) {
       recoImages.forEach(
         (e) => (e.style.borderColor = "rgba(5, 245, 25 , 0.5)")
       );
-      eArr.forEach((e) => {
-        const { blocks, lines, confidence, hocr, paragraphs, text, words } =
-          e.data;
-        const deStructuredData = {
-          confidence,
-          hocr,
-          text,
-        };
+      eArr.forEach((e, index) => {
+        // const { blocks, lines, confidence, hocr, paragraphs, text, words } =
+        //   e.data;
+
+        // const deStructuredData = {
+        //   confidence,
+        //   text,
+        //   imgSrc: recoImages[index].id,
+        // };
+        // console.log(e);
+        // postImagesTextData(deStructuredData);
+        console.log(e);
+
+        const deStructuredData = deStructure(e.data, {
+          imgSrc: recoImages[index].id,
+        });
+        console.log(deStructuredData);
         postImagesTextData(deStructuredData);
       });
       recognizeText(scheduler, (index += continues));
@@ -298,6 +306,14 @@ function recognizeText(scheduler, index) {
 
     alert("Text Data is Saved.");
   }
+}
+function deStructure(data, attachedData) {
+  const newObj = {
+    paragraphs: data.paragraphs.map((paragraph) => paragraph.text),
+  };
+
+  Object.assign(newObj, attachedData);
+  return newObj;
 }
 
 function postImagesTextData(data) {
