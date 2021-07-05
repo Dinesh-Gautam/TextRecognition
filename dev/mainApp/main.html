@@ -39,18 +39,21 @@
         </div>
     </form> -->
 
-    <div class="card">
+    <div class="card search-container">
         <div class="card-header">
             <ul class="nav nav-pills card-header-pills">
                 <li class="nav-item">
-                    <a class="search nav-link active" href="#">A.I Search</a>
+                    <a class="search nav-link active" data-nonTarget="form, .search-result"
+                        data-parent=".search-container" data-target=".ai-search, .ai-search-result">A.I Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="search nav-link" href="#">Simple Search</a>
+                    <a class="search nav-link" data-nontarget="form, .search-result" data-parent=".search-container"
+                        data-target=".simple-search, .simple-search-result">Simple Search</a>
                 </li>
-                <li class="nav-item">
-                    <a class="search nav-link" href="#">Both</a>
-                </li>
+                <!-- <li class="nav-item">
+                    <a class="search nav-link" data-nontarget="form" data-parent=".search-container"
+                        data-target=".both-search">Both</a>
+                </li> -->
             </ul>
         </div>
         <form class="ai-search m-2">
@@ -77,7 +80,7 @@
             </div>
         </form>
 
-        <form class="d-none both-Search m-2">
+        <form class="d-none both-search m-2">
             <label class="col-form-label" for="questionInputSimple">Your Question</label>
             <div class="row g-3 align-items-center">
                 <div class="col-10">
@@ -96,122 +99,174 @@
 
 
 
-    <div class="ai-search-result">
+    <div class="ai-search-result search-result">
         <div class="card">
             <div class="card-header">
+                <h4>AI Search Result</h4>
+
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="true" href="#">Short Answers</a>
+                        <a class="result nav-link active" data-nontarget=".result-body" data-target=".result-body.short"
+                            data-parent=".ai-search-result " aria-current="true">Short Answers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Paragraph</a>
+                        <a class="result nav-link" data-nontarget=".result-body" data-parent=".ai-search-result "
+                            data-target=".result-body.paragraph">Paragraph</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Image</a>
+                        <a class="result nav-link" data-nontarget=".result-body" data-parent=".ai-search-result "
+                            data-target=".image">Image</a>
                     </li>
                 </ul>
             </div>
             <div class="card-body">
-                <ul>
-                    <li>The future technology In Wireless communication</li>
-                    <li>The future technology In Wireless communication ABSTRACT</li>
-                    <li>future technology In Wireless communication</li>
-                    <li>future technology In Wireless communication ABSTRACT</li>
-                    <li>Fidetity The future technology In Wireless communication</li>
-                </ul>
-                <p>Li-Fi (Light Fidetity)<br>The future technology In Wireless communication<br>ABSTRACT<br><br>Vehuther
-                    yours
-                    using wirelessinemet i coffe shop, stesling it from the guy et door.or<br>Compating tor handwidih o
-                    contarence. you have probably sotien trustrted ot the stow<br>Specds ot whetn e than one device i
-                    tapped
-                    into e netwvork. AS more and more<br>4 One germen phycistHorsld Has b com up with &amp; solution be
-                    alls
-                    “dots through<br>llumimation” taking e tbber out ot tiber opis by sending dots gl an LED light
-                    bulh<br>b s i
-                    ety fster i th hums cye o follow. 1s the swme idso band behind<br>e remots convols hut tar more
-                    povertal.
-                    Hass sags his invention. which he cols<br>DLIGHT. can produce dats raes taster than 1 megahivs per
-                    sevond.
-                    which is speedicr than<br>your average brosdhand connecton. He envisions &amp; tutuse where dats tor
-                    Lptops.
-                    st<br>phoes.wnd talets s st hrough the light n 0 voom. And securty would he suap. it<br>ou a5 the L,
-                    you
-                    con’ s the dut,<br><br>V¥ i o VLC, visible light communisation. eshnology<br>eveloped by o ot
-                    scintists
-                    inluding Dr Gordon Povey. Prot. Harald Haas and Dr<br>Mostats Atgani a the University ot Edinburgh,
-                    The lem
-                    Li Fi s soined by Irot. Hoas<br>when he sz people by stssming high detiniion video trom o stndsed
-                    LED Lamp.
-                    o<br>TED Glohsl in July 2001, 13 ¥ is now part ot the Visihle Light Communications 1V1.C<br>PAN IEEE
-                    502157
-                    standird. “Li Fi i pically implemented using white LED light hulb.<br>hese devices are nommally wsed
-                    tor
-                    llumintion by aplying s constant current troush the<br>LED, Howsver. by tast nd sublle variaions o
-                    the
-                    curtent. the optcal output can b mads 1o<br>vary s extemety high speeds. Unseen by the human ey, tis
-                    soriaton i wsed 10y high<br>Spivd dhtn” suys Dr Povey: . Produst Mansger of the University ot
-                    Edinburghs 1
-                    Fi<br>Progren D Light Projeat<br></p><img src="../public/images/text.jpg">
+                <div class="result-body short">
+                    <ul>
+                        <li>The future technology In Wireless communication</li>
+                        <li>The future technology In Wireless communication ABSTRACT</li>
+                        <li>future technology In Wireless communication</li>
+                        <li>future technology In Wireless communication ABSTRACT</li>
+                        <li>Fidetity The future technology In Wireless communication</li>
+                    </ul>
+                </div>
+                <div class="result-body d-none paragraph">
+                    <p>Li-Fi (Light Fidetity)<br>The future technology In Wireless
+                        communication<br>ABSTRACT<br><br>Vehuther
+                        yours
+                        using wirelessinemet i coffe shop, stesling it from the guy et door.or<br>Compating tor
+                        handwidih o
+                        contarence. you have probably sotien trustrted ot the stow<br>Specds ot whetn e than one device
+                        i
+                        tapped
+                        into e netwvork. AS more and more<br>4 One germen phycistHorsld Has b com up with &amp; solution
+                        be
+                        alls
+                        “dots through<br>llumimation” taking e tbber out ot tiber opis by sending dots gl an LED light
+                        bulh<br>b s i
+                        ety fster i th hums cye o follow. 1s the swme idso band behind<br>e remots convols hut tar more
+                        povertal.
+                        Hass sags his invention. which he cols<br>DLIGHT. can produce dats raes taster than 1 megahivs
+                        per
+                        sevond.
+                        which is speedicr than<br>your average brosdhand connecton. He envisions &amp; tutuse where dats
+                        tor
+                        Lptops.
+                        st<br>phoes.wnd talets s st hrough the light n 0 voom. And securty would he suap. it<br>ou a5
+                        the L,
+                        you
+                        con’ s the dut,<br><br>V¥ i o VLC, visible light communisation. eshnology<br>eveloped by o ot
+                        scintists
+                        inluding Dr Gordon Povey. Prot. Harald Haas and Dr<br>Mostats Atgani a the University ot
+                        Edinburgh,
+                        The lem
+                        Li Fi s soined by Irot. Hoas<br>when he sz people by stssming high detiniion video trom o
+                        stndsed
+                        LED Lamp.
+                        o<br>TED Glohsl in July 2001, 13 ¥ is now part ot the Visihle Light Communications 1V1.C<br>PAN
+                        IEEE
+                        502157
+                        standird. “Li Fi i pically implemented using white LED light hulb.<br>hese devices are nommally
+                        wsed
+                        tor
+                        llumintion by aplying s constant current troush the<br>LED, Howsver. by tast nd sublle variaions
+                        o
+                        the
+                        curtent. the optcal output can b mads 1o<br>vary s extemety high speeds. Unseen by the human ey,
+                        tis
+                        soriaton i wsed 10y high<br>Spivd dhtn” suys Dr Povey: . Produst Mansger of the University ot
+                        Edinburghs 1
+                        Fi<br>Progren D Light Projeat<br></p>
+                </div>
+                <div class="result-body d-none image">
+                    <img src="../public/images/text.jpg">
+                </div>
+
             </div>
         </div>
     </div>
 
-    <div class="d-none simple-search-result">
+    <div class="d-none simple-search-result search-result">
         <div class="card">
+
             <div class="card-header">
+                <h4>Simple Search Result</h4>
+
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="true" href="#">Short Answers</a>
+                        <a class="result nav-link active" data-nontarget=".result-body" data-target=".result-body.short"
+                            data-parent=".simple-search-result " aria-current="true">Short Answers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Paragraph</a>
+                        <a class="result nav-link" data-nontarget=".result-body" data-parent=".simple-search-result "
+                            data-target=".result-body.paragraph">Paragraph</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Image</a>
+                        <a class="result nav-link" data-nontarget=".result-body" data-parent=".simple-search-result "
+                            data-target=".image">Image</a>
                     </li>
                 </ul>
             </div>
             <div class="card-body">
-                <ul>
-                    <li>The future technology In Wireless communication</li>
-                    <li>The future technology In Wireless communication ABSTRACT</li>
-                    <li>future technology In Wireless communication</li>
-                    <li>future technology In Wireless communication ABSTRACT</li>
-                    <li>Fidetity The future technology In Wireless communication</li>
-                </ul>
-                <p>Li-Fi (Light Fidetity)<br>The future technology In Wireless communication<br>ABSTRACT<br><br>Vehuther
-                    yours
-                    using wirelessinemet i coffe shop, stesling it from the guy et door.or<br>Compating tor handwidih o
-                    contarence. you have probably sotien trustrted ot the stow<br>Specds ot whetn e than one device i
-                    tapped
-                    into e netwvork. AS more and more<br>4 One germen phycistHorsld Has b com up with &amp; solution be
-                    alls
-                    “dots through<br>llumimation” taking e tbber out ot tiber opis by sending dots gl an LED light
-                    bulh<br>b s i
-                    ety fster i th hums cye o follow. 1s the swme idso band behind<br>e remots convols hut tar more
-                    povertal.
-                    Hass sags his invention. which he cols<br>DLIGHT. can produce dats raes taster than 1 megahivs per
-                    sevond.
-                    which is speedicr than<br>your average brosdhand connecton. He envisions &amp; tutuse where dats tor
-                    Lptops.
-                    st<br>phoes.wnd talets s st hrough the light n 0 voom. And securty would he suap. it<br>ou a5 the L,
-                    you
-                    con’ s the dut,<br><br>V¥ i o VLC, visible light communisation. eshnology<br>eveloped by o ot
-                    scintists
-                    inluding Dr Gordon Povey. Prot. Harald Haas and Dr<br>Mostats Atgani a the University ot Edinburgh,
-                    The lem
-                    Li Fi s soined by Irot. Hoas<br>when he sz people by stssming high detiniion video trom o stndsed
-                    LED Lamp.
-                    o<br>TED Glohsl in July 2001, 13 ¥ is now part ot the Visihle Light Communications 1V1.C<br>PAN IEEE
-                    502157
-                    standird. “Li Fi i pically implemented using white LED light hulb.<br>hese devices are nommally wsed
-                    tor
-                    llumintion by aplying s constant current troush the<br>LED, Howsver. by tast nd sublle variaions o
-                    the
-                    curtent. the optcal output can b mads 1o<br>vary s extemety high speeds. Unseen by the human ey, tis
-                    soriaton i wsed 10y high<br>Spivd dhtn” suys Dr Povey: . Produst Mansger of the University ot
-                    Edinburghs 1
-                    Fi<br>Progren D Light Projeat<br></p><img src="../public/images/text.jpg">
+                <div class="result-body short">
+                    <ul>
+                        <li>The future technology In Wireless communication</li>
+                        <li>The future technology In Wireless communication ABSTRACT</li>
+                        <li>future technology In Wireless communication</li>
+                        <li>future technology In Wireless communication ABSTRACT</li>
+                        <li>Fidetity The future technology In Wireless communication</li>
+                    </ul>
+                </div>
+                <div class="result-body d-none paragraph">
+                    <p>Li-Fi (Light Fidetity)<br>The future technology In Wireless
+                        communication<br>ABSTRACT<br><br>Vehuther
+                        yours
+                        using wirelessinemet i coffe shop, stesling it from the guy et door.or<br>Compating tor
+                        handwidih o
+                        contarence. you have probably sotien trustrted ot the stow<br>Specds ot whetn e than one device
+                        i
+                        tapped
+                        into e netwvork. AS more and more<br>4 One germen phycistHorsld Has b com up with &amp; solution
+                        be
+                        alls
+                        “dots through<br>llumimation” taking e tbber out ot tiber opis by sending dots gl an LED light
+                        bulh<br>b s i
+                        ety fster i th hums cye o follow. 1s the swme idso band behind<br>e remots convols hut tar more
+                        povertal.
+                        Hass sags his invention. which he cols<br>DLIGHT. can produce dats raes taster than 1 megahivs
+                        per
+                        sevond.
+                        which is speedicr than<br>your average brosdhand connecton. He envisions &amp; tutuse where dats
+                        tor
+                        Lptops.
+                        st<br>phoes.wnd talets s st hrough the light n 0 voom. And securty would he suap. it<br>ou a5
+                        the L,
+                        you
+                        con’ s the dut,<br><br>V¥ i o VLC, visible light communisation. eshnology<br>eveloped by o ot
+                        scintists
+                        inluding Dr Gordon Povey. Prot. Harald Haas and Dr<br>Mostats Atgani a the University ot
+                        Edinburgh,
+                        The lem
+                        Li Fi s soined by Irot. Hoas<br>when he sz people by stssming high detiniion video trom o
+                        stndsed
+                        LED Lamp.
+                        o<br>TED Glohsl in July 2001, 13 ¥ is now part ot the Visihle Light Communications 1V1.C<br>PAN
+                        IEEE
+                        502157
+                        standird. “Li Fi i pically implemented using white LED light hulb.<br>hese devices are nommally
+                        wsed
+                        tor
+                        llumintion by aplying s constant current troush the<br>LED, Howsver. by tast nd sublle variaions
+                        o
+                        the
+                        curtent. the optcal output can b mads 1o<br>vary s extemety high speeds. Unseen by the human ey,
+                        tis
+                        soriaton i wsed 10y high<br>Spivd dhtn” suys Dr Povey: . Produst Mansger of the University ot
+                        Edinburghs 1
+                        Fi<br>Progren D Light Projeat<br></p>
+                </div>
+                <div class="result-body d-none image">
+                    <img src="../public/images/text.jpg">
+                </div>
             </div>
         </div>
     </div>
@@ -229,14 +284,23 @@
         function navBtnsEventListner(elementClass, toggleClass, cb) {
             elementClass.forEach(btn => {
                 btn.addEventListener('click', (event) => {
-                    elementClass.forEach(e => e.classList.remove(toggleClass))
+                    elementClass.forEach(e => { e.classList.remove(toggleClass) })
                     event.target.classList.add(toggleClass)
-                    cb()
+                    const ds = event.target.dataset
+                    cb(ds)
                 })
             })
         }
 
-        navBtnsEventListner(document.querySelectorAll('.search.nav-link'), 'active')
+        navBtnsEventListner(document.querySelectorAll('.search.nav-link'), 'active', navBtnCB)
+        navBtnsEventListner(document.querySelectorAll('.result.nav-link'), 'active', navBtnCB)
+
+        function navBtnCB(ds) {
+
+            const { target, parent, nontarget } = ds;;
+            document.querySelectorAll(nontarget).forEach(e => e.classList.add('d-none'))
+            document.querySelectorAll(target).forEach(e => e.classList.remove('d-none'))
+        }
     </script>
 
 
