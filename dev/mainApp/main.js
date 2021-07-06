@@ -34,9 +34,9 @@ simpleSearchForm.addEventListener("submit", (event) => {
 });
 
 function parseSimpleSearchValue(value) {
-  const separateValues = value
-    .split(" ")
-    .filter((valueWord) => valueWord.length > 2);
+  const separateValues = [value];
+  // .split(" ")
+  // .filter((valueWord) => valueWord.length > 2);
 
   return data
     .map((eachData) => {
