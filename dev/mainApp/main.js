@@ -30,6 +30,7 @@ simpleSearchForm.addEventListener("submit", (event) => {
   const value = simpleSearchForm.querySelector("#questionInputSimple").value;
 
   const simpleSearchResult = parseSimpleSearchValue(value);
+  displayAnswers(".simple-search-result", simpleSearchResult);
 });
 
 function parseSimpleSearchValue(value) {
@@ -37,9 +38,7 @@ function parseSimpleSearchValue(value) {
     .split(" ")
     .filter((valueWord) => valueWord.length > 2);
 
-  const resultArr = [];
-
-  const SearchData = data
+  return data
     .map((eachData) => {
       const mapPara = eachData.paragraphs
         .map((para) => {
@@ -51,7 +50,6 @@ function parseSimpleSearchValue(value) {
       return { ...eachData, paragraphs: mapPara };
     })
     .filter((arr) => arr.paragraphs.length > 0);
-  console.log(SearchData);
 }
 
 // A.I Search
@@ -106,12 +104,17 @@ function displayAnswers(parentElement, answers) {
   const [short, paragraph, image] = document.querySelectorAll(
     parentElement + " " + ".result-body"
   );
-  const shortAnswer = creatAnswerElement("ul", "li", ["Hello", "World"]);
+  const shortAnswer = creatAnswerElement("ul", "li", synthesisAnswer(answers));
 
   short.appendChild(shortAnswer);
 }
+function synthesisAnswer(answers) {
+  return [answers[0].paragraphs[0][0].input];
+  // return answers[0].paragraphs.map((para) => para.input);
+}
 
 function creatAnswerElement(ele, innerEle, innerHTML) {
+  console.log(innerHTML);
   const element = document.createElement(ele);
 
   innerHTML.forEach((e) => {
@@ -122,8 +125,6 @@ function creatAnswerElement(ele, innerEle, innerHTML) {
 
   return element;
 }
-
-displayAnswers(".simple-search-result");
 
 // function displayAnswers(parentElement , answers) {
 //   const resultElement = document.querySelector(".result-body");
