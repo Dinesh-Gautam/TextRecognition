@@ -20,8 +20,6 @@ function modifyData() {
       return para;
     });
   });
-
-  console.log(data);
 }
 
 // Simple Search
@@ -104,31 +102,54 @@ function allParagraphsSearched() {
   displayAnswers(finalAnswer);
 }
 
-function displayAnswers(answers) {
-  const resultElement = document.querySelector(".result");
-  resultElement.innerHTML = "";
-  const ul = document.createElement("ul");
-  answers.forEach((e) => {
-    const li = document.createElement("li");
-    li.innerText = e.text;
-    ul.appendChild(li);
-  });
-  resultElement.appendChild(ul);
-  const paragraphs = indexArr.map((e) => {
-    const p = document.createElement("p");
-    p.innerText = data[e].text;
-    return p;
-  });
+function displayAnswers(parentElement, answers) {
+  const [short, paragraph, image] = document.querySelectorAll(
+    parentElement + " " + ".result-body"
+  );
+  const shortAnswer = creatAnswerElement("ul", "li", ["Hello", "World"]);
 
-  paragraphs.forEach((p) => resultElement.appendChild(p));
-
-  indexArr.forEach((e) => {
-    const { imgSrc } = data[e];
-    const image = document.createElement("img");
-    image.src = "../public" + imgSrc;
-    resultElement.appendChild(image);
-  });
+  short.appendChild(shortAnswer);
 }
+
+function creatAnswerElement(ele, innerEle, innerHTML) {
+  const element = document.createElement(ele);
+
+  innerHTML.forEach((e) => {
+    const innerElement = document.createElement(innerEle);
+    innerElement.innerHTML = e;
+    element.appendChild(innerElement);
+  });
+
+  return element;
+}
+
+displayAnswers(".simple-search-result");
+
+// function displayAnswers(parentElement , answers) {
+//   const resultElement = document.querySelector(".result-body");
+//   resultElement.innerHTML = "";
+//   const ul = document.createElement("ul");
+//   answers.forEach((e) => {
+//     const li = document.createElement("li");
+//     li.innerText = e.text;
+//     ul.appendChild(li);
+//   });
+//   resultElement.appendChild(ul);
+//   const paragraphs = indexArr.map((e) => {
+//     const p = document.createElement("p");
+//     p.innerText = data[e].text;
+//     return p;
+//   });
+
+//   paragraphs.forEach((p) => resultElement.appendChild(p));
+
+//   indexArr.forEach((e) => {
+//     const { imgSrc } = data[e];
+//     const image = document.createElement("img");
+//     image.src = "../public" + imgSrc;
+//     resultElement.appendChild(image);
+//   });
+// }
 
 // model
 //   .findAnswers(document.getElementById("questionInput").value, filteredData)
