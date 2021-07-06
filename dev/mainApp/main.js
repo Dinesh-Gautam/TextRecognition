@@ -14,13 +14,16 @@ console.log("model loading...");
 
 function modifyData() {
   data.forEach((e) => {
-    e.paragraphs.forEach((para) => {
+    e.paragraphs = e.paragraphs.map((para) => {
       let filteredString = para.replace(/[|&;$%@"<>()+,]/g, " ");
-      filteredString = filteredString.replace(/\n/g, " ");
-      para = filteredString;
+      para = filteredString.replace(/\n/g, " ").replace(/\s+/g, " ").trim();
+      return para;
     });
   });
+
+  console.log(data);
 }
+
 // Simple Search
 
 const simpleSearchForm = document.querySelector(".simple-search");
