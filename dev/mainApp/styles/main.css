@@ -8,4 +8,9 @@
 a {
   cursor: pointer;
 }
+
+.highlight-text {
+  background-color: yellow;
+  font-weight: normal;
+}
 /*# sourceMappingURL=main.css.map */

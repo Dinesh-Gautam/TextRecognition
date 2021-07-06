@@ -109,7 +109,21 @@ function displayAnswers(parentElement, answers) {
   short.appendChild(shortAnswer);
 }
 function synthesisAnswer(answers) {
-  return [answers[0].paragraphs[0][0].input];
+  sourceStringArr = answers[0].paragraphs[0][0];
+  // const modString = sourceStringArr.input.split("")[sourceStringArr.index];
+  console.log();
+  const modString = `${sourceStringArr.input.slice(
+    0,
+    sourceStringArr.index
+  )}<span class="highlight-text">${sourceStringArr.input.slice(
+    sourceStringArr.index,
+    sourceStringArr.index + sourceStringArr[0].length
+  )}</span>${sourceStringArr.input.slice(
+    sourceStringArr.index + sourceStringArr[0].length,
+    sourceStringArr.input.length
+  )}`;
+  console.log(modString);
+  return [modString];
   // return answers[0].paragraphs.map((para) => para.input);
 }
 
