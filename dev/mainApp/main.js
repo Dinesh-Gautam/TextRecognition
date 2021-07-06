@@ -39,15 +39,20 @@ function parseSimpleSearchValue(value) {
   // .filter((valueWord) => valueWord.length > 2);
 
   return data
-    .map((eachData) => {
+    .map((eachData, index) => {
       const mapPara = eachData.paragraphs
-        .map((para) => {
+        .map((para, index) => {
           return separateValues
-            .map((value) => para.toLowerCase().match(new RegExp(value), "g"))
+            .map((value) => {
+              const match = para.toLowerCase().match(new RegExp(value), "g");
+              if (match === null) return;
+              match.paragraphIndex = index;
+              return match;
+            })
             .filter((para) => para);
         })
         .filter((para) => para.length > 0);
-      return { ...eachData, paragraphs: mapPara };
+      return { ...eachData, sourceIndex: index, paragraphs: mapPara };
     })
     .filter((arr) => arr.paragraphs.length > 0);
 }
@@ -105,26 +110,59 @@ function displayAnswers(parentElement, answers) {
     parentElement + " " + ".result-body"
   );
   const shortAnswer = answers.map((ans) =>
-    creatAnswerElement("ul", "li", synthesisAnswer(ans))
+    creatAnswerElement("ul", "li", synthesisAnswer(ans.paragraphs))
   );
+  const wholeParagraph = answers.map((ans) => {
+    const sourceParagraph = [...data[ans.sourceIndex].paragraphs];
+    const ansParagraphs = ans.paragraphs;
+    const matchedParagraphs = ans.paragraphs.map(
+      (para) => para[0].paragraphIndex
+    );
+    matchedParagraphs.forEach((paraIndex, index) => {
+      sourceParagraph[paraIndex] = synthesisAnswer([ansParagraphs[index]]).join(
+        ""
+      );
+    });
+    return sourceParagraph.join("<br>");
+  });
+  const imageAnswers = answers.map((ans) => {
+    const { imgSrc } = ans;
+    const img = document.createElement("img");
+    img.src = "../public/" + imgSrc;
+    return img;
+  });
+
+  console.log(wholeParagraph);
   short.innerHTML = "";
+  paragraph.innerHTML = "";
+  image.innerHTML = "";
   shortAnswer.forEach((ans) => short.appendChild(ans));
+  wholeParagraph.forEach((ans) =>
+    paragraph.appendChild(creatAnswerElement("div", "p", [ans]))
+  );
+  imageAnswers.forEach((img) => image.appendChild(img));
 }
-function synthesisAnswer(answers) {
-  const sourceStringArr = answers.paragraphs;
+function synthesisAnswer(sourceStringArr) {
   // const modString = sourceStringArr.input.split("")[sourceStringArr.index];
 
   return sourceStringArr.map((string) => {
     string = string[0];
+
+    let matchedWordIndex = {
+      stringStarting: 0,
+      wordStarting: string.index,
+      wordEnding: string.index + string[0].length,
+      stringEnding: string.input.length,
+    };
     return `${string.input.slice(
-      0,
-      string.index
+      matchedWordIndex.stringStarting,
+      matchedWordIndex.wordStarting
     )}<span class="highlight-text">${string.input.slice(
-      string.index,
-      string.index + string[0].length
+      matchedWordIndex.wordStarting,
+      matchedWordIndex.wordEnding
     )}</span>${string.input.slice(
-      string.index + string[0].length,
-      string.input.length
+      matchedWordIndex.wordEnding,
+      matchedWordIndex.stringEnding
     )}`;
   });
   // return answers[0].paragraphs.map((para) => para.input);
