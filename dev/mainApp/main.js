@@ -104,31 +104,33 @@ function displayAnswers(parentElement, answers) {
   const [short, paragraph, image] = document.querySelectorAll(
     parentElement + " " + ".result-body"
   );
-  const shortAnswer = creatAnswerElement("ul", "li", synthesisAnswer(answers));
-
-  short.appendChild(shortAnswer);
+  const shortAnswer = answers.map((ans) =>
+    creatAnswerElement("ul", "li", synthesisAnswer(ans))
+  );
+  short.innerHTML = "";
+  shortAnswer.forEach((ans) => short.appendChild(ans));
 }
 function synthesisAnswer(answers) {
-  sourceStringArr = answers[0].paragraphs[0][0];
+  const sourceStringArr = answers.paragraphs;
   // const modString = sourceStringArr.input.split("")[sourceStringArr.index];
-  console.log();
-  const modString = `${sourceStringArr.input.slice(
-    0,
-    sourceStringArr.index
-  )}<span class="highlight-text">${sourceStringArr.input.slice(
-    sourceStringArr.index,
-    sourceStringArr.index + sourceStringArr[0].length
-  )}</span>${sourceStringArr.input.slice(
-    sourceStringArr.index + sourceStringArr[0].length,
-    sourceStringArr.input.length
-  )}`;
-  console.log(modString);
-  return [modString];
+
+  return sourceStringArr.map((string) => {
+    string = string[0];
+    return `${string.input.slice(
+      0,
+      string.index
+    )}<span class="highlight-text">${string.input.slice(
+      string.index,
+      string.index + string[0].length
+    )}</span>${string.input.slice(
+      string.index + string[0].length,
+      string.input.length
+    )}`;
+  });
   // return answers[0].paragraphs.map((para) => para.input);
 }
 
 function creatAnswerElement(ele, innerEle, innerHTML) {
-  console.log(innerHTML);
   const element = document.createElement(ele);
 
   innerHTML.forEach((e) => {
