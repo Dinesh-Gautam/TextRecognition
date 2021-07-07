@@ -48,7 +48,18 @@ function parseSimpleSearchValue(value, type) {
 
   switch (type) {
     case "soft":
-      separateValues = [value];
+      separateValues = [
+        value
+          .split("")
+          .map(
+            (v, index, arr) =>
+              v +
+              (arr[index + 1] || "") +
+              (arr[index + 2] || "") +
+              (arr[index + 3] || "")
+          )
+          .join(" "),
+      ];
       break;
     case "hard":
       separateValues = [value];
@@ -62,30 +73,16 @@ function parseSimpleSearchValue(value, type) {
       ];
       break;
   }
-  console.log(separateValues);
 
+  console.log(separateValues);
   return data
     .map((eachData, index) => {
       const mapPara = eachData.paragraphs
         .map((para, index) => {
           return separateValues
             .map((value) => {
-              let match;
-              if (type === "soft") {
-                match = para.toLowerCase().match(
-                  new RegExp(
-                    value
-                      .split("")
-                      .map((x) => {
-                        return `(?=.*${x})`;
-                      })
-                      .join("")
-                  ),
-                  "g"
-                );
-              } else {
-                match = para.toLowerCase().match(new RegExp(value), "g");
-              }
+              let match = para.toLowerCase().match(new RegExp(value), "g");
+
               if (match === null) return;
               match.paragraphIndex = index;
               return match;
