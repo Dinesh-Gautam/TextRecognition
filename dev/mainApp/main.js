@@ -58,10 +58,10 @@ function parseSimpleSearchValue(value) {
 }
 
 // A.I Search
-// qna.load().then(
-//   // Find the answers
-//   findQuestionsAnswers
-// );
+qna.load().then(
+  // Find the answers
+  findQuestionsAnswers
+);
 
 const finalAnswer = [];
 let searchingDone = false;
@@ -69,13 +69,16 @@ let searchingDone = false;
 function findQuestionsAnswers(model) {
   console.log("Model Loaded!");
   document
-    .querySelector(".question-searcher-btn")
+    .querySelector(".ai-question-searcher-btn")
     .addEventListener("click", (e) => {
       e.preventDefault();
 
-      filteredData.forEach((string, index) => {
+      data.forEach((string, index) => {
         model
-          .findAnswers(document.getElementById("questionInput").value, string)
+          .findAnswers(
+            document.querySelector(".ai-search #questionInput").value,
+            string.paragraphs.join(" ")
+          )
           .then((answers) => {
             if (answers.length > 0) {
               answers.forEach((e) => {
@@ -83,7 +86,7 @@ function findQuestionsAnswers(model) {
                 finalAnswer.push(e);
               });
             }
-            if (index + 1 === filteredData.length) {
+            if (index + 1 === data.length) {
               searchingDone = true;
             } else {
               searchingDone = false;
@@ -102,7 +105,38 @@ function allParagraphsSearched() {
   finalAnswer.forEach((e) => refIndexArr.push(e.index));
 
   indexArr = [...new Set(refIndexArr)];
-  displayAnswers(finalAnswer);
+
+  console.log(finalAnswer);
+
+  displayAiAnswers(".ai-search-result", finalAnswer, indexArr);
+}
+
+function displayAiAnswers(parentElement, aiAnswers, paragraphsIndex) {
+  const [short, paragraph, image] = document.querySelectorAll(
+    parentElement + " " + ".result-body"
+  );
+
+  const ulElement = aiAnswers.map(({ text }) =>
+    creatAnswerElement("ul", "li", [text])
+  );
+
+  const paragraphsElement = paragraphsIndex.map((indexNo) =>
+    creatAnswerElement("div", "p", [data[indexNo].paragraphs.join("<br>")])
+  );
+
+  const imgElement = paragraphsIndex.map((index) => {
+    const { imgSrc } = data[index];
+    const img = document.createElement("img");
+    img.src = "../public/" + imgSrc;
+    return img;
+  });
+
+  short.innerHTML = "";
+  paragraph.innerHTML = "";
+  image.innerHTML = "";
+  ulElement.forEach((ans) => short.appendChild(ans));
+  paragraphsElement.forEach((para) => paragraph.appendChild(para));
+  imgElement.forEach((img) => image.appendChild(img));
 }
 
 function displayAnswers(parentElement, answers) {
@@ -132,7 +166,6 @@ function displayAnswers(parentElement, answers) {
     return img;
   });
 
-  console.log(wholeParagraph);
   short.innerHTML = "";
   paragraph.innerHTML = "";
   image.innerHTML = "";
