@@ -63,16 +63,18 @@ qna.load().then(
   findQuestionsAnswers
 );
 
-const finalAnswer = [];
+let finalAnswer = [];
 let searchingDone = false;
 
 function findQuestionsAnswers(model) {
   console.log("Model Loaded!");
+  document.querySelector(".ai-question-searcher-btn").disabled = false;
   document
     .querySelector(".ai-question-searcher-btn")
     .addEventListener("click", (e) => {
       e.preventDefault();
 
+      finalAnswer = [];
       data.forEach((string, index) => {
         model
           .findAnswers(
