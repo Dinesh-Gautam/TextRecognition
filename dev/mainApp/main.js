@@ -24,19 +24,45 @@ function modifyData() {
 
 // Simple Search
 
-const simpleSearchForm = document.querySelector(".simple-search");
-simpleSearchForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const value = simpleSearchForm.querySelector("#questionInputSimple").value;
+const simpleSearchBtn = document.querySelectorAll(
+  ".simple-question-search-btn"
+);
 
-  const simpleSearchResult = parseSimpleSearchValue(value);
-  displayAnswers(".simple-search-result", simpleSearchResult);
+simpleSearchBtn.forEach((btn) => {
+  btn.addEventListener("click", (event) => {
+    event.preventDefault();
+    const value = document.querySelector(
+      ".simple-search #questionInputSimple"
+    ).value;
+    const btnType = event.target.dataset.type;
+    const simpleSearchResult = parseSimpleSearchValue(value, btnType);
+    displayAnswers(".simple-search-result", simpleSearchResult);
+  });
 });
 
-function parseSimpleSearchValue(value) {
-  const separateValues = [value];
+function parseSimpleSearchValue(value, type) {
+  let separateValues = null;
+  // const separateValues = [value];
   // .split(" ")
   // .filter((valueWord) => valueWord.length > 2);
+
+  switch (type) {
+    case "soft":
+      separateValues = [value];
+      break;
+    case "hard":
+      separateValues = [value];
+      break;
+    default:
+      separateValues = [
+        value
+          .split(" ")
+          .filter((valueWord) => valueWord.length > 2)
+          .join(" "),
+      ];
+      break;
+  }
+  console.log(separateValues);
 
   return data
     .map((eachData, index) => {
@@ -44,7 +70,22 @@ function parseSimpleSearchValue(value) {
         .map((para, index) => {
           return separateValues
             .map((value) => {
-              const match = para.toLowerCase().match(new RegExp(value), "g");
+              let match;
+              if (type === "soft") {
+                match = para.toLowerCase().match(
+                  new RegExp(
+                    value
+                      .split("")
+                      .map((x) => {
+                        return `(?=.*${x})`;
+                      })
+                      .join("")
+                  ),
+                  "g"
+                );
+              } else {
+                match = para.toLowerCase().match(new RegExp(value), "g");
+              }
               if (match === null) return;
               match.paragraphIndex = index;
               return match;
