@@ -13,4 +13,8 @@ a {
   background-color: yellow;
   font-weight: normal;
 }
+
+.result-body img {
+  max-width: 50%;
+}
 /*# sourceMappingURL=main.css.map */
