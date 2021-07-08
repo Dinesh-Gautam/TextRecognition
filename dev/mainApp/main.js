@@ -94,10 +94,10 @@ function parseSimpleSearchValue(value, type) {
 }
 
 // A.I Search
-// qna.load().then(
-//   // Find the answers
-//   findQuestionsAnswers
-// );
+qna.load().then(
+  // Find the answers
+  findQuestionsAnswers
+);
 
 let finalAnswer = [];
 let searchingDone = false;
@@ -144,8 +144,6 @@ function allParagraphsSearched() {
 
   indexArr = [...new Set(refIndexArr)];
 
-  console.log(finalAnswer);
-
   displayAiAnswers(".ai-search-result", finalAnswer, indexArr);
 }
 
@@ -164,9 +162,15 @@ function displayAiAnswers(parentElement, aiAnswers, paragraphsIndex) {
 
   const imgElement = paragraphsIndex.map((index) => {
     const { imgSrc } = data[index];
+    const div = document.createElement("div");
     const img = document.createElement("img");
+    const span = document.createElement("span");
     img.src = "../public/" + imgSrc;
-    return img;
+    span.innerText = "/public/" + imgSrc;
+    div.appendChild(img);
+    div.appendChild(span);
+
+    return div;
   });
 
   short.innerHTML = "";
@@ -199,9 +203,15 @@ function displayAnswers(parentElement, answers) {
   });
   const imageAnswers = answers.map((ans) => {
     const { imgSrc } = ans;
+    const div = document.createElement("div");
     const img = document.createElement("img");
+    const span = document.createElement("span");
     img.src = "../public/" + imgSrc;
-    return img;
+    span.innerText = "/public/" + imgSrc;
+    div.appendChild(img);
+    div.appendChild(span);
+
+    return div;
   });
 
   short.innerHTML = "";
