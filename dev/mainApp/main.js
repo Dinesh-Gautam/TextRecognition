@@ -48,18 +48,17 @@ function parseSimpleSearchValue(value, type) {
 
   switch (type) {
     case "soft":
-      separateValues = [
-        value
-          .split("")
-          .map(
-            (v, index, arr) =>
-              v +
-              (arr[index + 1] || "") +
-              (arr[index + 2] || "") +
-              (arr[index + 3] || "")
-          )
-          .join(" "),
-      ];
+      separateValues = value
+        .split("")
+        .map(
+          (v, index, arr) =>
+            v +
+            (arr[index + 1] || "") +
+            (arr[index + 2] || "") +
+            (arr[index + 3] || "")
+        )
+        .filter((value) => value.length > 2);
+
       break;
     case "hard":
       separateValues = [value];
@@ -96,10 +95,10 @@ function parseSimpleSearchValue(value, type) {
 }
 
 // A.I Search
-qna.load().then(
-  // Find the answers
-  findQuestionsAnswers
-);
+// qna.load().then(
+//   // Find the answers
+//   findQuestionsAnswers
+// );
 
 let finalAnswer = [];
 let searchingDone = false;
