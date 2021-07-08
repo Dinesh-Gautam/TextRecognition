@@ -73,7 +73,6 @@ function parseSimpleSearchValue(value, type) {
       break;
   }
 
-  console.log(separateValues);
   return data
     .map((eachData, index) => {
       const mapPara = eachData.paragraphs
