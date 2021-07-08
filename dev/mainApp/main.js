@@ -166,7 +166,7 @@ function displayAiAnswers(parentElement, aiAnswers, paragraphsIndex) {
     const img = document.createElement("img");
     const span = document.createElement("span");
     img.src = "../public/" + imgSrc;
-    span.innerText = "/public/" + imgSrc;
+    span.innerText = imgSrc;
     div.appendChild(img);
     div.appendChild(span);
 
@@ -207,7 +207,7 @@ function displayAnswers(parentElement, answers) {
     const img = document.createElement("img");
     const span = document.createElement("span");
     img.src = "../public/" + imgSrc;
-    span.innerText = "/public/" + imgSrc;
+    span.innerText = imgSrc;
     div.appendChild(img);
     div.appendChild(span);
 

@@ -44,14 +44,37 @@ app.post("/finalPost", (req, res) => {
 });
 
 app.get("/images", (req, res) => {
-  const directoryPath = path.join(__dirname, "public/images");
-  fs.readdir(directoryPath, function (err, files) {
-    if (err) {
-      return console.log("Unable to scan directory: " + err);
-    }
-    res.send(files.map((img) => img));
-  });
+  const allImagePath = getImageFilePathFromDir(
+    path.join(__dirname, "public/images")
+  );
+  // fs.readdir(directoryPath, function (err, files) {});
+
+  res.send(allImagePath.map((imgPath) => imgPath));
 });
+
+function getImageFilePathFromDir(dirPath) {
+  const allImagePath = [];
+
+  const files = fs.readdirSync(dirPath);
+
+  for (file in files) {
+    const fileLocation = path.join(dirPath, files[file]);
+    const stat = fs.statSync(fileLocation);
+
+    if (stat && stat.isDirectory()) {
+      allImagePath.push(...getImageFilePathFromDir(fileLocation));
+    } else {
+      allImagePath.push(
+        fileLocation.replace(
+          "E:\\html projects\\Text Recoginition\\dev\\public\\images\\",
+          ""
+        )
+      );
+    }
+  }
+
+  return allImagePath;
+}
 
 const PORT = 5000;
 app.listen(PORT, () => console.log("Running on Port: " + PORT));
