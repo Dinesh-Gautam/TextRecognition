@@ -179,7 +179,7 @@ function initTessrect() {
     position: "fixed",
     bottom: 0,
     left: 0,
-    height: "0.2vh",
+    height: "0.4vh",
     background: "rgba(242, 5, 25 , 0.8)",
     width: "0px",
     zIndex: 1000,
@@ -263,17 +263,17 @@ function initTessrect() {
 
 function recognizeText(scheduler, index) {
   recoBtn.disabled = true;
-  if (index < document.querySelectorAll(".root canvas").length) {
+  if (index < document.querySelectorAll(".root div").length) {
     const continues = Math.min(
       Number(document.querySelector("#continuesImages").value),
-      document.querySelectorAll(".root canvas").length,
-      document.querySelectorAll(" .root canvas").length - index
+      document.querySelectorAll(".root div").length,
+      document.querySelectorAll(" .root div").length - index
     );
     const ImagesArr = [];
     const recoImages = [];
     for (let i = 0; i < continues; i++) {
       console.log("recognizing Text of Image No. :" + (index + 1 + i));
-      const element = document.querySelectorAll(".root canvas")[index + i];
+      const element = document.querySelectorAll(".root canvas")[i];
 
       element.style.borderColor = "rgba(242, 5, 25 , 0.5)";
       recoImages.push(element);
@@ -281,9 +281,10 @@ function recognizeText(scheduler, index) {
       ImagesArr.push(scheduler.addJob("recognize", element));
     }
     Promise.all(ImagesArr).then((eArr) => {
-      recoImages.forEach(
-        (e) => (e.style.borderColor = "rgba(5, 245, 25 , 0.5)")
-      );
+      recoImages.forEach((e) => {
+        e.remove();
+        // (e.style.borderColor = "rgba(5, 245, 25 , 0.5)")
+      });
       eArr.forEach((e, index) => {
         // const { blocks, lines, confidence, hocr, paragraphs, text, words } =
         //   e.data;
@@ -339,12 +340,12 @@ function allTextRecognized() {
   //   body: JSON.stringify(allImagesTextData),
   // });
 
-  fetch("/finalPost", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  // fetch("/finalPost", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // });
   document.querySelector(".btns").style.display = "none";
   // recoBtn.disabled = false;
 }

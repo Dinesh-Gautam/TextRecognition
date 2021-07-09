@@ -25,7 +25,10 @@ app.get("/", (req, res) => {
 
 app.post("/preText", (req, res) => {
   const data = req.body;
-  comingData.push(data);
+  // comingData.push(data);
+  fs.appendFile("recognized.json", JSON.stringify(data), (err) =>
+    console.log(err)
+  );
   res.send("SUCCESS");
 });
 
