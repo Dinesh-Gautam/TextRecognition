@@ -65,10 +65,7 @@ function parseSimpleSearchValue(value, type) {
       break;
     default:
       separateValues = [
-        value
-          .split(" ")
-          .filter((valueWord) => valueWord.length > 2)
-          .join(" "),
+        value.split(" ").filter((valueWord) => valueWord.length > 2),
       ];
       break;
   }
