@@ -275,15 +275,15 @@ function recognizeText(scheduler, index) {
       console.log("recognizing Text of Image No. :" + (index + 1 + i));
       const element = document.querySelectorAll(".root canvas")[i];
 
-      element.style.borderColor = "rgba(242, 5, 25 , 0.5)";
+      element.parentElement.style.borderColor = "rgba(242, 5, 25 , 0.5)";
       recoImages.push(element);
 
       ImagesArr.push(scheduler.addJob("recognize", element));
     }
     Promise.all(ImagesArr).then((eArr) => {
       recoImages.forEach((e) => {
+        e.parentElement.style.borderColor = "rgba(5, 245, 25 , 0.5)";
         e.remove();
-        // (e.style.borderColor = "rgba(5, 245, 25 , 0.5)")
       });
       eArr.forEach((e, index) => {
         // const { blocks, lines, confidence, hocr, paragraphs, text, words } =
