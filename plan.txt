@@ -31,4 +31,10 @@ add rectanbgles to select a part of canvas in only edit its value in when eidt a
 
 add reset button to side of every input.
 
+
+start from
+end from 
+defautl thereshold index for all canvas.
+
+
 ..... more will be added.
