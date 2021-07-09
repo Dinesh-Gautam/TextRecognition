@@ -340,12 +340,12 @@ function allTextRecognized() {
   //   body: JSON.stringify(allImagesTextData),
   // });
 
-  // fetch("/finalPost", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // });
+  fetch("/finalPost", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   document.querySelector(".btns").style.display = "none";
   // recoBtn.disabled = false;
 }

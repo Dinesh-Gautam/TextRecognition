@@ -23,10 +23,12 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+fs.appendFile("recognized.json", "[", (err) => console.log(err));
+
 app.post("/preText", (req, res) => {
   const data = req.body;
   // comingData.push(data);
-  fs.appendFile("recognized.json", JSON.stringify(data), (err) =>
+  fs.appendFile("recognized.json", JSON.stringify(data) + ",", (err) =>
     console.log(err)
   );
   res.send("SUCCESS");
@@ -40,9 +42,10 @@ app.post("/text", (req, res) => {
 });
 
 app.post("/finalPost", (req, res) => {
-  fs.writeFile("recognized.json", JSON.stringify(comingData), (err) =>
-    console.log(err)
-  );
+  // fs.writeFile("recognized.json", JSON.stringify(comingData), (err) =>
+  //   console.log(err)
+  // );
+  fs.appendFile("recognized.json", "{}]", (err) => console.log(err));
   res.send("SUCCESS");
 });
 
@@ -67,12 +70,15 @@ function getImageFilePathFromDir(dirPath) {
     if (stat && stat.isDirectory()) {
       allImagePath.push(...getImageFilePathFromDir(fileLocation));
     } else {
-      allImagePath.push(
-        fileLocation.replace(
-          "E:\\html projects\\Text Recoginition\\dev\\public\\images\\",
-          ""
-        )
+      let filteredFileLocationPath = fileLocation.replace(
+        "E:\\html projects\\Text Recoginition\\dev\\public\\images\\",
+        ""
       );
+      filteredFileLocationPath = filteredFileLocationPath.replace(
+        "D:\\Dinesh Stuff\\Text Recogination\\TextRecognition\\dev\\public\\images\\",
+        ""
+      );
+      allImagePath.push(filteredFileLocationPath);
     }
   }
 

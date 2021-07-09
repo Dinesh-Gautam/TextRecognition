@@ -40,6 +40,7 @@ fix output of recognized text
 clear edit canvs whe recognizing to free some memory
 fix border of canvas not showing when recognzing text
 add indicators to tell if searching , searched , not found , search done.
+fix normal search remove join method
 
 try to improve memory managment.
 
