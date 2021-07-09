@@ -92,22 +92,42 @@ button.danger {
   background: rgba(255, 0, 0, 0.5);
 }
 
-.root canvas {
+.root > div {
   width: 10rem;
+  overflow: hidden;
   border: 2px solid rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.1);
   position: relative;
   cursor: pointer;
   -webkit-transition: -webkit-transform 200ms ease-in-out;
   transition: -webkit-transform 200ms ease-in-out;
   transition: transform 200ms ease-in-out;
   transition: transform 200ms ease-in-out, -webkit-transform 200ms ease-in-out;
+  padding: 4px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.root canvas:hover {
+.root > div:hover {
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
   border: 2px solid rgba(0, 0, 0, 0.9);
   z-index: 100;
+}
+
+.root > div canvas {
+  width: 100%;
 }
 
 .btns {

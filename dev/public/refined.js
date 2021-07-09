@@ -31,7 +31,13 @@ function createCanvas(imgSrc) {
     ctx.putImageData(imageData, 0, 0);
 
     canvas.id = imgSrc;
-    document.querySelector(".root").appendChild(canvas);
+
+    const div = document.createElement("div");
+    const span = document.createElement("span");
+    span.innerText = document.querySelectorAll(".root canvas").length + 1;
+    div.appendChild(canvas);
+    div.appendChild(span);
+    document.querySelector(".root").appendChild(div);
   });
 }
 
