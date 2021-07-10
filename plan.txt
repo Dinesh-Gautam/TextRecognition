@@ -41,4 +41,7 @@ add indicators to tell if searching , searched , not found , search done.
 
 try to improve memory managment.
 
+fix bottom margin 
+when a canvas is clicked it shold be focuse so when i close the editing panel i should now which canvas i clicked.
+
 ..... more will be added.
