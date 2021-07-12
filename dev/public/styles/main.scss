@@ -19,6 +19,7 @@ body {
   flex-wrap: wrap;
   gap: 2vh;
   padding: 2rem;
+  padding-bottom: calc(8vh + 2rem);
 }
 
 input[type="number"] {
