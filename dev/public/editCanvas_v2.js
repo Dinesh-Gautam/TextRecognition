@@ -100,7 +100,7 @@ const CANVAS_EDIT = {
 
     copyOriginalCanvasToCloneCanvas(
       document.querySelector(this.editCanvas),
-      document.getElementById(clickCanvasId).querySelector("canvas")
+      document.getElementById(clickCanvasId)
     );
 
     Object.keys(VALUES.editValues.default).forEach((inputClass) => {
@@ -229,25 +229,27 @@ const CANVAS = {
   parentElement: document.querySelector(".root"),
 
   onClick(event) {
-    const target = event.target.closest("div");
+    const target = event.target;
 
-    //changing canvas id
-    clickCanvasId = target.id;
+    if (target.tagName === "CANVAS") {
+      //changing canvas id
+      clickCanvasId = target.id;
 
-    //open canvas edit modal
-    CANVAS_EDIT.open();
+      //open canvas edit modal
+      CANVAS_EDIT.open();
 
-    //copying original canvas image data to clone canvas
-    copyOriginalCanvasToCloneCanvas(
-      target.querySelector("canvas"),
-      document.querySelector(CANVAS_EDIT.editCanvas)
-    );
+      //copying original canvas image data to clone canvas
+      copyOriginalCanvasToCloneCanvas(
+        target,
+        document.querySelector(CANVAS_EDIT.editCanvas)
+      );
 
-    document
-      .querySelectorAll(".root > div")
-      .forEach((e) => e.classList.remove("focused"));
+      document
+        .querySelectorAll(".root > div")
+        .forEach((e) => e.classList.remove("focused"));
 
-    target.classList.add("focused");
+      target.closest("div").classList.add("focused");
+    }
   },
 };
 

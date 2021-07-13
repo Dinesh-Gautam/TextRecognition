@@ -31,7 +31,7 @@ function createCanvas(imgSrc) {
     ctx.putImageData(imageData, 0, 0);
 
     const div = document.createElement("div");
-    div.id = imgSrc;
+    canvas.id = imgSrc;
 
     const span = document.createElement("span");
     span.innerText = document.querySelectorAll(".root canvas").length + 1;
