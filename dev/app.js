@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-fs.appendFile("recognized.json", "[", (err) => console.log(err));
+// fs.appendFile("recognized.json", "[", (err) => console.log(err));
 
 app.post("/preText", (req, res) => {
   const data = req.body;

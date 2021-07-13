@@ -31,6 +31,8 @@ const simpleSearchBtn = document.querySelectorAll(
 simpleSearchBtn.forEach((btn) => {
   btn.addEventListener("click", (event) => {
     event.preventDefault();
+    document.querySelector(".result-container").classList.remove("d-none");
+    document.querySelector(".simple-search-status").innerText = "Searching...";
     const value = document.querySelector(
       ".simple-search #questionInputSimple"
     ).value;
@@ -69,7 +71,9 @@ function parseSimpleSearchValue(value, type) {
       ];
       break;
   }
-
+  document.querySelector(
+    ".simple-search-status"
+  ).innerText = `Search result for "${separateValues.join(",")}"`;
   return data
     .map((eachData, index) => {
       const mapPara = eachData.paragraphs
@@ -106,14 +110,15 @@ function findQuestionsAnswers(model) {
     .querySelector(".ai-question-searcher-btn")
     .addEventListener("click", (e) => {
       e.preventDefault();
-
+      const aiSearchValue = document.querySelector(
+        ".ai-search #questionInput"
+      ).value;
+      document.querySelector(".result-container").classList.remove("d-none");
+      document.querySelector(".ai-search-status").innerText = "Searching...";
       finalAnswer = [];
       data.forEach((string, index) => {
         model
-          .findAnswers(
-            document.querySelector(".ai-search #questionInput").value,
-            string.paragraphs.join(" ")
-          )
+          .findAnswers(aiSearchValue, string.paragraphs.join(" "))
           .then((answers) => {
             if (answers.length > 0) {
               answers.forEach((e) => {
@@ -126,16 +131,18 @@ function findQuestionsAnswers(model) {
             } else {
               searchingDone = false;
             }
-            allParagraphsSearched();
+            allParagraphsSearched(aiSearchValue);
           });
       });
     });
 }
-function allParagraphsSearched() {
+function allParagraphsSearched(searchValue) {
   if (!searchingDone) {
     return;
   }
-
+  document.querySelector(
+    ".ai-search-status"
+  ).innerText = `Search result for "${searchValue}"`;
   const refIndexArr = [];
   finalAnswer.forEach((e) => refIndexArr.push(e.index));
 
